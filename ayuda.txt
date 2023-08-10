@@ -1,0 +1,60 @@
+tema 04
+El software a instalar está en la página https://gist.github.com/Klerith/4a4abfd88a88b2d1f16efd95fea41362
+instalo:
+React Developer Tools, extensión de chrome
+Redux DevTools, extensión de chrome
+visual studio code
+postman
+mongo compass que es para gestionar base de datos mongo
+git 
+node
+añadimos activitus Bar  para visual studio code, para poner la barra abajo
+Temas que estoy usando en VSCode:
+Monokai Night
+
+Tokyo Night
+
+Iconos
+
+Instalaciones recomendadas sobre React
+ES7 React/Redux
+
+Simple React Snippets
+
+Auto Close Tag
+Tema 8
+React es una librería declarativa, es muy eficiente solo renderiza lo que cambia.
+Permite tener componentes con estados o no, así tenemos piezas más pequeñas.
+Se puede usar en back, con movile
+
+La mínima aplicación sería esta:
+
+Esta linea de java script busca el elemento con nombre root
+const divRoot = document.querySelector("#root')
+En esta línea react escribe en ese elemento el hml indicado.
+ReactDom.render(<h1>Hola Mundo</h1>), divRoot);
+
+A esto se le llama JSX que mezcla js y xml
+
+
+lo anterior podría escribirse sólo así
+
+const h1Tag = document.createElement('h1',null,'Hola Mundo')
+
+Tema 9
+Crea una carpeta 01-intro-react crea un index.html dentro
+Escribe ! y luego ctrl y le sale un html básico
+vamos a https://gist.github.com/Klerith/b0111f52ba16451d095f38d4c995605b y copiamos 
+
+    <!-- Cargat React -->
+    <script crossorigin src="https://unpkg.com/react@16/umd/react.production.min.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+
+añade 
+const h1Tag = <h1> Hola, soy  { nombre } </h1>;
+pero da error porque esto no es javascript sino jsx, mezcla de javascript y html
+para que no de error le debemos decir a babel que lo traduzca a jsx:
+
+<script type="text/babel">
+</script>
