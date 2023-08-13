@@ -58,3 +58,55 @@ para que no de error le debemos decir a babel que lo traduzca a jsx:
 
 <script type="text/babel">
 </script>
+
+Tema 10
+Explica babel que sirve para que traduza un código javascript moderno a un javascript normal, para que los
+navegadores funcione.
+
+Sección 3 Conceptos de javascript
+Tema 11
+¿Qué aprenderemos en esta sección?
+
+Generar la base sobre JavaScript
+Constantes y variables Let
+Template String
+Objetos literales
+Arreglos
+Desestructruación * (sumamente importante)
+Promesas
+Fetch API
+Ternarios
+Async - Await
+Mi objetivo aquí es que tengamos las bases que nos ayuden a que podamos diferenciar fácilmente qué es propio de React y qué es propio de JavaScript. Estos conceptos y ejercicios nos ayudarán a suavizar la curva de aprendizaje de React.
+
+Tema 13
+Explica como crear el esqueleto de una aplicación react,
+desde esta página https://create-react-app.dev/.
+Existe otro proyecto que hace algo similar se llama vite https://vitejs.dev/guide/ (npm create vite@latest)
+nos indica que ejecutemos en la linea de comandos el comando:
+ npx create-react-app 02-intro-javascript
+esto nos crea una carpeta con todo lo necesario para nuestra aplicación react.
+si npx no está instalado node nos pregunta que lo instalemos
+a mi me pide conectarme a github, lo hago y se instalado
+luego aho cd a 02-intro-javascript y me abre un servidor node y un navegador que apunta a http://localhost:3000/
+
+Tema 14
+explica variables y constantes.
+Declaración de variables:
+const son variables que no se van a cambiar
+let  son variables que cambian de valor.
+var ya no se usa.
+
+crea un index.js que luego copia y renombra en la carpeta bases a 01-const-let.js
+El original lo deja vacio
+
+Tema 15 Template String
+
+sirve para poner concatener strings, poner variables dentro de strings etc..
+El template string son los que van entre el simbolo `, dentro podemos mezclar
+strings y javascript. El java script va dentro de ${}, además si hacemos
+saltos de linea estos se incorporan al string.
+
+const nombreCompleto = `${nombre} ${apellido} ${1+1}`;
+
+Al final hace una copia en bases con nombre 02-template-string.js
