@@ -24,3 +24,4 @@ const usreState = (valor) => {
 const [nombre,setNombre] = usreState('Goku');
 console.log (nombre);
 setNombre();
+

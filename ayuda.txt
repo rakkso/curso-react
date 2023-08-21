@@ -110,3 +110,513 @@ saltos de linea estos se incorporan al string.
 const nombreCompleto = `${nombre} ${apellido} ${1+1}`;
 
 Al final hace una copia en bases con nombre 02-template-string.js
+
+Tema 16 Objetos literales
+
+un objeto en javascript van entre llames
+const perona = {
+
+};
+tenemos el objeto persona. Le ponemos propiedades
+
+const persona = {
+    nombre: 'Toni',
+    edad:45,
+}
+
+console.log( { persona }) --> estamos creando un objeto nuevo que tiene 
+una propiedad persona
+console.table (persona)
+
+const persona2 = persona;
+
+hace una copia de referencia.
+
+const persona2 = { ...persona};
+
+hace una copia por valor
+
+Tema 16 Arreglos
+Es una colección de información dentro de una variable
+
+const arreglo = new Array();
+
+const arreglo = [];
+arreglo.push(1);
+arreglo.push(2);
+El console.log los muestra con [], cuando es un objeto es {}
+Para poner valores se puede usar push, 
+
+Hace uso de nuevo de ..., que es lo que llama operador spread. 
+Este operador lo que hace es leer el objeto que le acompaña y copiarlo parte a parte.
+
+Dice que consultemos la página 
+https://developer.mozilla.org/es/docs/Web/JavaScript/Reference/Global_Objects/Array/map
+
+Explica el método map de los arreglos.
+Este método lo que hace es dada una función, la aplica sobre cada elemento del arreglo
+origen y genera un nuevo arreglo con los nuevos valores:
+
+por ejemplo una copia podría hacerse:
+
+const arreglo3 = arreglo2.map(function(valor){return valor});
+
+una copia con el doble del valor original
+
+const arreglo3 = arreglo2.map(function(valor){return 2*valor});
+
+una copia que sólo tendría tantas veces la palabra hola, como elmentos
+tenga el arreglo original
+const arreglo3 = arreglo2.map(function(){return 'hola'});
+
+
+
+Tema 18 Funciones
+
+function saludar (nombre) {
+    return `Hola, ${nombre}`
+}
+
+console.log(saludar('Oscar'))
+
+Aconseja que la definamos como Constante, así no la podemos machacar:
+
+const saludar = function(nombre) {
+    return `Hola, ${nombre}`;
+}
+
+Ahora explica la función de flechas
+
+const saludar2  = (nombre) => {
+    return `Hola, ${nombre}`;
+}
+
+si la función sólo hace un return se puede hacer esto
+
+const saludar2  = (nombre) => `Hola, ${nombre}`;
+
+y si no tiene parámetros
+
+const saludar4 = () => `Hola, ${nombre}`;
+
+cuando retornamos un objeto tenemos que poner un parentesis
+
+const getUser = () => ({uid:'ddd',username:'ppp'})
+
+Tema 19 Desestructruación de Objetos o Asignación desestructurante
+
+dice que miremos esta página
+https://developer.mozilla.org/es/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment
+
+Significa sacar los valores de los campos de un objeto de forma fácil.
+
+Dado el objeto:
+
+const persona = {
+    nombre: 'Tony',
+    edad: 45,
+    clave: 'Ironman',
+}
+
+podemos sacarlo:
+console.log(persona.nombre);
+console.log(persona.edad);
+console.log(persona.clave);
+
+const { nombre, edad, clave} = persona;
+console.log(nombre);
+console.log(edad);
+console.log(clave);
+
+y si queremos renombrar algún campos
+
+const { nombre:nombre2, edad:edad2, clave:clave2} = persona;
+console.log(nombre2);
+console.log(edad2);
+console.log(clave2);
+
+y si queremos coger los campos de dentro de un objeto que es un objeto se 
+puede hacer de dos maneras:
+
+const { nombreClave, anios, latlng: { lat, lng}} = persona;
+
+o bien
+
+const { nombreClave, anios, latlng} = persona;
+const { lat, lng} = latlng;
+
+cuando ponemos los : estamos diciendo que cree variables con el nombre de lo que 
+hay a la derecha de los :. Por ejemplo
+
+const {nombreClave:minombre, anios:misAnios, latlng: {lat,lng}} = avenger;
+console.log(minombre, misAnios);
+console.log (lat,lng);
+
+Tema 20. Desestructruación de arreglos
+
+Es sacar los valores en variables de un arreglo
+
+const personajes =['Goku','Vegeta','Trunks']
+
+const [  ,personaje2,personaje3 ]=personajes;
+
+console.log(personaje2 personaje3);
+
+
+const retornaArreglo = () => {
+    return ['ABC',123];
+}
+
+const arr = retornaArreglo();
+const [letras, numeros] = retornaArreglo();
+console.log(letras,numeros)
+
+//Tarea
+//1. el primer valor de arreglo se llamará nombre
+//2. el segundo se llamara setnombre
+const useState = (valor) => {
+    return [valor, ()=>{console.log('Hola Mundo')}]
+}
+
+const [nombre,setNombre] = useState('Goku');
+console.log (nombre);
+setNombre();
+
+Sección 3. Tema 21
+
+Nos pide crear un fichero en el directorio data con nombre heroes.js
+que es un arreglo y contenido lo de este link 
+https://gist.github.com/Klerith/4aeb99d31aedbc29ff4d54bbb77d2d7f
+
+desde index.js quiere acceder:
+
+import {heroes} from './data/heroes'
+
+//pero para que funcione en heroes.js tenemos que poner un export
+
+//Proponer hacer un ejercicio para que hacer que el siguiente código funcione,
+//consultado el enlace : https://developer.mozilla.org/es/docs/Web/JavaScript/Reference/Global_Objects/Array/find
+const getHeroeById = (id) => {
+    return heroes.find((elemento) => {
+        console.log('id:', id);
+        console.log('elemento:', elemento);
+        return id===elemento.id});
+}
+
+console.log( getHeroeById(2))
+
+//mejorado 
+
+const getHeroeById2 = (id) => heroes.find((elemento) => id===elemento.id);
+
+
+console.log( getHeroeById2(2))
+
+//Ahora propone hacer funcionar el siguiente código, el caso es que el
+// find no nos sirve porque ahora retornaremos más de un valor 
+// dice que miremos la documentación para usar el Filter
+
+
+const getHeroeByOwner = (owner) => heroes.filter((elemento) => owner===elemento.owner);
+
+console.log( getHeroeByOwner('DC'));
+
+
+arr[1]();
+
+vuelve al tema de la exportación
+
+dice que dado que el fichero sólo tiene la tabla
+en lugar de exportarlo así:
+export const heroes = [
+
+e importar así:
+import {heroes} from './data/heroes'
+
+se puede poner
+
+export default [
+
+e importar así
+
+import pepito from './data/heroes'
+
+pero no le gusta
+
+prefiere poner al final del fichero
+export default heroes; al final del fichero
+con export const heroes = [
+
+otra cosa sobre la exportación, es cuando se exporta más de una cosa
+y una de ellas es por defeco, entonces en la de importar
+la que no tiene llave es la de por defecto y además podemos poner
+el nombre que queramos en la importación directamente.
+Si no es por defecto podemos cambiar el nombre así
+import {heroes,owners as otro nombre} from './data/heroes'
+
+export const owners = ['DC','Marvel];
+export const heroes= ['DC','Marvel];
+
+su import sería
+import {heroes,owners} from './data/heroes'
+
+si hacemos una por defecto, entonces no se ponen llaves
+
+const heroes = ['DC','Marvel];
+
+export const owners = ['DC','Marvel];
+export default heroes;
+
+import heroes,{owners} from './data/heroes'
+
+también es análogo 
+
+export {
+    heroes as default,
+    owners,
+}
+
+
+Sección 3 Tema 23 Promesas
+
+const promesa = new Promise();
+
+son asincronas, se ejecuta después de lo sincrono.
+
+Indica la documentación a revisar: https://developer.mozilla.org/es/docs/Web/JavaScript/Reference/Global_Objects/Promise
+
+Las promesas recibe de parámetros que son callback.
+El primero se ejecuta cuando este ok, y el segundo cuando falle
+
+const promesa = new Promise ( 
+    
+    (resuelto,noResuelto) => {
+    
+        setTimeout(() => {
+            resuelto();    
+        }, 2000);
+    
+        ;
+    }
+)
+//si pongo la llamada al método resuelto, que no está definido 
+//la promesa no se cumple y el método then nunca se ejecuta
+
+promesa.then( () =>{
+    console.log('Then de la promesa')
+})
+
+Ahora pide que dentro del setTime haga un
+
+const heroe = getHeroById(2);
+console.log(heroe);
+
+Ahora explica como pasarle argumentos a  la promesa. Esto
+se hace poniendo la definición en la promesa dentro de una función
+
+const miWrapper =(parametro) =>{
+   return new Promise ( 
+    
+    (resuelto,noResuelto) => {
+    
+        setTimeout(() => {
+
+            const heroe = getHeroeById(parametro);
+            //console.log(heroe)
+            resuelto(heroe);    
+        }, 2000);
+    
+        ;
+    }
+)
+}
+
+miWrapper(3).then( p1 => console.log('Heroe',p1));
+
+Ahora pide que añadamos el caso de error, y será cuando 
+busquemos un indice que no existe
+
+const miWrapper =(parametro) =>{
+   return new Promise ( 
+    
+    (resuelto,noResuelto) => {
+    
+        setTimeout(() => {
+
+            const heroe = getHeroeById(parametro);
+            console.log('Dentro', heroe)
+            if (heroe)  resuelto(heroe);
+            else noResuelto(heroe);    
+        }, 2000);
+    
+        ;
+    }
+)
+}
+
+miWrapper(2).then( p1 => console.log('Exito',p1))
+.catch(p1 => console.log('Error',p1))
+
+Comenta que podemos evitar escribir esto así
+
+miWrapper(2).then( p1 => console.log('Exito',p1))
+.catch(console.warm)
+
+poniendolo así, dado que como sabemos que recibimos un sólo
+parámetro y a la función le pasamos uno solo, javascript ya 
+sabe lo que tienen que hacer
+
+ //pide hacer lo mismo con el then
+ miWrapper(2).then( console.log)
+ .catch(console.warn)
+
+ Sección 3. Tema 24 Fetch API
+
+ es una librería interna, no hay que importar nada, recomienda
+ leer esta página https://developer.mozilla.org/es/docs/Web/API/Fetch_API
+
+ y para el ejemplo usaremos la siguiente web para disponer de una 
+ api a la que llamamos y nos devuelve gifs que es esta:
+
+ https://developers.giphy.com/ me doy de alta en la web con
+ usuario rak0kso@gmail.com/rakG1kso
+
+ creamos una aplicaicón tipo api, y nos quedamos con la apikey
+
+ GeBZZMWXwYjyH2H5CxCKkZtXE2frfBzL
+
+ buscamos en la documentación las api y cogemos la api Random EndPoint
+
+ api.giphy.com/v1/gifs/random	
+
+llamada de ejemplo 
+https://api.giphy.com/v1/gifs/random?api_key=GeBZZMWXwYjyH2H5CxCKkZtXE2frfBzL
+
+dado que fetch es una promesa que cuando se ejecuta ok nos devuelve 
+la respuesta de la invocación a la url que le pasamos como argumento.
+En el then le pasamos una función que coge esa respuesta y la devuelve en formato json.
+Este formato json, también es una promesa que cuando se ejecuta nos devuelve
+el forma json. Con ello cogemos la url de la imagen y la pintamos.
+
+Sección 3 tema 25 Async Await
+
+El Async hace que lo que se ejecute pueda ser sincrono.
+El Await va siempre dentro del Async y con ello indicamos que el flujo
+de ejecución se espere hasta que la sentencia se acabe.
+Si ponemos el Await delante de la ejecución de una promesa conseguimos 
+que esta sea sincrona.
+Al hacer esto no hace falta que escribamos el then, ya nos retorna lo que calcula
+la promesa.
+Las promesas tenian el then para cuando iba ok, el catch cuando acaban ko, y el finally
+para siempre. 
+Cuando las ejecutamos de forma sincrona, para recoger los errores tenemos que
+poner todo dentro de un try catch
+Ahora lo que hace es reescribir el código del tema anterior, 
+pero para que quede sincrono
+
+Sección 3. Tema 26  Operación Ternarios
+
+Es una forma corta de hacer un if.
+
+const activo = true;
+
+let mensaje = '';
+
+if (activo) {
+    mensaje = 'Activo';
+} else {
+    mensaje =' Inactivo';
+
+}
+
+console.log(mensaje);
+
+se rescribe
+
+const mensaje = (activo) ? 'Activo' : 'Inactivo';
+
+Si no tenemos el else sería así;
+
+const mensaje = (activo)&& 'Activo'
+
+Recomienda leer para javascript esta web https://developer.mozilla.org/es/
+y hacer su curso "JavaScript moderno"
+
+Luego pasa la url del código que ha hecho 
+https://github.com/Klerith/react-intro-javascript
+
+Sección 4. Tema 1 introducción
+
+¿Qué veremos en esta sección?
+
+Nuestra primera aplicación - Hola Mundo
+
+Exposiciones sobre los componentes
+
+Creación de componentes (Functional Components)
+
+Propiedades - Props
+
+Impresiones en el HTML
+
+PropTypes
+
+DefaultProps
+
+Introducción general a los Hooks
+
+useState
+
+Es una sección importante, especialmente para todos los que están empezando de cero en React, ya que dará las bases de cómo segmentar la lógica de nuestra aplicación en pequeñas piezas más fáciles de mantener.
+
+Sección 4 Tema 32
+Ahora crea la aplicación de ejemplo con create vite 
+
+ejecuta dentro de la carpeta I:\udemy\repogit\cursoReact\udemy-react-de-cero-a-experto-hooks-y-mern
+yarn create vite
+pide un nombre de proyecto y le pone counter-app
+pide que framework y le dice react
+
+cuando acaba tenemos una carpeta que se llama counter-app
+la renombra 03-counter-vite
+
+luego ejecuta en ellas
+yarn -->Esto instala las dependencias del proyecto
+yarn dev
+
+
+Nota: He tenido que crear instalar yarn
+que se instala via npm: npm install --global yarn
+
+usa yarn para dependencias locales y npm para dependencias globales ¿?
+luego hacer lo mismo con create react
+npx create-react-app counter-app
+
+este es mas lento por que usa webapp para actualizar los componentes, y vite
+utiliza otra  cosa
+renombra la carpeta 03-counter-cra 
+
+Sección 4 Estructura aplicación cra
+
+se ve que fue creado por npm porque tiene el fichero package-lock.json
+se crea con el npm install
+en el package.json hay infomración interesante, como dependencias, el nombre del
+proyecto, etc..
+
+La carpeta public tiene el index.html que es donde se invocará  a nuestra aplicaicón
+
+robots.txt es un fichero que usa google para analizar nuestra aplicación.
+explicación de robots : https://developers.google.com/search/docs/crawling-indexing/robots/intro?hl=es&visit_id=638282342332022604-3099763398&rd=1
+
+también pone estos dos enlaces
+PWA Progressive web app: https://web.dev/learn/pwa/
+ayuda de cra --> https://create-react-app.dev/docs/available-scripts/
+app.js --> tiene el javascript
+index.js --> es realmente un jpx, tiene html y javascript
+
+
+Sección 4 Directorios de vite
+
+tiene el package.json
+yarn.lock indica que lo creamos con yarn.
+tiene un main.jsx que es análogo al index.js
