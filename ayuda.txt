@@ -620,3 +620,55 @@ Sección 4 Directorios de vite
 tiene el package.json
 yarn.lock indica que lo creamos con yarn.
 tiene un main.jsx que es análogo al index.js
+
+Sección 4 Tema 35 primera aplicación en react
+
+usa carpeta de vite,
+arranca la aplicación con yarn dev
+
+borra todo lo del source y crea un fichero main.jsx
+importa react, react-dom/client
+
+todo en react funciona con componentes funcionales
+
+function App() {
+    return (<h1> hola Mundo</h1>)
+}
+
+ReactDOM.createRoot(document.getElementById('roo')).render(
+    <React.StrictMode>
+    <App/>
+    </React.StrictMode>
+)
+
+Sección 4 Tema 35 crear primer componetente
+el componente app lo había creado dentro del main.jsx, pero lo mueve a otro fichero
+Crea un fichero HelloWorldApp.jsx
+Mueve la función la exporta de forma unitaría y la importa.
+
+Sección 4 Tema 36 tarea crear nuevo componente
+
+Ahora propone que el componente no solo escriba un h1 sino que haga más html.
+pero si ponemos dos lineas falla.
+La primera solución es ponerlo todo dentro de un div, pero si lo ponemos dentro del div
+nos genrará un div no deseado en la página
+React permite enviar n sentencias con el tag <Fragment>
+
+hace lo siguiente 
+import {Fragment} from 'reac';
+
+export const FirstApp = () => {
+    return (
+        <Fragment><h1>Hola</h1><p>subtitulo</p></Fragment>
+    )
+}
+
+react permite hacer esto sin declararlo pero usando <>
+
+export const FirstApp = () => {
+    return (
+        <><h1>Hola</h1><p>subtitulo</p></>
+    )
+}
+
+Sin el import. React sólo permite retornar un nodo.
