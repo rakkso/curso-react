@@ -672,3 +672,45 @@ export const FirstApp = () => {
 }
 
 Sin el import. React sólo permite retornar un nodo.
+
+Sección 4 Tema 39 Impresión de variables en el HTML
+
+Como pones javascript dentro del html se hace con {} siempre que 
+el javascript no sea un objeto.
+
+<h1>hola { 1*5 }</h1>
+ o
+ <>{1*5}</>
+
+ el código javascript, debe estar fuera de la función del componente por Temas
+ de rendimiento
+
+Sección 4 Tema 40 Añadir estilos
+
+crea un styles.css con
+html, body {
+    background-color: #021232A
+    color: white
+    font-falimy: Helvetica, Arial, sans-serif;
+    font-size: 1.3rem;
+    padding: 70px;
+}
+y luego en el main.jsx importa el fichero con 
+import "./styles.css";
+
+Sección 4 Tema 41 comunicación entre componentes - Props
+
+son los parámetros que le podemos definir al a funcion que renderizan
+
+Los parámetros siempre son un objeto por tanto quedaría
+
+export const FirstApp = ( prop) =>
+
+return <>
+<h1>{prop.titulo}</h1>
+</>
+
+y en la llamada <FirstApp titulo="Hola Mundo"/>
+
+además explica que en f12 en la pestaña de components podemos ver el parámetro y 
+modificarlo
