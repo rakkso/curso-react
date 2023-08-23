@@ -9,6 +9,6 @@ import "./styles.css";
 ReactDOM.createRoot(document.getElementById('root')).render(
     <React.StrictMode>
     <App/>
-    <FirstApp titulo="parametro" />
+    <FirstApp titulo={1+1} />
     </React.StrictMode>
 )

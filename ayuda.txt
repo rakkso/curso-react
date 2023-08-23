@@ -714,3 +714,20 @@ y en la llamada <FirstApp titulo="Hola Mundo"/>
 
 además explica que en f12 en la pestaña de components podemos ver el parámetro y 
 modificarlo
+
+Sección 4 Tema 42 PropTypes
+
+Es una funcionalidad que viene directa con cra y no con vite
+El objetivo es hacer parámetros obligatorios.
+
+import PropTypes from 'prop-types';
+yarn add prop-types o npm install prop-types
+
+Luego declara 
+
+FirstApp.propTypes = {
+    title : PropTypes.string; Indica que debe ser un string, provocando un warning por consola.
+    title : PropTypes.string.isRequired; Indica que debe ser un string, provocando un warning por consola.
+
+
+}

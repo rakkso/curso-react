@@ -1,4 +1,7 @@
  
+ import PropTypes from 'prop-types';
+
+
  const miFuncion = () => {
     return "Un literal"
  }
@@ -11,4 +14,8 @@
     <p>{miFuncion()}</p>
     </>
     );
+}
+
+FirstApp.propTypes = {
+    titulo : PropTypes.string.isRequired,
 }
