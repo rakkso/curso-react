@@ -731,3 +731,62 @@ FirstApp.propTypes = {
 
 
 }
+
+Sección 4 Tema 43 Default PropTypes
+
+Podemos poner valores por defecto en la definición del functional componente
+
+export function FirstApp( {titulo='vacio', subtitulo='subtitulo vacio', valor})
+
+o bien podemos usar una propiedad de este que se llama defaultProps de la siguiente
+manera para nuestro ejemplo.
+
+FirstApp.defaultProps = {
+    title: 'No hay título',
+    subTitle: 'No hay subtitulo'
+    nuevo:'Nuevo'
+}
+
+Sección 4 Tema 44 Tarea - ComponentCounter
+
+Pide hacer el ejercicio que está en esta url:
+https://gist.github.com/Klerith/e1a731cc595c00a9794a709062eae757
+
+Sección 4 Tema 45 Evento Click
+
+En react los eventos son unos objetos sinteticos que 
+encapsulan los eventos de los navegadores y los homogenizan
+para que se comporten en todos los navegadores igual.
+
+En la pagina siguiente hay documentación : https://es.react.dev/reference/react-dom/components/common#react-event-object
+
+
+Ahora añade un botón al componente que al recibir un onclick llama a una función
+
+Comenta que la función si no hay referencia a nada del componente la podemos 
+poner fuera, y eso hara el componente más ligero porque no la volverá a leer.
+No necesitamos que se lea porque es una función que no cambia.
+
+Explica que si en la función tocamos el parámetro que le llega al componente.
+y lo pintamos veremos que no pasa nada. Esto es porque react aunque cambie
+el valor del parámetro no lo redibuja porque no le hemos dicho que lo redibuje.
+En cambio si hacemos un console.log el parámetro si cambio de valor.
+
+Sección 4 Tema 46 useState
+
+Habla de los hooks, hay muchos y en el fondo son funciones.
+Comenta el useState que es un hook.
+Los hooks aparece a partir de la versión 18
+Comenta la documentación: https://es.legacy.reactjs.org/docs/hooks-intro.html
+
+Los hooks cuando cambian provocan que se renderice, en el ejemplo anterior
+aunque se incrementaba el valor no lo veíamos en la página porque react
+no consideraba que había un cambio, los hooks hacen que react reconozca el cambio.
+
+useState recibe un valor inicial del estado
+y devuelve un valor final y una función a la que llamaremos 
+para cambiar el valor.
+
+const [ contador, actualizaContador ] = useState ( valorInicial);
+
+actualizaContador(contador + 1)
