@@ -776,12 +776,15 @@ Sección 4 Tema 46 useState
 
 Habla de los hooks, hay muchos y en el fondo son funciones.
 Comenta el useState que es un hook.
-Los hooks aparece a partir de la versión 18
+Los hooks aparece a partir de la versión 16.8
 Comenta la documentación: https://es.legacy.reactjs.org/docs/hooks-intro.html
 
 Los hooks cuando cambian provocan que se renderice, en el ejemplo anterior
 aunque se incrementaba el valor no lo veíamos en la página porque react
 no consideraba que había un cambio, los hooks hacen que react reconozca el cambio.
+
+Los hooks puede ser de react o custom. De react hay unos cuantos y todos 
+empizan por use: useState, useContext, use....
 
 useState recibe un valor inicial del estado
 y devuelve un valor final y una función a la que llamaremos 

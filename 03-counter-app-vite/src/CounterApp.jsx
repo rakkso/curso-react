@@ -1,3 +1,4 @@
+import {useState} from 'react';
 import PropTypes from 'prop-types';
 
 
@@ -5,16 +6,19 @@ import PropTypes from 'prop-types';
  
  export function CounterApp( { valor}) {
     
+    const [contador, actualizaContador] = useState(valor);
+
     function mifuncion(event) {
         console.log(event);
-        valor=19;
-        console.log(valor)
+        //da error porque contador es una constante contador=contador +1;
+        actualizaContador(contador +1);
+        console.log(contador)
     }
     
     return (
     <>
     <h1> CounterApp</h1>
-    <h2> {valor} </h2>
+    <h2> {contador} </h2>
     <button onClick={mifuncion}>{valor}</button>
     </>
     );
