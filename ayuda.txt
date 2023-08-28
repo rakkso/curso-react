@@ -793,3 +793,31 @@ para cambiar el valor.
 const [ contador, actualizaContador ] = useState ( valorInicial);
 
 actualizaContador(contador + 1)
+
+
+
+Cada vez que cambia el estado se vuelve a ejecutar todo el functional component,
+es decir la función CounterApp
+
+Se puede demostrar poniendo un console.log en el componente,
+
+Hacemos la función:
+
+function restar(event) {
+        console.log(event);
+        //da error porque contador es una constante contador=contador +1;
+        actualizaContador(contador -1);
+        console.log(contador)
+    }   
+
+
+que se puede reescribir por
+const restar = () ==> actualizaContador(contador -1);
+
+Parece que el useState tiene acción después cuando se renderiza el componente.
+Es decir, inicialmente el contador vale 2, si clico sumar 1, después de 
+la función sumar 1, vale 2 igual que antes, pero después se renderiza el componente
+pero ya con el nuevo valor 3.
+Esto es así porque el useState es asincrono y el valor no se actualiza hasta que 
+pasa un tiempo. 
+Si se pone un dealy en el console.log se ve bien.
