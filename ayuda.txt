@@ -821,3 +821,211 @@ pero ya con el nuevo valor 3.
 Esto es así porque el useState es asincrono y el valor no se actualiza hasta que 
 pasa un tiempo. 
 Si se pone un dealy en el console.log se ve bien.
+
+Tema 48 código de la sección
+https://github.com/Klerith/react-vite-counter-app/tree/fin-seccion-4
+
+Sección 5 Pruebas unitarias
+
+¿Qué veremos en esta sección?
+
+Introducción a las pruebas
+
+AAA
+
+Arrange - Arreglar
+
+Act - Actuar
+
+Assert - Afirmar
+
+Primeras pruebas
+
+Jest
+
+Expect
+
+toBe
+
+Enzyme
+
+Comandos útiles en la terminal para pruebas
+
+Revisar elementos renderizados en el componente
+
+Simular eventos
+
+Esta sección de pruebas es sumamente importante porque nos dará la base de las pruebas que estaremos haciendo durante el curso, las pruebas irán creciendo en complejidad, por lo que les recomiendo que nos aseguremos de comprender bien todos estos conceptos para que nos sea más fácil las siguientes secciones de pruebas.
+
+Sección 5. Tema 51 introducción
+
+Arreglar: 
+es incializar
+Actuar:
+aplicamos acciones
+Afirmar:
+observar el componrtamiento de las acciones
+
+Tema 52
+nos hace poner en src el código del tema 52 que es el de la primera parte del curso
+template-string, funciones etc...
+
+Sección 5 Tema 53
+´
+Como usamos vite tenemos que configurar las librerias de testing,
+si vuer cra no haría falta.
+Nos enseña la web de jest https://jestjs.io/
+yarn add --dev jest
+luego en package.json
+añade el script test.
+
+luego ejecuta yarn test
+nos dará error porque no tenemos pruebas
+
+Crea un directorio test en el src, y hace un espejo de los ficheros 
+si tenemos un CounterApp.jsx tendremos un ConteerApp.test.js
+le damos contenido
+
+el fichero se llama demo.test.js, sino acaba con test.js no lo reconoce.
+
+test('Esta prueba no debe falla', ()=>{
+
+    aqui evaluamos cosas
+})
+
+Ahora tendría que ejecutar yarn test cada vez.
+para que se ejecute en cada cambio  en el script ponermo 
+
+yarn jest --watchAll
+
+Tema 5 Tema 54
+
+consultar documentación jest
+
+Jest nos ayuda no hacer if en el codigo de test.
+
+const message1 = 'Hola mundo';
+const message2 = message1.trim();
+
+en lugar de hacer
+if (message1 === message2) throw exception
+
+hariamos 
+expect (message1).toBe(message2);
+
+como el jest tiene muchos metodos y añade
+yarn add -D @types/jest instala en desarrollo y el visual studio ya nos ayuda 
+
+Sección 5 Tema 56
+Ahora va a añadir test al archivo 02-template-string, para poder llamar a una
+función que queremos testear tenemos que hacer un export de esta.
+Además quita las otras varibles del archivo.
+
+Crea un archivo espejo para probar la función.
+
+No funciona porque jest no interpreta babel, tenemos que instalarlo y configurarlo
+
+yarn add --dev babel-jest @babel/core @babel/preset-env
+
+luego tocamos el fichero babel.config.js como dice la documentación
+ https://jestjs.io/es-ES/docs/getting-started
+
+ explica como hacer que no se ejecuten todos los archivos de test sino 
+ solo el que estamos trabajando
+
+ en yarn jest -watchAll
+ clickamos w
+
+ pero tuve que poner eston en powershell como administrador
+ Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
+ y el regexpr no me funciona
+
+ Sección 5 Tema 57
+
+ ahora hace test que comparan objetos java sobre el 05-funciones.
+ se hace con expect ... toEqual
+
+ Sección 5 Tema 58
+ Hace un test que comprueba que devuelve un string o un número.
+ explica que hay dos formas de hacerlo.
+ una con typeof de javascript 
+
+ expect(typeof miValor).toBe('String')
+
+ o bien con puro jest que es un objeto cualquiera pero string.
+
+ except ( mivalor).toEqual(expect.any(String));
+ Sección 5 Tema 59
+ Mas test ahora del fichero 08
+
+ Sección 5 Tema 60
+ Pruebas sobre las promesas 09
+
+ Jest ejecuta todo secuencial, por lo que cuando ponemos una promesa, no espera que esta se ejecute
+
+  const id = 1;
+        getHeroeByIdAsync(id).then( heroe => {
+            console.log('hola:', heroe);
+            expect(true).toBe(false);
+        }
+        
+        );
+        console.log('adios')
+
+Esta prueba pasa, escribe adios, no escribe hola, y cuando acaba dice que hay un worker fallado, se da cuenta
+que hay cosas que no ha ejecutado.
+
+ para que no lo haga, debemos pasarle un nombre
+ que normalmente se le pone el nombre de done, el cree que es una función que llamará
+ asumiendo que ha acabado,
+ así que en lugar de poner 
+
+ 
+ test('getHeroesByOwner debe retornar heroes de DC',()=>{
+    ponemos
+test('getHeroesByOwner debe retornar heroes de DC',(hecho)=>{
+y en la promesa llamamos a hecho.
+
+Con este test
+
+   test('getHeroeByIdAsyncdebe retornar un heroe por i',(CuandoHecho)=>{
+
+        const id = 1;
+        getHeroeByIdAsync(id).then( heroe => {
+            console.log('hola:', heroe);
+            //expect(true).toBe(false);
+            CuandoHecho();
+        }
+        
+        );
+        console.log('adios')
+
+Sección 5 Tema 61 Pruebas async-await
+
+ Cuando nosotros desde jest lanzamos :
+
+  const url = async getImagen();
+
+  se queja porque el async no lo reconoce, para que lo haga nos pide que hagamos  una serie de configuraciones.
+
+  Para que funcione configura el jest. Para hacerlo, primero en el raíz crea un archivo llamado
+  jest.config.js
+  En este archivo declara una propiedad que se llama setupFiles con la que le indicamos un archivo (jest.setup.js)
+  de javascript que debe ejecutar jest cada vez.
+  En este archivo cargará los modulos que le permiten ejecutar el fetch que es lo que le molesta
+  Antes instalamos via yarn este modulo para desarrollo con la opción -D
+  yarn add -D whatwg-fetch
+  en el fichero hace un import de este modulo
+  import 'whatwg-fech';
+
+Al final no he tenido que configurar nada, solo poner el async en la llamada
+
+Al hacerlo la salida es así
+ const id = 1;
+        getHeroeByIdAsync(id).then( heroe => {
+            console.log('hola:', heroe);
+            expect(true).toBe(false);
+        }
+        
+        );
+        console.log('adios')
