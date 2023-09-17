@@ -1062,3 +1062,24 @@ he puesto lo siguiente
  */
 
  para que pueda renderizar
+ Tema 5 sección 65
+ explica que el render nos ofrece un container y funciones.
+ El container contiene el código html que genera el componente.
+ Las funciones son funciones para buscar dentro del componente.
+ También explica que es muy útil hacer un snapshot de lo que genera
+ el componente esto se guarda en una carpeta y el test 
+ comprueba que lo generado por el render es lo mismo. Si no lo es
+ avisa e indica si queremos actualizar el render.
+ el snapshot lo genera al ejecutar esta linea
+  expect ( container ).toMatchSnapshot();
+  jest guarda una foto y la comporar cada vez.
+
+
+  Sección 6 Tema 66 getByTestId
+
+Ahora del render coge la función getByTestId
+En el código generado por el componente le pone un atributo
+donde quiere con nombre data-testid="test_1" y luego con la función
+getByTestid puede recuperar ese valor así, hacemos la prueba flexible.
+No debe estar en un h1 sino en un sitio con este valor
+
