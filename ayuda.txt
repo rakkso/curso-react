@@ -1029,3 +1029,36 @@ Al hacerlo la salida es así
         
         );
         console.log('adios')
+
+
+Sección 5 Tema 63
+react testing library, es otro framework de testing
+le gusta jest pero también quiere usar testing library porque es muy bueno para componentes
+De hecho en la documentación de jest recomienda el uso de react testing library y dice como
+instalarlo (https://jestjs.io/docs/tutorial-react#dom-testing, https://testing-library.com/)
+yarn add -dev @testing-library/react
+
+Sección 5 Tema 64
+Ahora creamos un test para firstapp y en el test invocamos al render
+de import { render } from '@testing-library/react'
+pero da un error porque no sabe hacerlo para arreglarlo hace
+en el jest.config.js añade
+testEnvironment: 'jest-environment-jsdom',
+e instala yarn add -dev jest-environment-jsdom
+y en el babel.config
+
+presets :[
+    [@babel/preset-react',{runtime :'automatic'}]
+]
+
+e instala @babel/preset-react 
+con yarn add -D @babel/preset-react
+
+no me ha funcionado no lee el archivo jest.config.cjs, al final en el test 
+he puesto lo siguiente
+
+  /**
+ * @jest-environment jsdom
+ */
+
+ para que pueda renderizar

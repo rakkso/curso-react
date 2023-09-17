@@ -6,7 +6,7 @@
     return "Un literal"
  }
  
- export function FirstApp( {titulo='vacio', subtitulo='subtitulo vacio', valor}) {
+ export function FirstApp( {titulo, subtitulo='subtitulo vacio', valor}) {
     return (
     <>
     <h1> FirstApp!! {titulo}</h1>
@@ -22,7 +22,7 @@ FirstApp.propTypes = {
 
 
 FirstApp.defaultProps = {
-    titulo:'sin titulo',
+   // titulo:'sin titulo',
     subtitulo: 'sin subtitulo',
     valor: 'sin valor'
 }
