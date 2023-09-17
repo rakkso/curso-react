@@ -1093,3 +1093,12 @@ Ahora poque para que se renderice solo el CounterApp
 pide que hagamos las pruebas de:
 debe de hacer match con el snapshot
 debe mostrar el valor inicial de 100
+
+Sección 6 Tema 69 Simular eventos
+
+Lo hace con fireEvent para disparar eventos.
+podemos simular cualquier evento, simula el click sobre un
+elemento de lo generado via screen
+
+fireEvent.click(screen.getByText('+1'))
+expect(screen.getByText('101')).toBeTruthy();

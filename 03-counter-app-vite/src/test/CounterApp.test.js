@@ -3,14 +3,14 @@
  * @jest-environment jsdom
  */
 
-  import { render,screen } from '@testing-library/react'
+  import { fireEvent, render,screen } from '@testing-library/react'
 
 import { CounterApp } from '../CounterApp';
   
   
   describe('Pruebas en <CounterApp />',() =>{
 
-    const valorInicial = 100;
+      let valorInicial = 100;
       test('debe de hacer match con el snapshot',() =>{
   
           
@@ -41,6 +41,46 @@ import { CounterApp } from '../CounterApp';
           expect(screen.getByRole('heading',{ level :2}).innerHTML).toContain(valorInicial.toString());
   
       })
+
+      test('debe funcionar el botón +1',() =>{
+        //screen.debug();
+        const {container,getByText} = render (<CounterApp valor={valorInicial}/>);
+        //screen.debug();
+        fireEvent.click(screen.getByText('+1'));
+        //screen.debug();
+
+        expect(screen.getByRole('heading',{ level :2}).innerHTML).toContain((++valorInicial).toString());
+      
+    })
+
+
+    test('debe funcionar el botón -1',() =>{
+        //screen.debug();
+        const {container,getByText} = render (<CounterApp valor={valorInicial}/>);
+        //screen.debug();
+        fireEvent.click(screen.getByText('-1'));
+        //screen.debug();
+
+        expect(screen.getByRole('heading',{ level :2}).innerHTML).toContain((--valorInicial).toString());
+      
+    })
+
+    test('debe funcionar el botón reset',() =>{
+        //screen.debug();
+        const {container,getByText} = render (<CounterApp valor={valorInicial}/>);
+        fireEvent.click(screen.getByText('+1'));
+        fireEvent.click(screen.getByText('+1'));
+        fireEvent.click(screen.getByText('+1'));
+        //screen.debug();
+        fireEvent.click(screen.getByRole('button',{ name :'miBoton'}));
+
+        //screen.debug();
+
+        
+
+        expect(screen.getByText(valorInicial)).toBeTruthy();
+      
+    })
   })
   
   

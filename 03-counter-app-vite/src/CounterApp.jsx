@@ -38,7 +38,7 @@ import PropTypes from 'prop-types';
     <h2 data-testid="test_2"> {contador} </h2>
     <button onClick={sumar}>+1</button>
     <button onClick={restar}>-1</button>
-    <button onClick={reset}>Reset</button>
+    <button aria-label="miBoton" onClick={reset}>Reset</button>
     </>
     );
 }
