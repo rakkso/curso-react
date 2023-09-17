@@ -3,7 +3,7 @@
  * @jest-environment jsdom
  */
 
-import { render } from '@testing-library/react'
+import { render,screen } from '@testing-library/react'
 import { FirstApp } from '../FirstApp'
 
 
@@ -24,6 +24,7 @@ describe('Pruebas en <FistApp />',() =>{
         //console.log(getByText(titulo));
         //miramos que nuestro título este:
         expect (getByText(titulo)).toBeTruthy();
+        expect (screen.getByText(titulo)).toBeTruthy();
 
        
         //miramos que el título esté en un h1, el primero

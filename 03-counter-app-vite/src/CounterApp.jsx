@@ -35,7 +35,7 @@ import PropTypes from 'prop-types';
     return (
     <>
     <h1> CounterApp</h1>
-    <h2> {contador} </h2>
+    <h2 data-testid="test_2"> {contador} </h2>
     <button onClick={sumar}>+1</button>
     <button onClick={restar}>-1</button>
     <button onClick={reset}>Reset</button>

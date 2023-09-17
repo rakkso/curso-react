@@ -1075,7 +1075,7 @@ he puesto lo siguiente
   jest guarda una foto y la comporar cada vez.
 
 
-  Sección 6 Tema 66 getByTestId
+  Sección 5 Tema 66 getByTestId
 
 Ahora del render coge la función getByTestId
 En el código generado por el componente le pone un atributo
@@ -1083,3 +1083,13 @@ donde quiere con nombre data-testid="test_1" y luego con la función
 getByTestid puede recuperar ese valor así, hacemos la prueba flexible.
 No debe estar en un h1 sino en un sitio con este valor
 
+Sección 5 Tema 67 screen
+
+igual que el render, tenemos el screen que es el código html 
+de la página, se dedica a hacer los mismos test pero usando el screen
+
+Sección 6 Tema 68 Pruebas CounterApp
+Ahora poque para que se renderice solo el CounterApp
+pide que hagamos las pruebas de:
+debe de hacer match con el snapshot
+debe mostrar el valor inicial de 100
