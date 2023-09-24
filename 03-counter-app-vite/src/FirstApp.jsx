@@ -9,7 +9,7 @@
  export function FirstApp( {titulo, subtitulo='subtitulo vacio', valor}) {
     return (
     <>
-    <h1 data-testid="test_1">{titulo}</h1>
+    <h1 data-testid="test_1">u{titulo}</h1>
     <p> Parrafo {subtitulo }</p>
     <p>{miFuncion()} {valor}</p>
     </>

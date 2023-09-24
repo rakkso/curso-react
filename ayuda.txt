@@ -1102,3 +1102,44 @@ elemento de lo generado via screen
 
 fireEvent.click(screen.getByText('+1'))
 expect(screen.getByText('101')).toBeTruthy();
+
+con screen.debug() nos mostrará como está el dom por pantalla
+
+usa el atributo arial-label y luego lo usa
+fireEvent.click(screen.getByRole('button',{name:'bnt-reset'}))
+
+Sección 6 Temas
+¿Qué veremos en esta sección?
+
+Custom Hooks
+
+Fetch hacia un API
+
+Comunicación entre componentes
+
+Clases de CSS
+
+Animaciones
+
+Enviar métodos como argumentos
+
+Crear listados
+
+keys
+
+Giphy
+
+Esta es una aplicación pequeña pero muy ilustrativa que explica cómo utilizar React + customHooks para poder resolver necesidades en específico que podremos re-utilizar después.
+
+Sección 6 Tema 74
+
+Crea una app
+yarn create vite --> crea la aplicación
+yarn install --> instala los modulos apm
+yarn dev --> arranca
+
+
+Sección 6 Tema 75
+Añade estilos y explica como organizar los ficheros
+https://es.legacy.reactjs.org/docs/faq-structure.html
+https://hackernoon.com/structuring-projects-and-naming-components-in-react-1261b6e18d76
