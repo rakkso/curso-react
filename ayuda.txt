@@ -1141,5 +1141,180 @@ yarn dev --> arranca
 
 Sección 6 Tema 75
 Añade estilos y explica como organizar los ficheros
+
+
 https://es.legacy.reactjs.org/docs/faq-structure.html
 https://hackernoon.com/structuring-projects-and-naming-components-in-react-1261b6e18d76
+
+Sección 7 Tema 77
+Crea una lista de tareas de categorias con ol, y la llena un useState
+React guarda cada hook como una lista numerada y sabe cual es cual por el orden
+en el que aparecen. 
+Si declaramosun hook (useState) dentro de un if, esto va encontra de react.
+No se debe hacer nunca
+Sección 6 Tema 78
+Hacer un boton que añada tareas.
+useState y react:
+//setCategories([ 'categoria1','categoria2','categoria3'] ); --> esto hace un bucle
+        //y no funciona, y esto también setCategories(ategories.push("categoria3") )
+        // tampoco funciona 
+        // categories.push("categoria3");
+        // setCategories(categories);
+        // por que a react no le gusta que le toques la variable de estado. El push lo que hace es añadir
+        // un valor alos existentes, pare evitar eso hay que hacer una nueva copia, modificar la copia,
+        // y asignarla con el set, así le creas un nuevo estado.
+        // por seo la solución es setCategories([ ...categories, 'Nuevo valor']); el comando hace una copia, y añade
+        // un nuevo valor. 
+
+        /* 
+        ...categories, saca los valores, y [,] añadem por tanto para añadirla nueva al principio hacemos
+        setCategories(['NuevoValor, ...categories])
+        */
+
+Tema 78
+
+Ahora escribe un componente que será una caja de texto.
+Primero lo hace con un input y el estado de este input
+
+const [ inputValue, setInputValue] = useState('nuevo valor');
+
+return (
+    <input
+    type="text"
+    value={inputValue}
+)
+
+Esto no funciona, cuando escribimos en el input no pasa nada, no nos deja escribir.
+Para solucionarlo le pone un onchage
+
+const [ inputValue, setInputValue] = useState('nuevo valor');
+
+const onInputChage = () => {
+    setInputValue('hola');
+}
+return (
+    <input
+    type="text"
+    value={inputValue}
+    onChange= {onInputChange}
+)
+
+Esto tampoco funciona ahora cuando escribimos cambia a hola mundo.
+Tenemos que coger el valor de lo que ha cambiado y asignarlo al estado.
+
+const [ inputValue, setInputValue] = useState('nuevo valor');
+
+const onInputChage = (event) => {
+    setInputValue(event.target.value);
+}
+return (
+    <input
+    type="text"
+    value={inputValue}
+    onChange= {(event) => onInputChange(event)}
+)
+
+Pero queremos que cuando le demos a enter haga algo para ello pone 
+el input dentro de un form que llame a una nueva función
+
+const [ inputValue, setInputValue] = useState('nuevo valor');
+
+const onInputChage = (event) => {
+    setInputValue(event.target.value);
+}
+
+const onSubmit = (event) => {
+
+}
+
+return (
+    <form onSubmit={ (event)} => onSubmit(event)}>
+    <input
+    type="text"
+    value={inputValue}
+    onChange= {(event) => onInputChange(event)}
+    </form>
+)
+
+Pero el form lo que hace es recargar la página, para evitarlo
+debe hacer un event.preventDefault en la función que llame el formulario.
+
+const [ inputValue, setInputValue] = useState('nuevo valor');
+
+const onInputChage = (event) => {
+    setInputValue(event.target.value);
+}
+
+const onSubmit = (event) => {
+    event.preventDefault();
+}
+
+return (
+    <form onSubmit={ (event)} => onSubmit(event)}>
+    <input
+    type="text"
+    value={inputValue}
+    onChange= {(event) => onInputChange(event)}
+    </form>
+)
+
+optimizando
+
+const [ inputValue, setInputValue] = useState('nuevo valor');
+
+const onInputChage = (event) => {
+    setInputValue(event.target.value);
+}
+
+const onSubmit = (event) => {
+    event.preventDefault();
+}
+
+return (
+    <form onSubmit={ onSubmit(event)}>
+    <input
+    type="text"
+    value={inputValue}
+    onChange= { onInputChange(event)}
+    </form>
+)
+
+Para escribir rápido un componente escribe rafc
+
+Tema 79
+
+Ahora pide quitar el botón de añadir literal y que desde el componente añadamos elmentos a la lista
+Como pista sugiere pasar la función setCategories al componente.
+
+La idea era pasar la función del useState del componente principal al de debajo  e invocarla
+asignando el valor que obtiene el componente que está leyendo la info, pero esto no funciona
+//no funciona da error GifExpertApp.jsx:45 Uncaught TypeError: categories.map is not a function
+        //functionAddCategory(...inputValue); 
+        
+Debemos llamarlo, pero no con el valor a introducir, sino con una función para que react
+lo actualice correctamente se intenta explicar en esta página pero no me queda claro
+
+https://es.react.dev/reference/react/useState#updating-state-based-on-the-previous-state
+
+Dice que react no ejecuta la función inmediatamente, lo que hace es ponerla en cola resolviendo todos los valores que se le pasan
+y luego la ejecuta secuencialmente.
+Si hacemos que sea una función, entonces si que lo hace
+de algún modo sabe que categories es el valor actual y lo debe actualizar con el input
+
+En una respuesta el profesor dice
+Recuerda que la función set (el segundo elemento del array que desestructuramos del useState, 
+en este caso setCategories en el GifExpertApp.jsx) puede recibir como argumento un valor determinado para actualizar el estado o una función actualizadora, 
+que tiene como argumento el estado previo.
+
+Tema 80
+
+ahora lo que hace es al reves que el componente que tiene el input devuelva el valor
+para ello invoca al componente que tiene el input pasandole una función del tipo (value) => onAddCategory(value) , que resumido queda como onAddCategory
+y en el componente invocamos a esta función.
+
+
+        functionAddCategory((categories)=> [inputValue,...categories])
+
+
+
+
