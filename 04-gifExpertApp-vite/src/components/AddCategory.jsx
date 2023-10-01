@@ -3,19 +3,19 @@ import { useState } from 'react'
 
 
 
-export const AddCategory = ({functionAddCategory}) => {
+export const AddCategory = ({onNewCategory}) => {
 
     const [ inputValue, setInputValue] = useState('nuevo valor');
 
     const onInputChange = (event) => {
         setInputValue(event.target.value);
-        console.log(event.target.value);
+        console.log("AddCatgory",event.target.value);
         //console.log(event)
     }
     
     const onSubmit = (event) => {
         event.preventDefault();
-        console.log("onSubmit:",functionAddCategory);
+        //console.log("onSubmit:",functionAddCategory);
         //Evita enviar vacios o con tamaño 1.
         if (inputValue.trim().length <= 1) return;
 
@@ -23,7 +23,8 @@ export const AddCategory = ({functionAddCategory}) => {
         //functionAddCategory(...inputValue); 
         
         
-        functionAddCategory((categories)=> [inputValue,...categories])
+        //functionAddCategory((categories)=> [inputValue,...categories])
+        onNewCategory(inputValue.trim());
         console.log(inputValue)
     
     }

@@ -5,7 +5,7 @@ export const GifExperApp = () => {
 
     const [categories, setCategories] = useState([ 'categoria1','categoria2'] );
     
-    const onAddCategory = () => {
+    const onAddCategory = ( newCategory ) => {
         //setCategories([ 'categoria1','categoria2','categoria3'] ); --> esto hace un bucle
         //y no funciona, y esto también setCategories(ategories.push("categoria3") )
         // tampoco funciona 
@@ -22,9 +22,9 @@ export const GifExperApp = () => {
         setCategories(['NuevoValor, ...categories])
         */
  
-        console.log("Hola");
+        console.log("GifExpertApp",newCategory);
 
-        setCategories(['NuevoValor', ...categories]);
+        setCategories([newCategory, ...categories]);
 
     }
 
@@ -35,7 +35,11 @@ export const GifExperApp = () => {
         <h1>GifExpertApp</h1>
 
         { /* Input */}
-        <AddCategory functionAddCategory={setCategories}/>
+        <AddCategory 
+        //functionAddCategory={setCategories}
+        onNewCategory={ (valor) => onAddCategory(valor)}
+        
+        />
 
         { /* listado de gif 
         <button onClick={onAddCategory} >Agregar</button>

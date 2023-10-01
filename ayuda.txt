@@ -1308,6 +1308,11 @@ que tiene como argumento el estado previo.
 
 Tema 80
 
+Ahora tenemos el GifExpert que es el padre y tiene un hijo que es el addCategory.
+El padre le pasa al hijo la función del useState y este tiene que saber que le están pasando un useStates.
+En realidad lo correcto sería qu el hijo, donde delegamos la captura de una categoria no supiera nada y que devolviera el useState.
+
+
 ahora lo que hace es al reves que el componente que tiene el input devuelva el valor
 para ello invoca al componente que tiene el input pasandole una función del tipo (value) => onAddCategory(value) , que resumido queda como onAddCategory
 y en el componente invocamos a esta función.
@@ -1315,6 +1320,10 @@ y en el componente invocamos a esta función.
 
         functionAddCategory((categories)=> [inputValue,...categories])
 
+La función que pasará ahora al hijo la llama onAddCategory,para darle la semantia que emite algo
+
+onNewCategory={ (valor) => onAddCategory(valor)} es decir el hijo tiene una propiedad 
+llamada onNewCategory que será una función a la que llamará.
 
 
 
