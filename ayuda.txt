@@ -1326,4 +1326,10 @@ onNewCategory={ (valor) => onAddCategory(valor)} es decir el hijo tiene una prop
 llamada onNewCategory que será una función a la que llamará.
 
 
+81 Quiere evitar que enviemos 2 valores iguales
+lo hace en el gifexpertapps
+
+82
+Creo un nuevo componente para mostrar la lista de categorias.
+
 
