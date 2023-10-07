@@ -1,15 +1,15 @@
+import { getGifs } from "../helpers/getGifs";
+
 export const GifGrid = ({ id,category }) => {
 
-  const gifs = [1,2,3,4];
+
+
+  getGifs();
 
   return (
     <>
     <h3>{category}  </h3>
-    {
-      gifs.map( gif => (
-        <p>{gif}</p>
-      ))
-    }
+
     
     </>
   
