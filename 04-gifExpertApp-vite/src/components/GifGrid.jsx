@@ -1,6 +1,6 @@
 
 
-import GitItem from "./GitItem";
+import GifItem from "./GifItem";
 import {useFetchGifs} from "../hooks/useFetchGifs"
 
 export const GifGrid = ({ id,category }) => {
@@ -13,24 +13,24 @@ console.log (isLoading);
   return (
     <>
     <h3>{category}  </h3>
-
-    <ol> {
-    
-    /* images.map .. */
-    images.map( imagen => (
-      <GitItem key={imagen.id} {...imagen}/>
-  
-    )
-       
-    )
-
-
-
+    {
+    isLoading && ( <h2>Cargando...</h2>)
     }
-      <li>1</li>
-      <li>2</li>
-      <li>3</li>
-    </ol>
+    
+    <div className="card-grid">
+      {
+      /* images.map .. */
+      images.map( imagen => (
+        <GifItem key={imagen.id} {...imagen}/>
+      ))
+      }
+    </div>
+   
+
+
+
+  
+    
 
     
     </>

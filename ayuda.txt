@@ -1436,3 +1436,9 @@ Ahora para simplificar el componente GifGrid, crea un customHook
 Un hook al final es una función y es lo que hace crea una función
 que retorna un objeto con dos campos images y isLoading.
 Esta función la crea en otro archivo js
+
+89 Mostrar mensaje de cargará
+a partir del customhook que retorna si está cargando o no.
+{
+    isLoading && ( <h2>Cargando...</h2>)
+}

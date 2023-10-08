@@ -1,4 +1,4 @@
-export default function GitItem( {title, url, id}) {
+export default function GifItem( {title, url, id}) {
   return (
     <div className="card">
         <img src={url} alt={title} />
