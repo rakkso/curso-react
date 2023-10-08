@@ -7,16 +7,18 @@ export const GifGrid = ({ id,category }) => {
   const [images,setImages] = useState([])
 
 
-  useEffect(() => {
+  const getImages = async() => {
+    const newImages = await getGifs(category);
+    setImages(newImages);
+}
 
-    //const newImages= getGifs({category});
-    
+useEffect(() => {
+
+    const newImages= getImages();
+    //setImages(newImages);
   
-    getGifs(category  )
-        .then( newImages => setImages(newImages));
-    
-    //console.log("imagenes",newImages); --> Si lo activo no funciona no lo entiendo.
   },[])
+
 
   //getGifs();
 
