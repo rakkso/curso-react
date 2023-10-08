@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { getGifs } from "../helpers/getGifs";
+import GitItem from "./GitItem";
 
 export const GifGrid = ({ id,category }) => {
 
@@ -15,7 +16,7 @@ export const GifGrid = ({ id,category }) => {
 useEffect(() => {
 
     const newImages= getImages();
-    //setImages(newImages);
+   
   
   },[])
 
@@ -30,7 +31,8 @@ useEffect(() => {
     
     /* images.map .. */
     images.map( imagen => (
-      <li key= {imagen.id}>{imagen.title}</li>
+      <GitItem key={imagen.id} {...imagen}/>
+  
     )
        
     )
