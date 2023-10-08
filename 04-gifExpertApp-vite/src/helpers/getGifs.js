@@ -12,4 +12,5 @@ export const getGifs =async() => {
 
             
     console.log(gifs);
+    return gifs;
   }
