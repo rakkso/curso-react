@@ -1331,5 +1331,108 @@ lo hace en el gifexpertapps
 
 82
 Creo un nuevo componente para mostrar la lista de categorias.
+El componente se llama GifGrid, recibe como parámetro la categoria buscar
+y renderiza los resultados de esa búsqueda.
+
+83 Feth API obtener imágnes 
+
+crea dentro del GifGrid una función que va a buscar la url del gif.
+ y luego llama a esta función dentro del webcomponent.
+ Esto hace que siempre se llame dos veces a la función.
+ Nunca debemos poner dentro del webcomponent una función sino se ejecutará de forma
+ incontrolada.
+
+Para remediarlo se debe usar el useEfect
+Para acabar mueve la función a otro fichero.
+
+84 useEffect
+
+React renderiza los componentes, funtional component cada vez que detecta un cambio.
+Si dentro del componente tenemos una función esta se ejecutará de nuevo.
+Además react en StrictMode ejecuta dos veces los componentes.
+
+Para evitar que lo ejecute la segunda vez lo quitamos.
+React.StrictMode
+Este modo en produción no aplica.
+
+Para eviatar que lo ejecute la primera vez usa el useEffect.
+El useEffect se le pasa la función que queremos que se ejecute solo sobre algunas condiciones
+y luego le pasa la lista de condiciones. si le pasamos una lista vacia asume que 
+sólo se debe ejecutar cuando se crea el componente.
+
+useEffect(() => {getGifs(category)},[])
+
+La función llama a nuestro getGifs, cuando []
+
+85 Demostración de un build a producción
+el modo StrictMode lo hace react para validar y sólo lo hace en desarrollo.
+Para generar el build de producción
+yarn build
+esto genera una carpeta dist que está el código a copiar a pro.
+Luego lo copia en un httpserver y vemos que no se reptie la llamada
+
+87 mostrar títulos de las imágenes
 
 
+Quiere mostrar los títulos de las imágenes.
+Dado que queremos que se refresque
+
+cuando nosotros usamos el async estamos indicando que es una promesa.
+el useEffect espera una función,no una promesa por ello desde el
+useEffect no podemos llamar al getGifs para obtener los gifs de la categoria y
+guardarlos en el useState.
+
+Si desde la promesa llamamos directamente al getGifs como tiene un async implica que es una promesa,
+y lo que pasa es que no acaba de ejecutarse, para mitigarlo lo que hace es hacer el then
+
+ useEffect(() => {
+
+    const newImages= getGifs(category);
+    
+  
+    getGifs(category).then( newImages => setImages(newImages));
+    
+    //console.log("imagenes",newImages);
+  },[])
+El useEffect sólo puede tener una linea, si pongo dos no funciona ni aunque sea un console.log
+
+luego para mejorarlo crea una función que hace todo esto:
+
+const getImages = async() => {
+    const newImages = await getGifs(category);
+    setImages(newImages);
+}
+
+useEffect(() => {
+
+    const newImages= getImages();
+  
+  
+  },[])
+https://react.dev/learn/state-a-components-memory
+87 spread y componente gifItem
+En jsx no se puede poner class para los css, se debe usar className
+le pone la key al nuevo componente porque react se queja todo los componentes tienen que tener un id.
+En esta clase crea un componente que será el encargado de pintar cada elemento de los gifs que hemos obtenido.
+El componente se llama GifItem
+
+para pasar los parámetros al componente usa lo que se llama spread
+
+en lugar de escribir 
+<GifItem
+key= {image.id}
+title={image.title}
+url= {image.url}
+/>
+
+hace esto
+<GifItem
+key= {image.id}
+{...image}
+/>
+
+88 CustomHook  useFetchGifs
+Ahora para simplificar el componente GifGrid, crea un customHook
+Un hook al final es una función y es lo que hace crea una función
+que retorna un objeto con dos campos images y isLoading.
+Esta función la crea en otro archivo js
