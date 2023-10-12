@@ -1442,3 +1442,28 @@ a partir del customhook que retorna si está cargando o no.
 {
     isLoading && ( <h2>Cargando...</h2>)
 }
+
+90 Archivos de barril
+
+Explica la manera de hacer que podamos importar todos los componentes de una carpeta
+para ello en la carpeta crea un archivo con nombre index.js
+y contenido
+export * from './addCategory';
+export * from './GifGrid';
+export * from './GifItem';
+
+luego en el fichero se carga haciendo referencia al nombre de la carpeta
+impot {GifGrid} from './components';
+
+
+¿Qué veremos en esta sección?
+
+Aprender cómo realizar backups a repositorios de Git
+
+Subir nuestro repositorio a GitHub
+
+Uso de Github Pages
+
+Desplegar nuestra aplicación de React
+
+Generar build de producción de nuestra aplicación
