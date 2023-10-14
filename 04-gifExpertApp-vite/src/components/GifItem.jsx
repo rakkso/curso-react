@@ -1,3 +1,5 @@
+import PropTypes from 'prop-types';
+
 export default function GifItem( {title, url, id}) {
   return (
     <div className="card">
@@ -6,3 +8,9 @@ export default function GifItem( {title, url, id}) {
         GitItem</div>
   )
 }
+
+GifItem.protoTypes ={
+  title: PropTypes.string.isRequired,
+  url: PropTypes.string.isRequired
+}
+
