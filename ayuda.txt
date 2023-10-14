@@ -1466,4 +1466,111 @@ Uso de Github Pages
 
 Desplegar nuestra aplicación de React
 
-Generar build de producción de nuestra aplicación
+Generar build de producción de nuestra aplicación   
+
+94 Despliege en netlyfy
+dice que hagamos yarn buil para generar la carpeta build.
+dice que borremos el fichero .ignore
+que hagamos yarn build para que genere la carptea dist
+que vayamos a https://www.netlify.com/
+creo una cuenta que la asocio  a gitlab
+luego arrastro la carpet dist a netlify
+https://rakkso.netlify.app/
+
+95 Ahora habla de poner  código a git
+
+git checkout -- . --> restaura el último commit
+
+96 Ahora habla de subir códig a git
+
+crea un repositorio en github
+git remote add origin https:/.... del repositorio
+git branch - M main renombra la rama a main, en lugar de master
+git push  -u origin main --> -u dice que será el de por defecto y el main.
+
+$ git remote -v
+origin  https://gitlab.com/rakkso/udemy-react-de-cero-a-experto-hooks-y-mern.git (fetch)
+origin  https://gitlab.com/rakkso/udemy-react-de-cero-a-experto-hooks-y-mern.git (push)
+
+git remote set-url origin https://github.com/rakkso/curso-react.git
+
+coge el dist le cambia el nombre a docs y hace un push
+hace un push entonces se sube y luego en settings en github lo escoge
+y así se despliega
+
+les da errores de 404 y lo explica en la siguiente clase.
+
+no encuntra los recurso para que lo haga el pone un . para que se path relativo 
+en el html del docs.
+
+no soy capaz de publicarlo, github me dice que los dominios que doy no son válidos.
+
+101 Configurar las pruebas.
+Nos pasa un git para configurar las pruebas
+
+
+Instalaciones:
+yarn add --dev jest babel-jest @babel/preset-env @babel/preset-react 
+yarn add --dev @testing-library/react @types/jest jest-environment-jsdom
+Opcional: Si usamos Fetch API en el proyecto:
+yarn add --dev whatwg-fetch
+Actualizar los scripts del package.json
+"scripts: {
+  ...
+  "test": "jest --watchAll"
+Crear la configuración de babel babel.config.js
+module.exports = {
+    presets: [
+        [ '@babel/preset-env', { targets: { esmodules: true } } ],
+        [ '@babel/preset-react', { runtime: 'automatic' } ],
+    ],
+};
+Opcional, pero eventualmente necesario, crear Jest config y setup:
+jest.config.js
+
+module.exports = {
+    testEnvironment: 'jest-environment-jsdom',
+    setupFiles: ['./jest.setup.js']
+}
+jest.setup.js
+
+// En caso de necesitar la implementación del FetchAPI
+import 'whatwg-fetch'; // <-- yarn add whatwg-fetch
+
+he tenido que cambiar la extensión de jest.config.js a jest.config.cjs 
+y el de babel.config.js a babel.config.cjs
+
+102 Implementación  PropTypes
+Hacer los test de la ruta crítica
+Tamibén tratar de probar los más pequeño
+
+Tenemos que hacer la tarea de añadir proptyes a GifItem
+evaluar que title  y url son obligatorios
+Luego evaluar el snapshot
+
+Para añadir PropTypes
+
+Es una funcionalidad que viene directa con cra y no con vite
+El objetivo es hacer parámetros obligatorios.
+
+import PropTypes from 'prop-types';
+yarn add prop-types o npm install prop-types
+
+FirstApp.propTypes = {
+    title : PropTypes.string; Indica que debe ser un string, provocando un warning por consola.
+    title : PropTypes.string.isRequired; Indica que debe ser un string, provocando un warning por consola.
+
+
+}
+
+importamos un render
+import { render } from '@testing-library/react'
+
+    test('debe de hacer match con el snapshot',() =>{
+
+        const titulo = 'Hola, Soy Goku'
+        const {container } = render (<FirstApp titulo={titulo}/>);
+
+        //console.log(container);
+        expect ( container ).toMatchSnapshot();
+    })
