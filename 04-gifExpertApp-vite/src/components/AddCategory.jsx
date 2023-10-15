@@ -1,5 +1,5 @@
 import { useState } from 'react'
-
+import PropTypes from 'prop-types';
 
 
 
@@ -22,7 +22,7 @@ export const AddCategory = ({onNewCategory}) => {
         //no funciona da error GifExpertApp.jsx:45 Uncaught TypeError: categories.map is not a function
         //functionAddCategory(...inputValue); 
         
-        
+        setInputValue('');
         //functionAddCategory((categories)=> [inputValue,...categories])
         onNewCategory(inputValue.trim());
         console.log(inputValue)
@@ -30,11 +30,16 @@ export const AddCategory = ({onNewCategory}) => {
     }
 
   return (
-    <form onSubmit={ onSubmit}>
+    <form onSubmit={ onSubmit} aria-label='form'> 
     <input
     type="text"
     value={inputValue}
     onChange= {onInputChange}/>
     </form>
   )
+}
+
+AddCategory.protoTypes ={
+  onNewCategory: PropTypes.func.isRequired,
+
 }

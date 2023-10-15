@@ -1616,3 +1616,23 @@ así
         });
 
      });
+
+
+Tema 106
+
+Ahora mira de hacer pruebas en otro componente sencillo
+el siguiente sería el addCategory
+No quiere hacer las pruebas con snapshot.
+El componente a hacer pruebas es el addCategory
+
+este componente se encarga de capturar la categoria.
+
+Le añade propTypes para que siempre tengamos una función de entrada.
+Lanzara el evento ura fireEvent.input( input, target: {value:'Samanta})
+
+Tema 107 Simular el submit del formulario
+
+Para evaluar el submit evaluará
+fireEvent.input(input, { target: {value:'Solo'}}); --> rellena el input con la palabra Solo
+fireEvent.submit( form) --> lanza el submit
+Despues de lanzar el submit sabemos que el input debe quedar a vacio.
