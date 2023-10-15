@@ -1574,3 +1574,45 @@ import { render } from '@testing-library/react'
         //console.log(container);
         expect ( container ).toMatchSnapshot();
     })
+
+
+104 Añada más pruebas
+
+para saber que está renderizando el render podemo usar despues
+del render  el screen.debug y así nos muestra el código html generado por el render.
+    test('debe de hacer match con el snapshot',() =>{
+
+        const titulo = 'Hola, Soy Goku'
+        const {container } = render (<FirstApp titulo={titulo}/>);
+        screen.debug();
+        //console.log(container);
+        expect ( container ).toMatchSnapshot();
+    })
+
+
+va a probar que la url de la img sea la url que le pasamos
+screen.getByRole('img').src).toBe (url)
+otra manera es 
+const { src, alt} 0screen.getByRole('img')
+
+Tema 105 Pruebas sobre getGifs
+
+Lo hace porque es otro comonente simple.
+
+Va ha validar que que al llamar a los gifs nos devuelve algo
+y lo que no devuelve tiene un id, title y url.
+
+dado que getGifs tenemos que llamarla con await el test lo define con async quedando
+así
+
+    test('debe de retornar un arreglo de gifs', async() => { 
+        
+        const gifs = await getGifs('Oone Punch');
+        expect(gifs.length).toBeGreaterThan(0);
+        expect (gifs[0]).toEqual({
+            id: expect.any(String),
+            title: expect.any (String),
+            url: expect.any (String),
+        });
+
+     });
