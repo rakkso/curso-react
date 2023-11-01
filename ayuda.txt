@@ -1864,3 +1864,29 @@ Y si queremos que sólo sea en el email, pues creamos otro
 useEffect( () => {
     console.log('Me acabo de ejecutar por que ha cambiado formstate');
 },[email])
+
+Tema 122
+
+El useEffect tiene tres partes:
+
+    useEffect(() => {
+      first
+    
+      return () => {
+        second
+      }
+    }, [third])
+
+
+    first: es el cuerpo,
+    second: es el cleanup,
+    third: arreglo de dependencias
+
+    Para mostrar el uso de estas tres partes crea un Funcional component  que escribe un mensaje.
+    Este funcional componente sólo hara que se llame si el username es uno determinado
+
+    username  === 'pp' <Mensaje/>
+
+    En el componete crea un use efect que en el first pone un console log indicando que se ha montado y en el return que se ha desmontado
+
+    
