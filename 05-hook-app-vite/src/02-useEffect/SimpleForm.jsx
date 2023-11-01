@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import { Message } from './Message';
 
 export const SimpleForm = () => {
 
@@ -23,16 +24,19 @@ export const SimpleForm = () => {
 
   }
   useEffect( () => {
-    console.log('Me acabo de ejecutar');
+    //console.log('Me acabo de ejecutar');
     },[])
 
     useEffect( () => {
-        console.log('Me acabo de ejecutar por que ha cambiado formstate');
+        //console.log('Me acabo de ejecutar por que ha cambiado formstate');
     },[formState])
 
     useEffect( () => {
-        console.log('Me acabo de ejecutar por que ha cambiado email');
+        //console.log('Me acabo de ejecutar por que ha cambiado email');
     },[email])
+
+ 
+    
   return (
     <> 
     <h1>Formulario Simple</h1>
@@ -54,6 +58,9 @@ export const SimpleForm = () => {
         value={email}
         onChange={ onInputChange}
     />
+    {
+        (username === 'pp') && <Message/>
+    }
     
     </>
    
