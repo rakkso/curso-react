@@ -21,7 +21,7 @@ describe('Pruebas de GifItem', () => {
         render (<GifItem title={titulo} url={url}/>);
 
         //screen.debug nos enseña el código html renderizado
-        screen.debug();
+        //screen.debug();
         const { src, alt } =screen.getByRole('img');
         expect (src).toBe("http://localhost/"+url);
         expect (alt).toBe(titulo);

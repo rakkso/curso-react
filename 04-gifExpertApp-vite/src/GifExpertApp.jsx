@@ -25,7 +25,7 @@ export const GifExperApp = () => {
         setCategories(['NuevoValor, ...categories])
         */
  
-        console.log("GifExpertApp",newCategory);
+        //console.log("GifExpertApp",newCategory);
         if (categories.includes(newCategory)) return;
         setCategories([newCategory, ...categories]);
 

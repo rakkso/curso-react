@@ -1597,9 +1597,9 @@ const { src, alt} 0screen.getByRole('img')
 
 Tema 105 Pruebas sobre getGifs
 
-Lo hace porque es otro comonente simple.
+Lo hace porque es otro componente simple.
 
-Va ha validar que que al llamar a los gifs nos devuelve algo
+Va a validar que que al llamar a los gifs nos devuelve algo
 y lo que no devuelve tiene un id, title y url.
 
 dado que getGifs tenemos que llamarla con await el test lo define con async quedando
@@ -1636,3 +1636,192 @@ Para evaluar el submit evaluará
 fireEvent.input(input, { target: {value:'Solo'}}); --> rellena el input con la palabra Solo
 fireEvent.submit( form) --> lanza el submit
 Despues de lanzar el submit sabemos que el input debe quedar a vacio.
+
+Tema 108 jest Functions
+
+Jest tiene funciones mock que te permiten preguntar sobre estas funcones, si se han llamado, si se han llamado con un parámetro,
+si se han llamado 2 veces etc...
+
+Esto lo usa para hacer validaciones sobre el componente addCategory ya que este recibe como parémtro una función que si 
+miramos el código debe ser llamada siempre que el valor del text box no sea vacio.
+
+Para probarlo hace:
+
+const onNewCategory = jest.fn();
+render(<AddCategory onNewCategory= {onNewCategory}/>)
+const input = screen.getByRole
+
+expect (onNewCategory).toHaveBeenCalled(); //Ha sido llamada 
+expect (onNewCategory).toHaveBeenCalledTimes(1); //Ha sido llamada una vez
+expect (onNewCategory).toHaveBeenCalledWith( inputValue); //Ha sido llamada con la variable inputValue
+
+Ahora pide que validemos que si el inputValue es vacio no se llama
+
+Tema 109 
+
+Dice que el más fácil es el useState, pero lo deja para el final.
+Decide hacer el GifGrid.
+La primera prueba es que inicialmente debe mostrar loading
+Añade proptypes a GifGrid, para tener la categoria 
+Prueba el estado inicial es decir debe aparecer loading y la categoria
+
+En el siguiente hará cómo se debe comportar cuando encuentra gifs.
+
+Tema 110
+
+Ahora simula que el useGetGifs retorne gifs. Importamos el useFetchGifs y
+le dice a jest que función debe mockear 
+jest.mock("../src/hooks/useFetchGifs")
+
+Eso da error porque ahora necesita definir qué valores debe retornar esta función
+useFetchGifs.mockReturn({
+    images: [],
+    isLoading: true
+})
+
+crear un objeto que tendría las imágenes
+const gifs = [
+    {
+        id:'ABC',
+        title:'Saitama',
+        url:'https://localhost/saitama.jpg'
+    },
+    {
+        id:'Default',
+        title:'Goku',
+        url:'https://localhost/goku.jpg'
+    }
+]
+
+Tema 111 Probar customHooks
+
+Antes de la versión 18 había que cargar una librería https://react-hooks-testing-library.com/ pero ahora ya viene incluida.
+Hace primero una prueba para validar el estado inicial del hook.
+Para poder ejecutar el hook en una prueba debe llamarlo desde renderHook de este modo:
+renderHook retorna un objeto llamado result
+
+const { resultado } = renderHook( () => useFetchGifs('Mi categoria'));
+
+y sobre el resultado hace validaciones.
+
+const { imagen, estaCargando} = resultado.current;
+
+expect (imagen.letgh).toBe(0);
+expect (estaCargando).toBeTruthy();
+
+Esto no funciona porque el renderHook devuelve result no resultaod, y el useFetchGifs devuelve images y isLoading
+
+Para probar el siguiente estado del hook introduce una nueva función que se llama waitFor que es asincrona
+por lo que tenemos que poner el test con async y hacer un wait.
+Esta función te permite indicar que espere ha que ocurra algo, en este caso que la longitud de imágenes se mayor que 0.
+
+await waitFor(
+    ()=> expect (result.current.images.length).toBeGreaterThan(0)
+);
+
+luego hacemos las otras consultas
+
+cons { images, isLoading } = result.current;
+expect (images.length).toBeGreaterThan(0)
+expect (isLoading).toBeFalsy()
+
+112 ahora pide que probamos GifExpertApp
+
+Dice que probamos la funcionalidad que no hemos probado onAddCategory
+
+113 Código fuente de la sección
+https://github.com/Klerith/react-gif-expert/tree/fin-seccion-8
+
+Tema 114 
+
+¿Qué veremos en esta sección?
+
+Profundizar en el tema de los Hooks
+
+Crear otros customHooks
+
+useState
+
+useCounter - Personalizado
+
+useEffect y sus precauciones
+
+useRef
+
+useFetch - Personalizado + optimizaciones
+
+useLayoutEffect
+
+Memo
+
+useMemo
+
+Crea un nuevo proyecto yarn create vite
+hook-app
+yarn
+en src borra todo menos el main.jsx
+crea un index.css con
+
+body {
+    padding: 20px;
+}
+
+button {
+
+    margin-right: 10px;
+}
+
+crea una HooksApp como component con el comando 'rafc', 
+añade bootstrap 
+ 
+https://getbootstrap.com/ vamos a getstarter y copiamos el url del css
+ <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+
+
+
+este componente mostrará 3 números y un botón que incrementará uno de ellos.
+
+
+Esto le sirve para enseñara que un useState puede tener un objeto y no sólo una variable.
+A la hora de actualizarlo hay que actualizar todo el objeto. En este caso el objeto son tres números 
+para actualizar uno lo que hace es pasar el objeto con el comando sprite ...status, counter+1, y el campo del status que queremos
+acuatlizar.
+
+Para actualizar el estado si hago esto:
+
+<button onClick={setState(state+1)}>+1</button>
+
+se crea un bucle infinito tengo que hacerlo así ¿?¿?¿? https://reactjs.org/docs/faq-functions.html#why-is-my-function-being-called-every-time-the-component-renders
+
+<button onClick={() => setState(state+1)}>+1</button>
+
+Tema 118 
+
+Crea un customhook para implementar un contador
+un hook es una función que tiene un return es decir
+
+const useCounter = ()  => {
+    return {
+
+    }
+
+}
+
+Para ello crea una nueva carpeta y en ella un nuevo componente CounterWithCustomHook, 
+este llamará a nuestro custom hook (useCounter), que tendrá internamente un useState
+
+Para hacer que retornemos la función plantea varios métodos.
+
+export const useCounter = (inicial = 10 ) => {
+
+    const {counter,setCounter} = useState(inicial)
+
+    const increment = ()  => {
+        setCounter(counter +1)
+    }
+    return {
+        counter,
+        increment
+
+    }
+}

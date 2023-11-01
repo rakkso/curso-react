@@ -5,11 +5,11 @@ import PropTypes from 'prop-types';
 
 export const AddCategory = ({onNewCategory}) => {
 
-    const [ inputValue, setInputValue] = useState('nuevo valor');
+    const [ inputValue, setInputValue] = useState('');
 
     const onInputChange = (event) => {
         setInputValue(event.target.value);
-        console.log("AddCatgory",event.target.value);
+        //console.log("AddCatgory",event.target.value);
         //console.log(event)
     }
     
@@ -25,7 +25,7 @@ export const AddCategory = ({onNewCategory}) => {
         setInputValue('');
         //functionAddCategory((categories)=> [inputValue,...categories])
         onNewCategory(inputValue.trim());
-        console.log(inputValue)
+        //console.log(inputValue)
     
     }
 
