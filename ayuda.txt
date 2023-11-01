@@ -1825,3 +1825,20 @@ export const useCounter = (inicial = 10 ) => {
 
     }
 }
+
+Tema 120
+
+Ahora crea un nuevo componente que tiene un formulario.
+Añade un useState para guardar el estado del formulario.
+
+Curioso: Una vez que añadimos el estado al formulario react ya no nos deja manipularlo.
+Enlaza esa parte del html a un estado y entonces aunque intentemos tocar el formulario coge el control
+y no lo renderiza y no permite camibarlo
+
+Los useEfects es para lanzar efectos secundarios.
+se ejecuta cuando pasa algo, si no le pones dependencia se va a llamar cada vez que se repinte el componente.
+Sale dos veces porque tenemos strictMode si lo quitamos sólo se ejecutará sólo una vez.
+
+useEffect( () => {
+    console.log('Me acabo de ejecutar');
+})
