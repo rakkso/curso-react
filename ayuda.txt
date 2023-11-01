@@ -1842,3 +1842,25 @@ Sale dos veces porque tenemos strictMode si lo quitamos sólo se ejecutará sól
 useEffect( () => {
     console.log('Me acabo de ejecutar');
 })
+
+Tema 121
+
+Al useEffect le puedes pasar un parámetro que es una array donde le dices cuando se debe ejecutar.
+si le pasas [] se ejecutará la primera vez que se renderice el componete, si no  le pasas nada se ejecuta cada vez que se renderiza el componente.
+
+useEffect( () => {
+    console.log('Me acabo de ejecutar');
+},[])
+
+Pero si queremos que se ejecute cuando cambie el formulario, react dice que es mejor crear otro useEffect uno para cada parte
+por tanto creo uno nuevo 
+
+useEffect( () => {
+    console.log('Me acabo de ejecutar por que ha cambiado formstate');
+},[formState])
+
+Y si queremos que sólo sea en el email, pues creamos otro 
+
+useEffect( () => {
+    console.log('Me acabo de ejecutar por que ha cambiado formstate');
+},[email])

@@ -8,6 +8,7 @@ export const SimpleForm = () => {
   })
 
   const {username, email} = formState;
+
   const  onInputChange = ( {target}) =>{
 
     const {name,value} = target;
@@ -23,8 +24,15 @@ export const SimpleForm = () => {
   }
   useEffect( () => {
     console.log('Me acabo de ejecutar');
-    })
+    },[])
 
+    useEffect( () => {
+        console.log('Me acabo de ejecutar por que ha cambiado formstate');
+    },[formState])
+
+    useEffect( () => {
+        console.log('Me acabo de ejecutar por que ha cambiado email');
+    },[email])
   return (
     <> 
     <h1>Formulario Simple</h1>
