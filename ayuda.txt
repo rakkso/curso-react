@@ -1889,4 +1889,28 @@ El useEffect tiene tres partes:
 
     En el componete crea un use efect que en el first pone un console log indicando que se ha montado y en el return que se ha desmontado
 
-    
+    Tema 123
+
+    Para mostrar el tema de montar y desmontar un useEffet en el useEffect anterior al montarse que lo hará al cargar la página, cogerá un listener
+    que cogerá el movimiento del ratón, y veremos que si no hace nada en el desmontar return, seguimos enganchados al listener
+
+    window.addEventListener('mousemove', (event) =>  {
+        console.log(event);
+    })
+
+     para remover debemos tener la referencia a la función que queremos demonstar. Para hacerlo en lugar de tener una función anónima crear una función
+     quedando así:
+
+const onMouseMove = ( {x.y}) => {
+    const coords = {x,y};
+    console.log(coords);
+
+}
+      window.addEventListener('mousemove', (event) =>  {
+        console.log(event);
+    })
+
+    Para que tenga más sentido muestra las coordenadas en la página. Dado que es algo que cambia de estado usa un useState para las coordenadas.
+    Lo mostrará al lado del mensaje
+
+Tema 124 Formulario con CustomHooks
