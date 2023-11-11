@@ -1914,3 +1914,36 @@ const onMouseMove = ( {x.y}) => {
     Lo mostrará al lado del mensaje
 
 Tema 124 Formulario con CustomHooks
+
+Primero lo que hace es crear un functional component con el formulario.
+Luego crea un customhook que tendrá el useState y la función de actualizar el formulario.
+Este customhook lo hace genérico para que actualice cualquier formulario.
+Para ello le pasa como parámetro un objeto que representa el formulario
+
+Aplica un truco para no tener que desectructurar en otra linea es decir  en lugar de hacer esto
+
+  const {formState,onInputChange} = useForm({
+        username: 'pp',
+        email:'popo',
+        password:'miPassword',
+      })
+
+  const {username, email, password} = formState;
+
+  hace esto 
+
+    const {formState,onInputChange, username, email, password} = useForm({
+        username: 'pp',
+        email:'popo',
+        password:'miPassword',
+      })
+
+  //const {username, email, password} = formState;
+
+  porque en el useForm ha desetructurado retronando esto :
+
+    return {
+    ...formState,
+    formState,
+    onInputChange,
+  }
