@@ -1947,3 +1947,81 @@ Aplica un truco para no tener que desectructurar en otra linea es decir  en luga
     formState,
     onInputChange,
   }
+
+  126 
+  crea una nueva carpeta 03-examples dentro crea un nuevo funcional component que se llama MultipleCustomHooks
+
+  vamos a usar una api de https://fakestoreapi.com/products/1 y va hacer que un customhook se encargue de obtener la imagen
+  y lo combina con el customhook que hace de contador
+  Crea un hook useHooks.js
+  Le añade un useEffect para recuperar los datos y un useState para devolverlos.
+
+  Tema 127
+
+  Aque lo que hace es enriquecer el MultipleCustomHooks para que sepa leer cuando el useFetch no ha retornado datos
+  quiere desestructurar los datos pero no lo puede hacer si es nulo.
+  Para hacerlo se aprovecha de un curiosidad del javascript. El undefined
+
+  !undefined es false,  y !!undefined es true,
+
+  const {author, quote} = !!data && data[0];
+ 
+  si intentas desestrucutra algo de false da un undefined
+  const { a,b} = false;
+  undefined
+
+  !null es false, 
+
+  si data es !!data true entonces desectructura data [0]
+
+  Tema 128
+
+  Nos hace hacer usar el counter que hicimos para que cuando clickemos al botón vayamos a buscar otra url.
+  No lo hago perfecto porque no se concatenar elegantemente hago esto:
+
+   const url = 'https://fakestoreapi.com/products/' + counter;
+    const {data, isLoading, hasError} = useFetch(url);
+
+    y debería haber hecho
+
+ const url = + counter;
+    const {data, isLoading, hasError} = useFetch(`https://fakestoreapi.com/products/${counter}` );
+
+Tema 129
+
+Hace optimaciones
+Como tenemos 3 hooks en un directorio crea un archivo de barril que tiene
+export * from './useCounter';
+export * from './useFetch';
+export * from './useForm';
+lo llama index.js
+
+y ahora podemos substituir:
+
+import { useFetch } from '../hooks/useFetch'
+import { useCounter } from '../hooks/useCounter';
+
+por
+
+import {useFetch, useCounter} from '../hooks/';
+
+Pide que hagamos dos componentes para que el código no se vea tan feo que tengan la funcionalidad
+      isLoading
+        ? (
+            <div className=" alert alert-info text-center">
+              Loading...
+            </div>
+        )
+        : (
+          <blockquote className="blockquoute text-end">
+            <p className="mb-1">{title}</p> 
+            <footer className="blockquote-footer"> {category} </footer>
+          </blockquote>
+          
+
+        )
+
+quiere que los llamaremos
+
+<LoadingQuote/>
+<Quote/>

@@ -17,13 +17,24 @@ export const useForm = ( initialForm={} ) => {
             ...formState, // todos los campos que hubiese
             [name]:value, // funciona porque el target nos devuelve los campos name y value del form que han cambiado
         })
-    
-    
-    
+
       }
-  return {
+ 
+ 
+      const resetFormulario = ( ) => {
+       
+       
+        console.log(initialForm);
+        setFormState(initialForm)
+    
+    
+    
+ 
+      }
+      return {
     ...formState,
     formState,
     onInputChange,
+    resetFormulario,
   }
 }

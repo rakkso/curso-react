@@ -16,8 +16,8 @@ export const SimpleForm = () => {
     //console.log({name, value});
 
     setFormState({
-        ...formState,
-        [name]:value, // funciona porque el nombre del campo del form coincide con el nombre del campo del useState
+        ...formState, // todos los campos que hubiese
+        [name]:value, // funciona porque el target nos devuelve los campos name y value del form que han cambiado
     })
 
 
