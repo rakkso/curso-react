@@ -2025,3 +2025,59 @@ quiere que los llamaremos
 
 <LoadingQuote/>
 <Quote/>
+
+No he sabido hacer como pasar los parámetros que se hace así;
+
+<Quote title={title} category={category}/>
+
+y se regogen ({title,category})
+
+Tema 130 useRef
+
+Sirve para manejar un valor como el useState pero no lanza la renderización.
+
+Como ejemplo crea un componente que tienen un input y un botón.
+Cada vez que clica el boton el input debe seleccionarse.
+Para ello crea una referencia al input con el useRef y cuando hace click
+la lee y lo activa.
+
+Al final es ponerle una marca para poder referenciarlo fácil....
+
+
+<input
+        ref={inputRef}   
+        type="text"
+        placeholder='Ingrese su nombre2'
+        className='form-control'/>
+
+    <button className='btn btn-primary mt-2'
+        onClick={onClick}>Set Focus </button>
+
+
+
+    const inputRef = useRef();
+
+    const onClick =() => {
+
+        inputRef.current.select();
+    }
+
+Tema 131 useLayoutEffect
+
+Es como el useEffect, pero se ejecuta cuando se ha renderizado todo. El lo usa normalmente para saber el tamaño definitivo de un contenedor
+
+https://es.legacy.reactjs.org/docs/hooks-reference.html#uselayouteffect
+
+Crea un directorio 05-useLayoutEffect . Crea un objeto que se llama Layout.jsx y lo llena con lo que tiene le MultipleCustomHooks
+
+le añade el style flex al componente quote, en lugar de hacerlo con un string lo hace con un objeto porque así lo puede modificar con react
+style={{ display: 'flex'}} en lugar de style="display: 'flex'"
+
+En el Quote ha puesto lo del estilos
+Además importa el useLayoutEffect y usa el useRef apuntandolo al párrafo
+console.log(pRef.current.getBoundingClientReact())
+
+Para mostrar el ancho en pantalla como siempre crea un useEffect
+
+<code>{ JSON.stringify(boxSize) }</code>
+

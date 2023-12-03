@@ -13,7 +13,7 @@ export const Message = () => {
         
       }
     
-      console.log ("Monando")
+      console.log ("Montando")
       window.addEventListener('mousemove', onMouseMove)
     
       return () => {

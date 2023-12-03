@@ -1,10 +1,10 @@
 import React from 'react'
 import { useFetch } from '../hooks/useFetch'
 import { useCounter } from '../hooks/useCounter';
-import { LoadingQuote } from './LoadingQuote';
-import { BlockQuote } from './BlockQuote';
+import { LoadingQuote } from '../03-examples/LoadingQuote';
+import { BlockQuote } from '../03-examples/BlockQuote';
 
-export default function MultipleCustomHooks() {
+export default function Layout() {
     
 
   const {counter,increment,reset,decrement} = useCounter(1);
