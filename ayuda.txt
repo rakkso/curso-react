@@ -2110,3 +2110,24 @@ Intenta memorizar todo el componente con memo pero no funciona. Esto es porque l
 y claro cuando el componente padre se redibuja/genera porque el valor ha cambiado también cambia la dirección donde está la memoria.
 
 useCallback memoriza funciones, memoriza la función en el padre, y el hijo que tiene el memo, ahora sabe que la función no ha cambiado y por tanto no se renderiza.
+El useCallback guarda la función tal como esté, es decir con el valor de las variables donde se tomo la foto.
+Si le pone el counter para que se guarde cada vez que se guarde, pero claro como cambia el valor la función cambia....
+Para evitarlo en lugar de hacer:
+
+const incrementarFather = useCallBack(
+    () => {
+        setCounter(counter +1 )
+    }
+)
+
+hace 
+
+const incrementar Father = useCallBack(
+    () => {
+        setCounter( (value) => value +1)
+    }
+)
+
+Ahora la función queda guardada, pero el setCounter internamente nos hace cambiar el value y encontes ahora si que se incrementa de forma dinámica, es decir,
+hemos guardado la función, la función no cambia, en el otro caso counter cambiaba ahora no hacemos referencia a nada que cambie por lo que la función se mantiene siempre
+intacta.
