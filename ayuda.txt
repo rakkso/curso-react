@@ -2081,3 +2081,32 @@ Para mostrar el ancho en pantalla como siempre crea un useEffect
 
 <code>{ JSON.stringify(boxSize) }</code>
 
+Tema 132
+
+crea un componente que usa el componente contador. En ese componente añade otro componente para mostrar el valor del contador.
+Al componente que muestra el valor del contador le pone un console.log para ver cuando se ejecuta.
+En el primer componente crea un botón que actualiza otro valor. Comprueba que react por alguna razón cuando clica este botón renderiza
+todo el componente incluso el componente que muestra el valor del contador, cuando en principio no lo debería hacer porque no ha cambiado su valor.
+Para evitar esto, usa un componente de react que se llama memo. Este lo usa en el componente que muestra el valor del contador. 
+Con este cambio el componente que muestra el valor del contador ya no se renderiza cuando no toca.
+
+ Si en tu componente utilizas props que constantemente están cambiando, no utilices react.memo(), ya que de igual manera tendrá que realizar el renderizado ya que los props cambiaron.
+
+Si tu componente solo en ocasiones cambia o modifica los props puedes usar el react.memo() y su rendimiento sera muy bueno.
+
+Tema 133
+
+Ahora muestra el uso del hook useMemo, este hook recibe una función cuyo valor debemos guardar y un parámetro que indica que si este cambia se debe volver a ejecutar.
+Copia el componente memorize y quita la parte de small, se añade una función pesada que será la memorizada  y la asocaia al counter.
+
+Tema 134 useCallBack
+
+Crea un componente con un contador, y otro componente que tiene el botón con el que incrementamos el contador.
+usará el useCallBack para que sólo se renderice lo que toca.
+
+Cada vez que pulsamos el botón el componente que tiene el botón se vuelve a generar/dibujar
+
+Intenta memorizar todo el componente con memo pero no funciona. Esto es porque la función  que está memorizando, la función del padre, se guarda una referencia
+y claro cuando el componente padre se redibuja/genera porque el valor ha cambiado también cambia la dirección donde está la memoria.
+
+useCallback memoriza funciones, memoriza la función en el padre, y el hijo que tiene el memo, ahora sabe que la función no ha cambiado y por tanto no se renderiza.
