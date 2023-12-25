@@ -2081,7 +2081,7 @@ Para mostrar el ancho en pantalla como siempre crea un useEffect
 
 <code>{ JSON.stringify(boxSize) }</code>
 
-Tema 132
+Tema 132 react.memo
 
 crea un componente que usa el componente contador. En ese componente añade otro componente para mostrar el valor del contador.
 Al componente que muestra el valor del contador le pone un console.log para ver cuando se ejecuta.
@@ -2094,10 +2094,17 @@ Con este cambio el componente que muestra el valor del contador ya no se renderi
 
 Si tu componente solo en ocasiones cambia o modifica los props puedes usar el react.memo() y su rendimiento sera muy bueno.
 
+Padre: Memorize 
+Hijo : Smalli
+
+
 Tema 133
 
 Ahora muestra el uso del hook useMemo, este hook recibe una función cuyo valor debemos guardar y un parámetro que indica que si este cambia se debe volver a ejecutar.
 Copia el componente memorize y quita la parte de small, se añade una función pesada que será la memorizada  y la asocaia al counter.
+
+Padre: MemoHook 
+Hijo : No hay, aqui lo que memoriza es algo que es muy pesado para que no se ejecute cuando se renderiza el componente.
 
 Tema 134 useCallBack
 
@@ -2131,3 +2138,52 @@ const incrementar Father = useCallBack(
 Ahora la función queda guardada, pero el setCounter internamente nos hace cambiar el value y encontes ahora si que se incrementa de forma dinámica, es decir,
 hemos guardado la función, la función no cambia, en el otro caso counter cambiaba ahora no hacemos referencia a nada que cambie por lo que la función se mantiene siempre
 intacta.
+
+Padre: CallBackHook
+hijo: ShowIncrement 
+
+Tema 136
+ 
+07 tarea demo
+Es un padre que expone una función que pasa al hijo para que la llame.
+El padre tiene un estado que va cambiando con la función con lo cual cuando el hijo ejecuta la función del padre, el estado
+del padre cambia y como se reescribe el padre incluida la función entonces el hijo también se reescribe.
+
+En teoria tenemos que hacer lo mismo que antes en el padre guardar una copia de la función que no cambie con el useCallBack
+en el hijo en principio creo que no.
+
+He tenido que poner el hijo en memo,porque sino también se renderizaba, no lo acabo de entender.
+
+
+Hola, me está costando entender esta parte de memo así que diré lo que entendí para ver si es correcto.
+
+memo: Guarda en memoria componente, su dependencia para renderizar nuevamente son los props que recibe
+
+useMemo: Guarda en memoria el valor del retorno del callback. Renderiza el componente cuando el valor de la dependencia cambia.
+
+useCallback: Guarda en memoria el callback. Renderiza el componente cuando el valor de la dependencia cambia.
+
+Al haber cambios en el state, React realiza los cambios necesarios excepto con los componentes hijos que son renderizados por completo.
+
+1. Como el valor de los botones no va a cambiar, queremos que los botones no se rendericen cada vez que haya un cambio en el state, así que los almacenamos en memoria con React.memo. Pero los botones si se van a renderizar nuevamente si hay cambios en sus props.
+
+2. Al renderizar nuevamente con estos cambios, se sigue creando una nueva instancia del callback, por lo que al ser una nueva referencia, React lo detecta como una prop diferente, esto hace que el componente hijo se siga renderizando
+
+3. Para solventar esto guardamos en memoria la referencia del callback, de esta forma el prop que recibe el componente hijo va a ser el mismo cada vez que se ejecute el ciclo de cambios de React  
+
+Sección 10. Tema 140 useReducer es como es useState, se usa cuando hay muchas cosas que cambian.
+Un reducer es una función normal que no puede ser asincrona. Debe ser pura, no llamar a otras. Siempre debe retornar un nuevo valor. Recibe estado inicial y la acción.
+No puede llamar al localStorage o sessionStorage.
+Si programamos bien, en el reducer deberían estar todas las funciones que hace nuestra aplicación, así si no conocemos el código solo con buscar el reducer sabriamos que hace.
+
+Supongamos que hacemos el mantenimiento de usa lista.
+
+La lista tiene el estado inicial que se lo pasamos a la vista.
+La vista puede añadir un elemento, para ello llama el reducer con la acción de añadir.
+Este lo añade y la vista lo renderiza.
+
+Sección 10 . Tema 141
+
+Crea la caperta 08 donde crea un archivo js que ejecuta holamundo
+y lo añade al main quitando la parte visual.
+
