@@ -2187,3 +2187,36 @@ Sección 10 . Tema 141
 Crea la caperta 08 donde crea un archivo js que ejecuta holamundo
 y lo añade al main quitando la parte visual.
 
+ Sección 10. Tema 142
+
+ Dentro de la carpeta que ha creado antes crea un archivo intro-reducer.js
+
+ Un reducer es una función simple que recibe un estado inicial y una acción.
+ Le dice cómo debe cambiar el estado.
+ Y siempre retornar un estado.
+ Se usa cuando el estado es complejo un objeto que queremos camiar el estado.
+
+ Explica que el estado se debe cambiar con la función y no funciones push que lo que 
+ hacen es mutar el objeto. React con un push no lo renderiza.
+ Ahora crea otro item de la lista y se lo pasa indicandole en el action que
+debe añadirlo y él que debe añadir:
+
+const addTodoAction = {
+    type: '[TODO] add todo',
+    payload: newTodo
+}
+
+Si cuando llamamos a reducer no hay cambio de estado entonces
+react se da cuenta y no hace nada.
+
+Sección 10 Tema 143 useReducer
+Ahora explica la documentación de useReducer, es parecido al useState
+pero se usa para estados complejos.
+
+https://es.legacy.reactjs.org/docs/hooks-reference.html#usereducer
+
+Empieza a crearse un nuevo componente TodoApp.jsx con una lista de cosas a hacer.
+y hay crea un el hook useReducer que tiene como parámetro una función reducer
+que hemos creado antes, que recibe un estado y una acción con payload.
+
+En otro archivo define esta funión.
