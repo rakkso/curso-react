@@ -28,22 +28,28 @@ export const TodoApp = () => {
         <hr/>
         <div className="row">
           <div className='col-7'>
+             { /* Nuevo componente todoList le debemos pasar la lista de items a dibujar*/}
             <ul className='list-group'>
               {
                 todos.map( todo => (
+                   {/* Nuevo componente todoItem */}
                   <li className='list-group-item d-flex justify-content-between'>
                   <span className='align-self-center'>Item1</span>
                   <button className='btn btn-danger'>Borrar</button>
                   </li>
-    
+                  {/* Fin Nuevo componente todoItem */}   
                 ))
               }
             </ul>
+            { /* Nuevo componente todoList */}
           </div>
         </div>
         <div className='col-5'>
+          
           <h4>Agregar TODO</h4>
           <hr/> 
+          { /* Todo Add  tenemos que emitir el nuevo valor, un onNewTodo. Debe retornar un todoItem
+             que en realidad lo que hace es llamar a una función que definimos aqui handleNewTodo que imprimer por consola el todo*/}
           <form>
             <input
             type='text'
@@ -55,6 +61,7 @@ export const TodoApp = () => {
             className='btn btn-outline-primary mt-1'
             > Agregar </button>
             </form> 
+            { /* Fin Todo Add */}
         </div>
     </>
   )

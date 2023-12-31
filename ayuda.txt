@@ -2219,4 +2219,17 @@ Empieza a crearse un nuevo componente TodoApp.jsx con una lista de cosas a hacer
 y hay crea un el hook useReducer que tiene como parámetro una función reducer
 que hemos creado antes, que recibe un estado y una acción con payload.
 
-En otro archivo define esta funión.
+En otro archivo define esta funión, la función reducer (todoReducer.js)
+
+Sección 10 Tema 144 
+
+Ahora maqueta el componente para que se vea bonito
+
+Sección 10 TEma 145
+
+Hacer 3 componentes como tarea.
+
+el ul será un componente será TodoList
+
+el li será un todoItem
+el form sera el TodoAdd que retorne un objeto
