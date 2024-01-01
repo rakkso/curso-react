@@ -1,6 +1,8 @@
 import React from 'react'
 import { useReducer } from 'react'
 import { todoReducer } from './todoReducer';
+import { TodoList } from './TodoList';
+import { AddTodo } from './AddTodo';
 
 
 const initialState = [ {
@@ -20,6 +22,9 @@ export const TodoApp = () => {
 
     const [ todos, dispatchTodoAction ] = useReducer (todoReducer, initialState);
 
+    const onHandleNewTodo = (todo) => {
+      console.log("Recogido:",todo);
+    }
 
   return (
     <>
@@ -28,28 +33,30 @@ export const TodoApp = () => {
         <hr/>
         <div className="row">
           <div className='col-7'>
-             { /* Nuevo componente todoList le debemos pasar la lista de items a dibujar*/}
+             { /* Nuevo componente todoList le debemos pasar la lista de items a dibujar
             <ul className='list-group'>
               {
                 todos.map( todo => (
-                   {/* Nuevo componente todoItem */}
+                   //Nuevo componente todoItem 
                   <li className='list-group-item d-flex justify-content-between'>
                   <span className='align-self-center'>Item1</span>
                   <button className='btn btn-danger'>Borrar</button>
                   </li>
-                  {/* Fin Nuevo componente todoItem */}   
+              //Fin Nuevo componente todoItem  
                 ))
               }
             </ul>
-            { /* Nuevo componente todoList */}
+             Nuevo componente todoList */}
+             <TodoList todoLista={todos}/>
           </div>
         </div>
         <div className='col-5'>
           
           <h4>Agregar TODO</h4>
           <hr/> 
+          <AddTodo onNewTodo={ (valor) => onHandleNewTodo(valor)}    />
           { /* Todo Add  tenemos que emitir el nuevo valor, un onNewTodo. Debe retornar un todoItem
-             que en realidad lo que hace es llamar a una función que definimos aqui handleNewTodo que imprimer por consola el todo*/}
+             que en realidad lo que hace es llamar a una función que definimos aqui handleNewTodo que imprimer por consola el todo }
           <form>
             <input
             type='text'

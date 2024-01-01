@@ -2233,3 +2233,9 @@ el ul será un componente será TodoList
 
 el li será un todoItem
 el form sera el TodoAdd que retorne un objeto
+
+He mirado el ejercicio del gifExpert donde se hacia lo mismo, no sabia pasar variables, ni funciones...
+
+Sección 10 Tema 146 Resolución de la tarea.
+
+Él utiliza el hook que hicimos de formulario en lugar de crear un useState y una función onChange
