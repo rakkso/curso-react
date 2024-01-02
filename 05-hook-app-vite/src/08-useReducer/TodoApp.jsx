@@ -12,7 +12,7 @@ const initialState = [ {
   ,
   {
     id: new Date().getTime()*3,
-    description: 'Recolectar la piedra del alma',
+    description: 'Recolectar la piedra del tiempo',
     done: false,
   }
 ]
