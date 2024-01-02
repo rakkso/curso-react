@@ -2245,3 +2245,19 @@ Sección 10 Tema 147
 Usará el reducer para añadir un todo a la lista.
 Toca la función reducer  añadiendo la acción
 '[TODO] Add Todo': return [ ...initialState, action.payload]
+
+Sección 10 Tema 148 hacer persistente la lista de todo en el navegador
+
+En el navegador Aplication. localStorage está en el ordenador, las cookies son más pequeña y viajan al servidor.
+La idea es que cuando la lista de todo cambien se guarden, para eso usa el useEffect
+localStorage.setItem('todos',todos) no funciona porque sólo deja guardar strings
+localStorage.setItem('todos',JSON.stringfytodos)
+
+Pero si recargamos..., se pierden, esto es porque el effecto se carga con el valor vacio porque ha cambiado. 
+Y la lista ha cambiado porque al refrescar se ejecuta el useReducer que inicializamos con la lista vacia.
+Para evitarlo usa el useReducer,usando la función init, que la define para que lea lo que hay en el localStorage
+const init = () => {
+    return JSON.parse(localStorage.getItem('todos')) || [];
+}
+init o inicializar:
+https://kentcdodds.com/blog/use-state-lazy-initialization-and-function-updates

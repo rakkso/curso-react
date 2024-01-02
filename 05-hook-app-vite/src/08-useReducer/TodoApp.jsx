@@ -1,11 +1,11 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useReducer } from 'react'
 import { todoReducer } from './todoReducer';
 import { TodoList } from './TodoList';
 import { AddTodo } from './AddTodo';
 
 
-const initialState = [ {
+const initialState = [/* {
   id: new Date().getTime(),
   description: 'Recolectar la piedra del alma',
   done: false,}
@@ -14,13 +14,17 @@ const initialState = [ {
     id: new Date().getTime()*3,
     description: 'Recolectar la piedra del tiempo',
     done: false,
-  }
+  }*/
 ]
+
+const funcionIni =  () => {
+  return JSON.parse(localStorage.getItem('todos')) || [];
+}
 
 export const TodoApp = () => {
 
 
-    const [ todos, dispatchTodoAction ] = useReducer (todoReducer, initialState);
+    const [ todos, dispatchTodoAction ] = useReducer (todoReducer, initialState,funcionIni);
 
     const onHandleNewTodo = (todo) => {
 
@@ -31,6 +35,12 @@ export const TodoApp = () => {
       dispatchTodoAction(action);
       console.log("Recogido:",todo);
     }
+
+    // cuando cambie el todo guardamos
+    useEffect(() => {
+      localStorage.setItem('todos',JSON.stringify(todos))
+    }, [todos])
+    
 
   return (
     <>
