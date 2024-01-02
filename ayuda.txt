@@ -2239,3 +2239,9 @@ He mirado el ejercicio del gifExpert donde se hacia lo mismo, no sabia pasar var
 Sección 10 Tema 146 Resolución de la tarea.
 
 Él utiliza el hook que hicimos de formulario en lugar de crear un useState y una función onChange
+
+Sección 10 Tema 147
+
+Usará el reducer para añadir un todo a la lista.
+Toca la función reducer  añadiendo la acción
+'[TODO] Add Todo': return [ ...initialState, action.payload]
