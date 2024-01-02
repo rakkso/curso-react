@@ -1,7 +1,7 @@
 import React from 'react'
 import { TodoItem } from './TodoItem'
 
-export const TodoList = ( {todoLista} ) => {
+export const TodoList = ( {todoLista, onDeleteTodo} ) => {
   return (
     
     <>
@@ -14,7 +14,7 @@ export const TodoList = ( {todoLista} ) => {
                   //<button className='btn btn-danger'>Borrar</button>
                   //</li>
               //Fin Nuevo componente todoItem
-              <TodoItem key={todo.id} {...todo}/>
+              <TodoItem key={todo.id} todo={todo} borrar={(id) => onDeleteTodo(id)}/>
                 
               
               ))

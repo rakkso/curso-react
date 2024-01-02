@@ -36,6 +36,15 @@ export const TodoApp = () => {
       console.log("Recogido:",todo);
     }
 
+    const onHandleDeleteTodo = ( id ) =>{
+      const action = {
+        type:  '[TODO] Delete Todo',
+        payload: id
+      }
+      dispatchTodoAction(action);
+
+    }
+
     // cuando cambie el todo guardamos
     useEffect(() => {
       localStorage.setItem('todos',JSON.stringify(todos))
@@ -63,7 +72,7 @@ export const TodoApp = () => {
               }
             </ul>
              Nuevo componente todoList */}
-             <TodoList todoLista={todos}/>
+             <TodoList todoLista={todos} onDeleteTodo= { (valor) => onHandleDeleteTodo(valor) }/>
           </div>
         </div>
         <div className='col-5'>
