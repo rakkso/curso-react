@@ -2304,3 +2304,36 @@ Ahora pide que añadamos la funcionalidad a los contadores dentro del usetodo y 
 
 el total de elementos es todos.length 
 y el total de tareas completadas: todos.filter(todo => !todo.done).length
+
+Sección 11 Tema 154 introdución al useContext
+El useContext sirve para pasar cosas entre componentes además te avisa cuando algo cambia para que lo leas.
+Usará el router para mostrarnos un caso en el que sólo se puede hacer con un useContext, no pasando parámetros de padres a hijos como hemos hecho antes.
+Sección 11 Tema 155 introdución al useContext
+¿Qué veremos en esta sección?
+
+Context
+
+Provider
+
+useContext
+
+React Router
+
+Links y NavLinks
+
+CreateContext
+
+SPA ( Single Page Application )
+
+El objetivo de la sección es principalmente aprender sobre el Context, el Router es un valor agregado que explotaremos mucho más en próximas secciones, pero al usar un Router, podemos explicar claramente el problema y necesidad del context.
+
+
+Sección 11 Tema 157 añadir rutas
+Creo otro directorio 09-useContext y crea dos  funcional components
+mainApp.jsx que será una página
+aboutPage.jsx
+homePage.jsx
+LoginPage.jsx
+
+instala react router v6
+usamos el   BrowserRouter es un componente higher component porque es un componente que contiene otro componente.
