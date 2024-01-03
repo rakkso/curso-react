@@ -2261,3 +2261,35 @@ const init = () => {
 }
 init o inicializar:
 https://kentcdodds.com/blog/use-state-lazy-initialization-and-function-updates
+
+
+Sección 10 Tema 148 Borrar un elemento de la lista
+
+Al hacer que el botón borre le tenemos que pasar la función de borrado desde arriba al TodoList y luego al TodoItem, no es muy elegante pero 
+es la única forma de hacerlo hasta ahora, con useContext no hará falta.
+
+Sección 10 Tema 149 Marcar como hecho un elemento.
+
+Ahora lo que hace es marcar con el useReducer el atribuo a done, y en el item lee este valor renderizando diferente, lo hará 
+de varias formas una es esta:
+
+className={`align-self-center ${todo.done && 'text-decoration-line-through'}`}
+
+Esto la malo que tiene que si es false dejará escrito la palabra false, para que no lo haga hace
+
+className={`align-self-center ${ (todo.done) ? 'text-decoration-line-through':''}`}
+
+codigo del reducer curioso con el map
+            initialState.map( todo => {
+                if ( todo.id === action.payload ) {
+                    return  {
+                        ...todo,
+                        done:!todo.done
+                    }
+                }
+                return todo;
+            });
+
+            
+
+Para modificar el done, lo hace igual que en el ejercicio anterior pasando una función hasta el item

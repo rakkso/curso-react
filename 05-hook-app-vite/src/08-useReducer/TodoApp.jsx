@@ -45,6 +45,15 @@ export const TodoApp = () => {
 
     }
 
+    const onHandleToggleTodo = (id) => {
+      const action= {
+        type: '[TODO] Toggle Todo',
+        payload:id
+      }
+      dispatchTodoAction(action);
+
+    }
+
     // cuando cambie el todo guardamos
     useEffect(() => {
       localStorage.setItem('todos',JSON.stringify(todos))
@@ -72,7 +81,7 @@ export const TodoApp = () => {
               }
             </ul>
              Nuevo componente todoList */}
-             <TodoList todoLista={todos} onDeleteTodo= { (valor) => onHandleDeleteTodo(valor) }/>
+             <TodoList todoLista={todos} onDeleteTodo= { (valor) => onHandleDeleteTodo(valor)} onToggleTodo= { (valor) => onHandleToggleTodo(valor)}/>
           </div>
         </div>
         <div className='col-5'>
