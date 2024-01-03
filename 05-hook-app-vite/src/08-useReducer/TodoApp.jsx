@@ -3,6 +3,7 @@ import { useReducer } from 'react'
 import { todoReducer } from './todoReducer';
 import { TodoList } from './TodoList';
 import { AddTodo } from './AddTodo';
+import { useTodos } from './useTodos';
 
 
 const initialState = [/* {
@@ -23,8 +24,9 @@ const funcionIni =  () => {
 
 export const TodoApp = () => {
 
+    const {todos,total, totalHechos,onHandleNewTodo,onHandleDeleteTodo,onHandleToggleTodo} = useTodos();
 
-    const [ todos, dispatchTodoAction ] = useReducer (todoReducer, initialState,funcionIni);
+    /*const [ todos, dispatchTodoAction ] = useReducer (todoReducer, initialState,funcionIni);
 
     const onHandleNewTodo = (todo) => {
 
@@ -59,11 +61,11 @@ export const TodoApp = () => {
       localStorage.setItem('todos',JSON.stringify(todos))
     }, [todos])
     
-
+*/
   return (
     <>
     
-        <h1>TodoApp: 10,<small> pendientes: 2</small></h1>
+        <h1>TodoApp: {total},<small> pendientes: {totalHechos} </small></h1>
         <hr/>
         <div className="row">
           <div className='col-7'>

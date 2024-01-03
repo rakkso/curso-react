@@ -2290,6 +2290,17 @@ codigo del reducer curioso con el map
                 return todo;
             });
 
-            
+Sección 10 Tema 149 ejercicio
+
+Dice que hagamos un custom hook (useTodo) para limpiar el javascript 
+
+const {todos, handles....} = useTodos()
 
 Para modificar el done, lo hace igual que en el ejercicio anterior pasando una función hasta el item
+
+Sección10 Tema 152 Tarea contadores
+
+Ahora pide que añadamos la funcionalidad a los contadores dentro del usetodo y nos muestra como deben ser:
+
+el total de elementos es todos.length 
+y el total de tareas completadas: todos.filter(todo => !todo.done).length
