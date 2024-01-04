@@ -2335,5 +2335,24 @@ aboutPage.jsx
 homePage.jsx
 LoginPage.jsx
 
-instala react router v6
+instala react router v6 https://reactrouter.com/en/main
 usamos el   BrowserRouter es un componente higher component porque es un componente que contiene otro componente.
+
+para instalarlo:  yarn add react-router-dom (https://www.freecodecamp.org/news/how-to-use-react-router-version-6/#:~:text=To%20install%20React%20Router%2C%20all,%2Drouter%2Ddom%406%20.)
+
+Sección 11 Tema 158 Configurar Router en React
+Explica como configurar el router en react dice que miremos la documentación
+https://reactrouter.com/en/main
+
+Cómo la página MainApp quiere que salga siempre y esta tenga las otras incrustadas, confiura el router en ella
+<Routes>
+Define la ruta de la /
+<Route path="/" element={<HomePage/>}/>
+<Route path="login" element={<LoginPage/>}/>
+<Route path="about" element={<AboutPage/>}/>
+si en el navegador ponemos una ruta que no está definida entonces sólo mostrará lo que tenga el MainApp. Para que muestre una en este caso se define lo siguiente
+<Rotue path="/*" element={<LoginPage/>}/> pero claro esto lo que hace es dejarte en el navegador la url que pusiste... es mejor hacer que navege a la página para ello hace
+<Rotue path="/*" element={<Navigate to="/about>} /> es decir que navege un path definido en otro router
+</Routes>
+
+El Route tambien es un higher component que contiene otros componentes como son las páginas. En el navegador podemos ver como anida los componentes en la opción component
