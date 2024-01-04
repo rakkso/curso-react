@@ -2356,3 +2356,10 @@ si en el navegador ponemos una ruta que no está definida entonces sólo mostrar
 </Routes>
 
 El Route tambien es un higher component que contiene otros componentes como son las páginas. En el navegador podemos ver como anida los componentes en la opción component
+
+Sección 11 Tema 159 Links
+Ahora hace unos enlaces para navegar a las diferentes páginas, para ello primero usa el tag a de html pero aunque funciona esto lo que hace es renderizar toda la página.
+Cuando sólo debe renderizar la parte de abajo. 
+Para solucionarlo lo cambia por el componente Link que hace lo mismo pero sin recargar toda la página.
+También cambia el estilo del tag a para que el Link se vea mejor, esto lo puede hacer porque el Link en el fondo se renderiza como un a.
+Luego solicita que esta parte del código la encapsulemos en un componente que se llame Navbar.jsx, es el que gestionará el menú de navegación.
