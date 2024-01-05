@@ -2363,3 +2363,96 @@ Cuando sólo debe renderizar la parte de abajo.
 Para solucionarlo lo cambia por el componente Link que hace lo mismo pero sin recargar toda la página.
 También cambia el estilo del tag a para que el Link se vea mejor, esto lo puede hacer porque el Link en el fondo se renderiza como un a.
 Luego solicita que esta parte del código la encapsulemos en un componente que se llame Navbar.jsx, es el que gestionará el menú de navegación.
+
+Sección 11 Tema 160 NavLink
+
+NavLink es un componente que permite saber qué link se ha pinchado con lo que nos permite cambiar el color. En este ejercicio cambia la barra de links anterior
+por estos links a partir de un menu de bootstrap,y la funcionalidad nueva del componente.
+
+1.- Vamos a getbootstrap.com en docs y buscamos navbar
+2.- copia el ejemplo que pone navbar home feature Pricing  Disabled
+es decir este 
+
+<nav class="navbar navbar-expand-lg bg-body-tertiary">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="#">Navbar</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="#">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Features</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Pricing</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link disabled" aria-disabled="true">Disabled</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+3.- Copia esto en el componente que hemos creado Navbar, y le hace los siguientes arreglos
+3.1.- cambiar class por className
+3.2.- cambia light por dark
+con ctrl+d selecciona las palabras iguales 
+cambiar:
+ <a class="navbar-brand" href="#">Navbar</a>
+por
+ <Link class="navbar-brand" href="/">useContext</Link>
+
+ <a class="nav-link active" aria-current="page" href="#">Home</a>
+ <NavLink es otro higher component
+ <NavLink to="/" ClassName= {'nav-link' }>Home</NavLink>
+
+ substituyy el li y el A
+
+ className=(args)=>{
+    console(args)
+    return 'nav-link'
+ }
+
+NavLink nos dice con isActive si la url del navegador es la url del path del NavLink
+entonces hace 
+className={({ isActive}) => `nav-link ${ isActive ? 'active' : ''}` }
+3.3.- añande la clase rounded-3
+
+Sección 11 Tema 161 CreatContext y ContextProvider
+
+El contexto es la estructura de componentes de nuestra aplicación
+Si quisieramos compartir info entre páginas 
+Podemos tener varios contextos en la aplicación.
+Crea un directorio llamado context
+Crea un UserContext.jsx y excribe:
+
+export const UserContext = createContext();
+crea otro archivo como functional component para crear el provider.
+
+UserProvider.jsx que contiene un funcional component
+En los parámetrosde entrada pone uno que sea children
+que da así:
+
+export const UserProvider= ( { children }) => {
+    return (
+        <UserContext.Provider value={{ hola: 'Mundo' }}>
+        {children}
+        </UserContext.Provider>
+    )
+}
+
+con esto el cualquiera que use el provider va a tener acceso al objeto que
+ha creado en el value con una propiedad hola valor mundo
+
+Este provider lo tenemos que poner en la parte más alta del árbol de
+componentes para que los hijos lo puedan consultar.
+
+Lo pone en el Navar. Ahora el UserProvider está en el árbol de componentes.
+
+Por tanto, creas un contexto, luego como componente creas un provider que usa el contexto y le añade objetos., 
+y luego pones el provider en la aplciación en la parte más alta del árbol de componentes.
