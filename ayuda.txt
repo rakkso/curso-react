@@ -2456,3 +2456,16 @@ Lo pone en el Navar. Ahora el UserProvider está en el árbol de componentes.
 
 Por tanto, creas un contexto, luego como componente creas un provider que usa el contexto y le añade objetos., 
 y luego pones el provider en la aplciación en la parte más alta del árbol de componentes.
+
+Sección 11 Tema useContext.
+
+Sirve para coger cosas del contexto.  Es un hook
+
+
+const algo = useContext(UserContext);
+Coge el objeto usario y lo muestra en la página de login, luego lo borra y lo que hace es
+crear un botón en la página de login que mete un objeto usuario y lo muestra en todas las páginas.
+
+en el home pone esto para cuando llege a null el usuario no permite
+ <h1>HomePage<small>{user?.name}</small></h1>
+   

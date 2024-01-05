@@ -1,10 +1,10 @@
 import React from 'react'
 import { Link, NavLink } from 'react-router-dom'
-import { ProviderContext } from '../09-useContext/context/ProviderContext'
+
 
 export const Navbar = () => {
   return (
-  <ProviderContext>
+
     <nav className="navbar navbar-expand-lg navbar-dark bg-dark rounded-3">
   <div className="container-fluid">
     <a className="navbar-brand" href="/">useContext</a>
@@ -18,7 +18,7 @@ export const Navbar = () => {
     </div>
   </div>
 </nav>
-</ProviderContext>
+
 
   )
  }

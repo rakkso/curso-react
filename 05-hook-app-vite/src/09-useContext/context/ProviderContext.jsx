@@ -1,16 +1,16 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { UserContext } from './UserContext'
 
 
-const user = {
-    id: 123,
-    name: 'Óscar',
-}
+
 
 export const ProviderContext = ({children}) => {
+
+  const [user, setUser] = useState();
+
   return (
 
-    <UserContext.Provider value={{ hola: 'Mundo' }}>
+    <UserContext.Provider value={{ hola: 'Mundo',user:user,setUser:setUser }}>
     {children}
     </UserContext.Provider>
   )
