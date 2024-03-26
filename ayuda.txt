@@ -2468,4 +2468,311 @@ crear un botón en la página de login que mete un objeto usuario y lo muestra e
 
 en el home pone esto para cuando llege a null el usuario no permite
  <h1>HomePage<small>{user?.name}</small></h1>
-   
+
+
+Sección 12 Tema 166
+Como estamos usando vite tenemos que instalar jest que si usaramos react ya vendría instalado.
+
+vamos a : https://gist.github.com/Klerith/ca7e57fae3c9ab92ad08baadc6c26177
+
+y ejecutamos 
+
+yarn add --dev jest babel-jest @babel/preset-env @babel/preset-react 
+yarn add --dev @testing-library/react @types/jest jest-environment-jsdom
+
+yarn add --dev whatwg-fetch
+
+Añadimos al package.json en scripts 
+
+"scripts: {
+  ...
+  "test": "jest --watchAll"
+
+Crear el archivo babel.config.js con este contenido
+module.exports = {
+    presets: [
+        [ '@babel/preset-env', { targets: { esmodules: true } } ],
+        [ '@babel/preset-react', { runtime: 'automatic' } ],
+    ],
+};
+
+Crear el archivo jest.config
+module.exports = {
+    testEnvironment: 'jest-environment-jsdom',
+    setupFiles: ['./jest.setup.js']
+}
+Crear el archivo jest.setup.js 
+// En caso de necesitar la implementación del FetchAPI
+import 'whatwg-fetch'; // <-- yarn add whatwg-fetch
+
+ejecutamos yarn test 
+
+Sección 12 Tema 165 pruebas sobre el useCounter
+
+Intenta probar los hooks que tienen menos dependencias, es decir menos parámetros.
+
+Crea la estructura en la nueva carpeta test para hacer pruebas sober el useCounter
+La primera prueba que hace es comprobar que si no le pasamos nada los valores que devuelve son los por defecto.
+
+Al hacerlo:
+
+  test('Debe retornar los valores por defecto', () => { 
+
+    const {result } = renderHook(()=> useCounter());
+    const { counter, decrement, increment, reset} = result.current;
+
+    expect( counter ).toBe(10);
+    expect( decrement).toEqual ( expect.any(Function));
+    expect( increment ).toEqual( expect.any(Function));
+    expectç( reset ).toEqual( expect.any( Function));
+    
+  });  
+
+Me da error el jest:
+
+    Details:
+
+    I:\udemy\repogit\cursoReact\udemy-react-de-cero-a-experto-hooks-y-mern\05-hook-app-vite\test\hooks\useCounter.test.js:1
+    ({"Object.<anonymous>":function(module,exports,require,__dirname,__filename,jest){import { renderHook } from '@testing-library/react';
+                                                                                      ^^^^^^
+
+    SyntaxError: Cannot use import statement outside a module
+
+
+
+Luego pide de ejercicio, que si le pasamos el valor 100 que comprobemos qué valores devuelve.
+
+
+    "@babel/preset-env": "^7.23.8",
+    "@babel/preset-react": "^7.23.3",
+    "@testing-library/react": "^14.1.2",
+    "@types/jest": "^29.5.11",
+
+Sección 12 Tema 168
+    Sigue haciendo pruebas con el hook counter que creamos
+    Intenta hacer uno para validar que el incrementar funciona.
+    Cuando lo hace se encuentra dos problemas a patir del código siguiente:
+
+const {result } = renderHook(()=> useCounter(100));
+const { counter, decrement, increment, reset} = result.current;
+increment();
+expect(counter).toBe(101)
+
+El primer error es que se queja que no podemos ejecutar increment porque actualiza
+un estado de react. El counter dentro tiene un estado y no se permite hacerlo
+directamente en el test se debe encapsular en un act, quedando así:
+
+act( () => increment())
+
+El segundo problema es que el valor no se actualiza, esto es porque al ejecutar
+const { counter, decrement, increment, reset} = result.current;
+
+en counter nos hemos quedado una copia por que es un tipo primitivo.
+
+Para recuperar el valor correcto, debemos hacer
+expect( result.current.counter).toBe(101)
+en lugar de 
+expect( counter).toBe(101)
+
+También explica que si hacemos:
+incrementar();
+incrementar(2);
+
+El valor esperado sería 103 pero no lo es. Esto es porque en el
+counter la función incrementar está definida como:
+
+setCounter(counter + value)
+
+donde counter es la definición del state:
+const [counter,setCounter] = useState(inicial);
+
+para que esto no ocurra debemos dejar la función counter así:
+
+setCounter( (current) => current + value)
+
+luego hace el decrementar
+
+Sección 12. Temas 169
+Ahora prueba el useForm
+La primera prueba hace que debe devolver los valores por defecto.
+Para ello crear un useForm con un objeto con los valores por defecto
+y luego hace el expect 
+
+expect(result.current).toEqual({
+    name:initialForm.name,
+    email: initialForm.email,
+    formState: initialForm,
+    onInputChange: expect.any (Function),
+    onResetForm: expect.any (Function),
+})
+
+Luego dice que hagamos una prueba que
+
+debe de cambiar el nombre del formulario
+
+montar el hook
+oninputChange //act event
+
+//Excep result.curren.name == juan
+//expec result.current.formState.name
+Como el inputchange espera un evento le crea un evento tal cual lo espera
+{ target: { name: 'name' ,value:newValue}}
+
+Luego hace una pruebat del reset
+
+Sección 12. Tema 170
+
+Ahora prueba el MultipleCustomHooks
+
+Intenta renderizar el componente para hacer la prueba por defecto
+render (<MultipleCustomHooks />)
+screen.debug
+
+
+Al hacerlo me da el error Jest worker encountered 4 child process exceptions, exceeding retry limit
+
+para corregirlo descomento las lineas que tenía comoentadas
+
+module.exports = {
+    testEnvironment: 'jest-environment-jsdom',
+    setupFiles: ['./jest.setup.js']
+}
+
+en el acrhivo jest.config.cjs
+
+y el estado inicial es que este como hace el debug.
+Podría hacerlo con snapshot, pero lo hace con expect buscando cosas
+que tenga el screen.
+
+excpect( screen.getByText('Loading...'));
+
+const nextButton = screen.getByRole('button',{name:'Next quote'})
+expect(nextButton.disabled).toBETruthly();
+
+
+Sección 12. Tema 171
+
+Ahora hace un test que debe mostrar un quote, una llamada...
+Lo hace generando un mock para probar el useFetch
+
+con jest.mock( useFecth) genera un mock
+
+import { useFetch } from '../../../src/hooks/useFetch';
+
+jest.mock('../../../src/hooks/useFetch');
+Esto da error, pare evitarlo, en cada llamada al hook hay que definir resultados a cada mock.
+console.error
+      Error: Uncaught [TypeError: Cannot destructure property 'data' of '(0 , _useFetch.useFetch)(...)' as it is undefined.]
+
+Para ello hace en cada test:
+
+useFecth.mockReturnValue();  como queremos que devuelve un objeto con tres campos:
+data:null,
+isLoading:null,
+hasError:null
+
+Esto es porque el MultipleCustomHooks tiene dentro un useFecth que retorna un objeto:
+
+    const {data, isLoading, hasError} = useFetch(`https://fakestoreapi.com/products/${counter}` );
+
+Ahora pide que evaluemos la función incrementar.
+
+para ello selecciona el boton y le lanza un fireEvent.click(boton);
+y luego como ejercicio pide cómo debe ser el expect
+expect( xxxx ).toHaveBeenCalled();
+
+La solución pasa por lo mismo, por moquear el useCounter y la función increment
+
+        const mockIncrement = jest.fn();
+    useCounter.mockReturnValue({
+        counter:1,
+        increment: mockIncrement
+    });
+
+Luego hace que se borren las pruebas cada vez que se ejecuten, así la función siempre se abrá ejecutado 0 veces.
+    beforeEach(()=>{
+        jest.clearAllMocks();
+    })    
+
+
+Tema 172 Sección 12
+
+Reducer es fácil de probar porque se le pasa un estado y una acción, y devuelve otro estado. Por tanto va a probar nuestro useReducer.
+es js poque no retorna un functional component
+
+test('debe regresar el estado inicial', () => { 
+    
+    const newState = todoReducer(initialState,{});
+
+    //hace un toBe, porque como le pasa un objeto este viaja por referencia, con lo cual es exacto, el mismo trozo de memoria, no es una copia.
+    expect(newState).toBe(initialState);
+    
+})
+
+
+Luego crea una prueba para agregar un todo.
+
+   const action = {
+        type:  '[TODO] Add Todo',
+        payload: {
+            id:2,
+            description: 'Nuevo todo #2',
+            done: false
+        }};
+
+        const newState = todoReducer(initialState, action);
+        expect( newState.length).toBe(2);
+        expect( newState).toContain(action.payload);
+
+Luego pone de tarea eliminar un todo y otro para que cambie el valor de un elemento (toggle)
+
+174 Sección 12
+Comienza aprobar el componente totoItem, prueba que se renderice correctamente
+hace el test debe de mostrar el Todo Pendiente de completar
+175 Sección 12
+Hace otra prueba sobre el todoItem
+La prueba es debe mostrar el todo completado
+El span debe llamar al toogle cuando se hace click
+
+Todas las pruebas se hacen sobre elementos del componente, es decir, no comprobamos si lo borra, sino que sólo cambia la apariencia.
+
+Como ejercicio indica que haga "El botón debe de llamar al deleteTodo"
+
+176 Sección 12
+
+Ahora hace las pruebas del componente todoApp. Dado que renderiza en función de lo que le pasa en useTodos.
+Por ello crea un useTodos y luego evalua en función del useTodos que le ha pasado.
+
+177 Sección 12
+
+Va a probar que el useContext funciona como esperamos. En nuestro caso evalua el contexto renderiza el usuario.
+HomePage.test.jsx
+
+Intenta primero renderizar el HomePage, pero les da error por que no tiene contexto.
+Para evitarlo le crea un contexto:
+
+render(
+    <UserContext.Provider value={{user:null}}>
+        <HomePage />
+    </UserContext.Provider>
+);
+
+178 Sección 12
+
+Ahora prueba el LoginPage debemos validar que cuando se hace click se ejecuta la función.
+
+Hace dos pruebas: debe mostrar el componente sin usuario, debe llamar al setuser cuando se hace click en el botón.
+
+179 Sección 12
+
+Prueba el route,
+si estamos en el / debe aparecer el Homepage..
+si estamos en el.... debe apraecer el ...
+sobre MainApp
+
+Debe de mostra el home page es la primera prueba.
+cuando lo hace directamente falla, porque es llamado con el BrowserRouter, pero no podemos usarlo porque estamos en consola.
+Para hacerlo usa el MemoryRouter
+
+Para navegar a un sitio en el MemoryRouter le pone el atributo initialEntries={['/Login']}
+
