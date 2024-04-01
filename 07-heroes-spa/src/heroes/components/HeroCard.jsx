@@ -10,8 +10,8 @@ first_appearance,
 characters}) => {
 
     const heroImageUrl =`/assets/heroes/${id}.jpg`;
-    console.log("HeroCard con id: %s",id);
-    console.log("HeroCard con heroImageUrl: %s",heroImageUrl);
+    //console.log("HeroCard con id: %s",id);
+    //console.log("HeroCard con heroImageUrl: %s",heroImageUrl);
   return (
     <div className='col animate__animated animate__fadeIn'>
         <div className='card'>
