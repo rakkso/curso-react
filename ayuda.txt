@@ -1374,6 +1374,7 @@ Luego lo copia en un httpserver y vemos que no se reptie la llamada
 87 mostrar títulos de las imágenes
 
 
+
 Quiere mostrar los títulos de las imágenes.
 Dado que queremos que se refresque
 
@@ -2776,3 +2777,435 @@ Para hacerlo usa el MemoryRouter
 
 Para navegar a un sitio en el MemoryRouter le pone el atributo initialEntries={['/Login']}
 
+181 Sección 13
+
+Va a crear un repositorio en git con las utilidades que hemos creado, con los customHooks.
+¿Qué veremos en esta sección?
+
+Subir código a nuestro repositorio
+
+Tener un listado de customHooks y código que podemos reutilizar
+
+Una idea para mantener tu repositorio ordenado con ejemplos
+
+No es una sección obligatoria, pero puede ayudarles a tener su código ordenado y fácil de utilizar en proyectos futuros.
+
+crea carpeta 06- mis-cunstoms hooks y copia todos los custom hooks
+git init
+git add .
+git commit -m "Primer commit"
+en github crea un nuevo repositorio llamdo custom-hooks
+
+    
+git remote add origin https://github.com/rakkso/custom-hooks.git
+git branch -M main
+git push -u origin main
+
+Detecta que useTodos usa el useReducer de la carpeta 8 con lo que lo debe arreglar
+
+184 Sección 13
+
+Ahora crear va ha ordenar este repositorio.
+Crea una carpeta para cada customhook
+Trae el useTodo en otra carpeta
+Trae el todoReducer y toca los path
+
+188 Sección 14
+
+¿Qué veremos en esta sección?
+
+SPA ( Single Page Application ) a profundidad
+
+Diferentes temas en la misma aplicación aplicados a diferentes rutas
+
+Multiples Routers
+
+Push y Replace en el History
+
+Leer argumentos por URL
+
+QueryParams
+
+Aplicar filtros utilizando QueryStrings
+
+En esta sección aún no haremos protección de rutas, pero dejaremos el estilo de esos componentes listos para la siguiente sección.
+
+==> nos enseñará Router
+
+189 Sección 13
+Creación del cascaron de la aplicaicón
+
+desde el directorio I:\udemy\repogit\cursoReact\udemy-react-de-cero-a-experto-hooks-y-mern
+hace:
+yarn create vite
+heroes-spa
+react
+JavaScript
+
+cambia el nombre la carpeta a 07-heroes-spa
+entra dentro y ejecuta
+yarn install
+
+yarn dev para arrancar y vemos que tenemos una la aplicación arrancada
+
+Borra de la estructura
+app.css
+app.jsx
+logo
+favicon
+index.css lo cambia a styles.css
+
+Crea un componente en src que se llama HeroesApp.jsx
+hace rafc y pone el <h1>HeroesApp</h1>
+Añade bootstrap, accede a getBootstrap.com y copia el link de css
+
+ <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+
+crea dentro de src una carpeta assets y allí pone las imágenes
+
+comenta que como va a ser una aplicación mediana con dos módulos crea dos carpetas
+una para cada modulo, uno el del login auth, y otro el de los heroes (heroes)
+
+y dentro, crea carpetas, pages, components, helpers, hooks., y en la de auth hace lo mismo
+
+191 Sección 13
+Tiene varios router uno para naveciones privadas y públicas.
+
+Va a usar react router 6, la 5 era muy diferente.
+yarn add react-router-dom@6
+
+en la documentación lo hace con npm, pero debe ser lo mismo yarn add react-router-dom
+luego en main.jsx importa BrowserRouter de react-router-dom
+y lo pone en la main.jsx
+
+Ahora configura las rutas, crea un directorio llamado router dentro del src.
+AppRouter.jsx es el router principal como un componente con el siguiente contenido
+<Routes>
+<Route path="marvel" element={<Home/></Routes>} />
+<Route path="dc" element={<About/>}
+<Route path="login" element={<About/>}
+
+En heroes dentro de pages, crea las páginas DcPages.jsx, MarvelPages.jsx y en auth pages loginPagex
+Los crea con h1
+el home será MarvelPage
+
+En heroresApp pone el AppRouter
+añade /* <Navigate to=="/marvel"
+
+Luego debe usar el AppRouter dentro de la HeroresApp
+
+192 Sección 13
+
+Con las rutas, ahora define los menus con navbar (nos lo pasa de un recurso para no 
+volver a hacer lo mismo). Dice que no hay una manera donde ponerlo.
+Al final decide crear una carpeta ui, subcarpeta components.
+Ahi crea un archivo de barril, index.js en components y otro fuera 
+
+El de fuera 
+//este exporta todo lo que esté en el arvhivo index de la carpeta components
+export * from './components'
+
+El de dentro
+export * from './Navbar';
+
+Así a la hora de importar no hay que especificar carpeta componente o archivo Navbar
+import {NavBar} from '../ui'
+a mi no me funciona tengo que poner ui/components
+
+Luego el Navbar lo importa en el AppRouter y lo coloca encima de Routes
+
+La tarea que pide es que cuando clicemos en la ruta quede activa con una clase. Para ello
+dice que miremos como lo hicimos
+
+
+Cambio 
+className="nav-item nav-link" 
+por 
+className={({ isActive}) => `nav-link ${ isActive ? 'active' : ''}` }
+
+en lugar de un navlink en la parte de login cambia a otra cosa. Es decir
+de esto 
+
+<NavLink 
+                        className={({ isActive}) => `nav-item nav-link ${ isActive ? 'active' : ''}` }
+                        to="/login"
+                    >
+                        Logout
+
+
+Pasa a 
+
+<span className="nav-item nav-link text-primary">
+Óscar</span>
+                   <button
+                   className="nav-item nav-link btn"
+                   >Logout</button>
+
+193 Sección 13
+Dice que no tiene mucho sentido que si estamos en login  enseñemos Marvel y DC
+Es decir, si estamos en login no debe aparecer nada más.
+
+Para hacerlo dentro de heroes crea carpeta routes dentro hace un component HeroesRoutes
+Aquí dentro va a tener el navbar y los Routes originales, pero el de login lo quita.
+y en el original quita todo menos lo de login
+y añade /* hacia al Routes.
+
+RouterApp queda:
+
+    <>
+
+    <Routes>
+
+        <Route path="login" element={<LoginPage/>}/>
+        <Route path="/*" element={<HeroesRoutes/>}/>
+        
+    </Routes>
+    </>
+
+Lo teniamos así:
+
+import React from 'react'
+import { Navigate, Route, Routes } from 'react-router-dom'
+//import { MarvelPage } from '../heroes/pages/MarvelPage'
+//import { DcPage} from '../heroes/pages/DcPage'
+import {MarvelPage, DcPage} from '../heroes/'
+//import { LoginPage} from '../auth/pages/LoginPage'
+import { LoginPage} from '../auth'
+import { Navbar } from '../ui'
+
+
+export const AppRouter = () => {
+  return (
+    <>
+    <Navbar/>
+    <Routes>
+        <Route path="marvel" element={<MarvelPage/>}/>
+        <Route path="dc" element={<DcPage/>}/>
+        <Route path="login" element={<LoginPage/>}/>
+        <Route path="/" element={<Navigate to="/marvel" />}/>
+        
+    </Routes>
+    </>
+  )
+}
+
+
+
+
+añade div className="container">
+
+Pide que añadamos dos rutas a search (este tiene que salir al navbar) y hero (no tiene que estar en el navbar)
+
+194 Sección 13
+Ahora quiere que cuando ciclemos logout vayamos a login y cuando hagamos login vayamos a la aplicación.
+Primero en la de logout usa un custom hook de Router que lo que permite es navegar, se llama useNavigate. Además borra del historial la página de donde venimos, porque claro si hemos hecho logout y hacemos
+para atrás no deberíamos estar dentro de la aplicación.
+
+195 Sección 13
+Comienza diciendo que la página de Dc y Marvel va a ser muy parecida con lo cual, crea un componente.
+Primero crea un fichero que nos da, con la lista de superherores,lo ponemos en el directorio data.
+Luego en helpers crea una función que filtrará por editor de los superherores, Marvel DC Comics.
+Ahora pide que creemos un componente que muestre esta información, según sea la página.
+
+196 Sección 13
+
+Ahora crea un componente HeroCard que renderiza cada linea de los heroes en la lista.
+Primero cambia HeroList estructurandolo mejor con html y luego llamando al nuevo componente que mostrará la información del Hero, con el nuevo
+componente HeroCard.
+
+197 Sección 13
+
+Ahora quiere acabar la targeta, quiere que no repita los nombres entre alter_ego y characters si son iguales lo hace de dos formas 
+
+1.- {
+    (alter_ego!== characters) && (<p>characters</p>)
+}
+
+2.- Crea una varible con el contenido de <p>characters</p>
+const characterByHero=(<p>{characters}</p>)
+y luego usarlo
+{
+    (alter_ego!== characters) && characterByHero;
+}
+3.- O creando un componente dentro de este
+const CharacterByHero = ({alger_ego,characters}) => {
+    if (alter_ego === characters) return (<></>)
+
+    return <p>characters</p>
+}
+
+y lo usa
+<CharacterByHero characters={characters} alter_ego={alter_ego}/>
+
+198 Sección 13
+
+Ahora cuando le de al enlace deberá presentar la página de cada hero para ello en la ruta de hero que tenemos:
+
+<Route path="hero" element={<HeroPage/>}/>
+
+le añade que el path puede tener parámetros:
+
+<Route path="hero/:heroId" element={<HeroPage/>}/>
+
+para obtener los parámetros de la url (sólo rutas, no query params), usa el customhook de router useParams
+const {heroid} =useParams(); que lo usa en la página de heroes
+
+En el helpers crea una utilidad getHerobyId
+export const getHeroById= (id ) => {
+    return heroes.find(hero=> hero.id === id)
+}
+
+199 Sección 13
+Ahora trabaja con la pantalla del hero.
+Crea un botón para volver a atrás como ejercicio. No supe hacerlo se hacia con el useNavigate
+
+const navigate = useNavigate();
+
+navigate(-1)
+
+200 Sección 13
+Hace una optimización, sobre las funciones que llama en el componente HeroPage, para memorizarlas y que no se ejecuten cada vez que se renderice el componente.
+En este caso no es necesario porque nose va a renderizar más de una vez, porque todo es estático.
+useMemo para memorizar datos useCallback para memorizar funciones
+
+const hero = useMemo( () => getHeroById(heroId),[heroId])
+
+useMemo ejecutará getHeroById sólo cuando el heroId cambie.
+Hace lo mismo para la lista de de heroes HeroList
+
+201 sección 13
+
+Añade estilos css que hacen que las cosas aparezcan, como en un ppt. Para ello va a la página https://animate.style/ y allí explica como
+importarlo, ya sea por npm o por url.
+El opta por meter 
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
+  />
+
+En el heroCard pone
+    <div className='col animate__animated animate__fadeIn'>
+
+En el HeroPage tambien pone 
+'img-thumbnail animate__animated animate__fadeInLeft'/>
+
+202 Sección 13
+Empieza con la página de search. Hace el diseño, sin funcionalidad.
+203 Sección 13
+Ahora mete funcionalidad. 
+Va a usar nuestro customHook useForm. Lo copia en la carpeta hooks
+
+En el formulario añade lo siguiente
+value={searcText} que viene del useForm
+onChange={onInputChange} que viene del useForm
+onSubmit={onSearchSubmit}
+y define la función onSearchSubmit
+
+Al hacer esto cuando le das al botoón en lugar de salir esto
+http://localhost:5173/search?searchText=eeee
+sale esto 
+http://localhost:5173/search
+
+para añadir a la url los queryparam hace una navegación a la misma página pero con query param  y el texto que ha escrito con el navigate:
+
+navigate(`?query=${searchText}`);
+
+Ahora pare leerlo usa el useLocation, que nos da el search de la url recibida, todo a partir del ?.
+Para leer fácilmente el queryparam instala el paquete query-string
+
+Se instala así yarn add query-string
+Con el query-string hace un parse de Location.search
+
+const location = useLocation();
+  const query =queyString.parse(location.queryString);
+  console.log(query);
+  desectructura lo que viene 
+  const {miQuery=''} = queryString.parse(location.search);
+
+204 Sección 13
+Ahora una vez tiene la palabra a buscar hace la búsqueda.
+En helpers crea la función getHeroresByName que reciba el nombre
+si es vacio devuelve un arreglo vacio.
+205 sección 13
+Ahora explica como mostrar el rótulo de no encontrado y el de encontrado cada uno 
+cuando toque.
+Explica de dos formas:
+
+{
+    ( miQuery === '')
+    ?  <div className="alert alert-primary">Search a hero</div>
+    : (heroes.length === 0)
+      && <div className="alert alert-danger">No hero with <b>{miQuery}</b></div>
+}
+
+La segunda forma:
+usa el display : 'none' no hidden,porque el hidden ocupa espacio en la pantalla.
+
+const showSearch = (miQuery.length === 0);
+const showError = (miQuery.length > 0) && heroes.length === 0;
+
+<div className="alert alert-primary style={{display: showSearch? 'none':''}}">Search a hero</div>
+<div className="alert alert-danger style={{display: showError? 'none':''}}">No hero with <b>{miQuery}</b></div>
+        
+        {
+          heroes.map(hero => (
+            <HeroCard key={hero.id} {...hero} />
+          ))
+        }
+
+
+209 Sección 14 Protección de rutas
+
+Va hacer que rutas de la aplicación sólo funcionen si estás autentificado.
+
+¿Qué veremos en esta sección?
+
+Rutas públicas
+
+Rutas privadas
+
+Login y logout - Sin backend aún
+
+Recordar cuál fue la última ruta visitada para mejorar la experiencia de usuario.
+
+Context
+
+Reducer
+
+Esta es una sección pequeña pero importante para trabajar las bases de la autenticación y protección de nuestra aplicación.
+Además guardaremos en que pantalla estab cunado hace logout para cuando haga login volver
+
+210 Explica que necesitaremos un contexto y crea el directorio vacio dentro de la parte de auth
+y también un directorio types, con los nombres de las acciones. Comenta que el contexto lo necesitamos para mantener si que todos los componentes sepan si
+ha hecho login o no.
+Dentro de la carpeta auth crea una carpeta context y una carpeta types
+
+211 Crea un archivo types.js  que contiene
+export const types = {
+    login: '[Auth] Login',
+    logout: '[Auth] Logout'
+}
+
+
+y en la carpte context crea un archivo AuthContext.jsx que será un funciontal component
+por exportará un functional componente, lo que hace es createContext.
+Luego hace otro archivo AuthProvider.jsx que es otro functional component.
+Este será el que pasará el contexto a los objetos:
+
+import React from 'react'
+import { AuthContext } from './AuthContext'
+
+export const AuthProvider = ({children}) => {
+  return (
+    <AuthContext.Provider value={{}}>
+        {children}
+    </AuthContext.Provider>
+  )
+}
+
+Crea otro archivo authReucer.js que contendrá el reducer, que es un estado y una acción,
+y será lo que el AuthProvider guardará y compartirá.
+
+Luego crea un arhivo index en la carptea context, para exportar los tres archivos Y
+hacer poner el contexto accesible en el componente de primer nivel para queda
+así todos lo tengan.

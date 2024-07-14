@@ -10,10 +10,13 @@ export const SearchPage = () => {
   const navigate = useNavigate();
 
   const location = useLocation();
-  //console.log("location %s",location);
-  const query =queryString.parse(location.search);
-  console.log(location);
-  console.log(query);
+
+
+  console.log("location %s",location);
+  //const {query} =queryString.parse(location.search);
+ // console.log(location);
+  
+  // Si descomento esto peta, no se el motivo : console.log("query:%s",query);
   const {miQuery=''} = queryString.parse(location.search);
   console.log("Mi query:%s",miQuery);
   const heroes = getHeroesByName(miQuery);
