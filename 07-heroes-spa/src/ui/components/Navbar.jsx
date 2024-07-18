@@ -1,14 +1,33 @@
-import { Link, NavLink, useNavigate } from 'react-router-dom';
+import { Link, NavLink, useLocation, useNavigate } from 'react-router-dom';
+import { AuthContext } from '../../auth';
+import { useContext } from 'react';
 
 
 export const Navbar = () => {
 
     const navigate = useNavigate();
 
+
+    const {pathname, search} = useLocation();
+
+
     const onLogout= () => {
-        console.log('Logout');
+        console.log('Logout',pathname,search);
+
+        const lastPath = pathname + search;
+        localStorage.setItem('lastPath',lastPath);
+
+        logout();
         navigate('/login',{ replace:true});
     }
+
+
+
+    const { user, logout } = useContext (AuthContext);
+
+    console.log("Escribo el nombre", user?.name);
+
+
     return (
         <nav className="navbar navbar-expand-sm navbar-dark bg-dark p-2">
             
@@ -49,7 +68,7 @@ export const Navbar = () => {
             <div className="navbar-collapse collapse w-100 order-3 dual-collapse2 d-flex justify-content-end" >
                 <ul className="navbar-nav ml-auto">
                 <span className="nav-item nav-link text-primary">
-Óscar</span>
+{ user?.name}</span>
                    <button
                    className="nav-item nav-link btn"
 
