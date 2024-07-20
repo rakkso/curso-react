@@ -3209,3 +3209,221 @@ y será lo que el AuthProvider guardará y compartirá.
 Luego crea un arhivo index en la carptea context, para exportar los tres archivos Y
 hacer poner el contexto accesible en el componente de primer nivel para queda
 así todos lo tengan.
+
+Nota:
+ no me funciona el archivo index.js si dentro no pongo el nombre del archivo con extensión
+mirar el archivo index del context.
+
+212 Login de un usuario
+
+Ahora quiere que cuando haga login haga un dispatch para informar el usuario
+En el state del AuthProvider quiere meter el usuario.
+
+Opción 1:
+Comenta que podemos pasar el state y dispatch del reducer en los
+parámetros del authContext.Provider pero esto compartiría ambas cosas el estado y el dispacher a todos los componentes
+
+Opción 2
+Crea una función que define en AuthProvider que llama a reducer.
+
+const login = (name ='') =>{
+    const action = {
+        id:'ABC',
+        name: name
+    }
+}
+
+y lo comparte así, en un objeto que tiene el estado y la función de login
+que es un objeto.:
+
+<AuthContext.Provider value={{
+    ...authState,
+    login: login
+}} >
+{children}
+</AuthContext.Provider/>
+
+
+Ahora se va la LoginPage y en el onLogin a parte de navegar
+lo que hará será llamar a la función de login.
+
+recuper la función del contexto haciendo:
+
+const { login } = useContext (AuthContext)
+
+y luego pone login ('Óscar Bella')
+
+Ahora la tarea es pintar en la cabecera este nombre.
+
+213 Ahora hace que sea persistente el ususario.
+Lo guardará en el storage del navegador.
+Comenta que en el useReducer no debemo hacer la llamada para guardar el usuario, ya que las buenas prácticas dicen que un useReducer no debe tener llamadas externas.
+Por ello lo hace en la función de login que crea el action en el provider.
+Al useReducer lo llamamos con 3 parámetros, el reducer, el estado inicial, y una función de inicialización.
+En la función de inicialización hace el acceso para recuperar el usuario de la memoria.
+En la función de login hace el acceso para informar el usuario en la memoria
+
+const init = () => {
+    const user = JSON.parse (localStorage.getItem('user'));
+
+    return {
+        logged: !!user,
+        user:user,
+    }
+}
+
+y en la definición del dispatch lo hace 
+
+const user = {id:'ABC',name}
+
+const action = {
+    type: types.login,
+    payload:user
+}
+
+localStorage.setItem('user',JSON.stringfy(user));
+
+dispatch(action);
+
+Ahora el estado  inicial ya no tiene sentido y la deja vacia.
+
+214 Vamos a implementar el logout, que será una acción de reducer, indica que lo implementemos en el provider, ya que en el reducer
+estaría mal porque tenemos que llamar al localStorage y es una función extrna, y el reducer no llama funciones externas.
+dice que lo hagamos como ejercicio.
+
+En el AuthProvider que es donde tengo acceso al dispatch de reducer, creo una función que lo llama y llama también al localStorage para borrar.
+Esta función la publico en el AuthProvider y la recojo en el navbar que es donde está el logout.
+Allí cuando se hace logout invoco a esta función que puedo coger del contexto.
+
+215 Rutas privadas y rutas públicas.
+Dentro de la aplicación tendremos rutas públicas como el login, y rutas privada como el resto de páginas.
+En este lección implementa las rutas privadas. Para ello se crea un componente que recibe como parámetro otro componente.
+Lo que hace es mirar si tenemos login hecho y si lo tenemos retorna el componente y sino retorna el login.
+Este componente lo usa en la approute.
+
+export const PrivateRoute = ({children}) => {
+ 
+    const {logged} = useContext(AuthContext);
+    
+    return (logged) 
+    ? children
+    : <Navigate to="/login" />
+
+    
+}   
+
+216 ahora pide que si está autentificado no permita ir a login, nos pide que sea un ejercicio
+Para ello dice que creamos el compontente PublicRoute.jsx
+
+Comenta que no pongamos un Route dentro de otro Route, sino entre Routes, pero no tiene mucho sentido.
+Sería algo asi:
+
+        <Route path="login/*" element={
+          <PublicRoute> 
+            <Routes>
+                <Route path="/*" element={<LoginPage/>} />
+            </Routes>
+             
+          </PublicRoute>          
+          }/>
+
+
+
+        <Route path="login" element={
+          <PublicRoute>
+            <LoginPage/>
+          </PublicRoute>          
+          }/>
+
+217 Volver a la página anterior
+Por ejemplo si estoy buscando un herore y hago logout, cuando hago login que vuelva a la búsqueda.
+Para hacerlo usa el useLocation que le dice donde está, para ello antes de hacer logout se guarda el punto donde esta en el localStorage (Navbar)
+y luego en el login (LoginPage) lo recupera y navega allí.
+
+En el privateRoute  hace lo siguiente:
+
+const {pathname, search} = useLocation();
+
+const lastPath = pathname + search
+localStorage.setItem('lastPath',lastPath)
+
+
+y en el login hace
+const lastPath  = localStorage.getItem('lastPath') || '/' --> si hay datos datos y sino /
+
+y luego
+navigate (lastpath,{replace:true})
+
+Yo lo implemente en el navbar en lugar del privateRoute
+
+Sección 16
+Qué veremos en esta sección?
+
+Nuevos tipos de pruebas
+
+Pruebas en rutas privadas y públicas
+
+MemoryRouter
+
+Pruebas en nuestro DashboardRouter
+
+Pruebas en el AppRouter
+
+Simular URLs y segmentos
+
+Simular queryParams y queryStrings
+
+Recuerden que el objetivo de las pruebas, es ir probando cosas nuevas cada vez y tener un repertorio completo de diferentes casos.
+
+ lección 222 instalación de la libreria de test , siguiendo esta página https://gist.github.com/Klerith/ca7e57fae3c9ab92ad08baadc6c26177
+
+Instalación y configuracion de Jest + React Testing Library
+En proyectos de React + Vite
+Instalaciones:
+desde el raiz del proyecto
+
+yarn add --dev jest babel-jest @babel/preset-env @babel/preset-react 
+yarn add --dev @testing-library/react @types/jest jest-environment-jsdom
+
+Opcional: Si usamos Fetch API en el proyecto:
+yarn add --dev whatwg-fetch
+
+
+
+Actualizar los scripts del package.json
+"scripts: {
+  ...
+  "test": "jest --watchAll"
+
+
+Crear la configuración de babel babel.config.js --> Debe ser extensión cjs
+module.exports = {
+    presets: [
+        [ '@babel/preset-env', { targets: { esmodules: true } } ],
+        [ '@babel/preset-react', { runtime: 'automatic' } ],
+    ],
+};
+
+Opcional, pero eventualmente necesario, crear Jest config y setup:
+jest.config.js --> Debe ser extensión cjs
+
+module.exports = {
+    testEnvironment: 'jest-environment-jsdom',
+    setupFiles: ['./jest.setup.js'] --> este no hace falta si no usamos fetch api
+}
+jest.setup.js
+
+// En caso de necesitar la implementación del FetchAPI
+import 'whatwg-fetch'; // <-- yarn add whatwg-fetch
+
+
+223 Comienza probando el reducer
+
+para ello quiere validar:
+
+authReducer 
+*debe retornar el estado por defecto
+*debe llamar al login y establecer el user
+*debe borrar el name y logged false cuando haga logout
+
+La idea es llamar al authReducer en cada caso.
