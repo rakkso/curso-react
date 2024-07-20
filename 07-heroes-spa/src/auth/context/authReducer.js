@@ -3,7 +3,7 @@ import { types } from "../types/types";
 
 
 export const authReducer = (state, action) => {
-    console.log("authReducer haciendo ...");
+    console.log("authReducer haciendo ...",action.type);
     switch (action.type){
         case types.login:
             console.log("authReducer haciendo login");
