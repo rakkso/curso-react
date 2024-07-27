@@ -72,7 +72,6 @@ export const SearchPage = () => {
         <hr/>
         <div className="alert alert-primary animate__animated animate__fadeIn" style={{display: showSearch ? '':'none'}}>Search a hero</div>
         <div aria-label="alert-danger" className="alert alert-danger animate__animated animate__fadeIn" style={{display: showError ? '':'none'}}>No hero with <b>{miQuery}</b></div>
-
         {
           heroes.map(hero => (
             <HeroCard key={hero.id} {...hero} />

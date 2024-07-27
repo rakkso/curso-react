@@ -3427,3 +3427,246 @@ authReducer
 *debe borrar el name y logged false cuando haga logout
 
 La idea es llamar al authReducer en cada caso.
+
+224 Valida el types. Es muy sencillo pero no se como lo hace.
+
+Valida que tiene los types que hemos definido y no otros
+     test('Types solo debe tener login y logout', () => { 
+        
+        expect(types).toEqual({
+            login: '[Auth] Login',
+            logout: '[Auth] Logout',
+        }) })
+
+
+225 Primera prueba en el publicRoute
+
+Como necesita un context le tenemos que crear uno
+
+hace estos test:
+
+debe mostrar el children sino está logeado.
+Si intentamos renderizar directamente da error porque no le hemos dado el contexto.
+es decir si hacemos 
+render(
+    <PublicRoute/>>
+)
+
+esto falla, hay que darle también el contexto:
+
+render(
+    <AuthContext.Provider value=>
+        <PublicRouter/>>
+    </AuthContext.Provider>
+
+)
+
+Como es un functional component usa el render.
+Como queremos probar algo que tiene el navigator, tenemos que tenerlo dentro de un WebRoute o un MemoRoute
+
+
+Me daba el siguiente error 
+
+jest Cannot find module '@testing-library/dom' from 'node_modules/@testing-library/react/dist/pure.js'
+
+Miro  en el package.json y la testing-library tengo la versión"^16.0.0" y antes tenía la "^14.1.2" la cambio y hago yarn
+ahora funciona pero me da warnings warning " > @babel/preset-env@7.24.8" has unmet peer dependency "@babel/core@^7.0.0-0".
+en el actual 
+
+    "@babel/preset-env": "^7.24.8",
+    "@babel/preset-react": "^7.24.7",
+    "@testing-library/react": "^16.0.0",
+    "@types/jest": "^29.5.12",
+    "@types/react": "^18.2.66",
+    "@types/react-dom": "^18.2.22",
+    "@vitejs/plugin-react": "^4.2.1",
+    "babel-jest": "^29.7.0",
+    "eslint": "^8.57.0",
+    "eslint-plugin-react": "^7.34.1",
+    "eslint-plugin-react-hooks": "^4.6.0",
+    "eslint-plugin-react-refresh": "^0.4.6",
+    "jest": "^29.7.0",
+    "jest-environment-jsdom": "^29.7.0",
+    "vite": "^5.2.0"
+
+En uno que funcionaba tenía
+
+    "@babel/preset-env": "^7.23.8",
+    "@babel/preset-react": "^7.23.3",
+    "@testing-library/react": "^14.1.2",
+    "@types/jest": "^29.5.11",
+    "@types/react": "^18.2.15",
+    "@types/react-dom": "^18.2.7",
+    "@vitejs/plugin-react": "^4.0.3",
+    "babel-jest": "^29.7.0",
+    "eslint": "^8.45.0",
+    "eslint-plugin-react": "^7.32.2",
+    "eslint-plugin-react-hooks": "^4.6.0",
+    "eslint-plugin-react-refresh": "^0.4.3",
+    "jest": "^29.7.0",
+    "jest-environment-jsdom": "^29.7.0",
+    "vite": "^4.4.5",
+    "whatwg-fetch": "^3.6.20"
+
+
+Sección 226 Ahora hace la prueba cuando está autentificado.
+
+Si estoy autenticado tengo que asegurarme que vamos a la página que toca
+Primero muestra el error que da si no hacemos nada más que decir que estamos loggeados
+
+  Error: Uncaught [Error: <Navigate> may be used only in the context of a <Router> component.]
+
+Es decir, al ser true intenta navegar a algún sitio y no puede
+
+  Entonces usa el memoryRouter, que es analogo al BrowserRouter simula este componente en modo test. El initialEntries es a donde quieres navegar, es decir el memoryRourter te simula
+  que navega al initialEntries.
+
+        render(
+            <AuthContext.Provider value={ contextValue}>
+                 <MemoryRouter initialEntries={['/login']}>
+                    <Routes>
+                        <Route path='login' element={
+                            <PublicRoute><h1>Ruta pública</h1></PublicRoute>
+                         }/>
+                         <Route path="/" element={<h1>Ruta privada</h1>}/>
+                    </Routes>
+                 </MemoryRouter>
+                
+            </AuthContext.Provider>
+        );
+
+        expect(screen.getByText('Ruta privada')).toBeTruthy();
+
+    Lo que está haciendo es navegar a /login pero ya con el contexto que dice que está logeado.
+    Cuando pasa esto el PublicRoute envia directo a la parte privada en es el /
+
+    Sección 16 Tema 227 Prueba PrivateRoute
+
+    El private route mira si está logeado y si lo está lo envia a la zona privada 
+    Hará las mismas pruebas que con el publicRoute, primero la prueba simulando que está logeado, y luego la prueba de cuando no está logeado.
+    Para la primera prueba qeucrea un contexto donde el usuario está logeado, y por tanto tendrá que ir al hijo.
+    tal y como lo tenía hecho no necesito el memo porque no hay navigate y tampoco useLocation. El useLocation para guardar la ruta de la que vengo,
+    lo hice en el logout, el lo hizo en al Private Route, por ello lo cambio para hacer la misma prueba, ya que el también validará que llamamos al storage con 
+    los parámetros indicados en la prueba.
+
+    Al dejarlo como el lo hizo, entonces se queja:
+
+    Error: Uncaught [Error: useLocation() may be used only in the context of a <Router> component.]
+
+    Esto es porque el useLocation sólo se debe invocar si estamos dentro de un Route, por ello usará el MemoryRouter que simula el route
+
+    También quiere evaluar que se llama al localStorage con datos correctos, para ello define el Storage como función mock, el localStorage.
+    No sabe el motivo por así lo hace:
+
+    Storage.prototype.setItem = jest.fn();
+
+    pero luego lo usa normal
+
+
+ expect(localStorage.setItem).toHaveBeenCalledWith('lastPath','/search?q=batman');
+
+ Por alguna razón me estuvo mucho tiempo sin funcionar, al final parando y arrancando me empezo ha funcionar daba el error típico de que uselocation no se puede usar sin route.
+
+ Sección 16. Tema 228
+
+ Ahora prueba el appRoute, lo que hace es probar que debe mostrar el login si no está autenticado.
+
+ Para ello coloca el contexto sin logar y hace que estemos en la ruta de Marvel, entonces el approute enviará a login, y comprobamos que es así.
+ Luego prueba que cuando estemos logados vayamos a la ruta de Marvel, hace lo mismo con el MemoryRoute fuerza que la primera página sea login, pero como estamos logados irá a la de marvel.
+ya que es la de por defecto.
+
+Sección 16. Tema 229 Prueva navbar
+Debe validar que se muestre el nombre del usuario.
+Debe validar que si el usuario hace click en logout, hace un navigate y hace una llamada al logout.
+
+Para el primero como el navbar usa el useNavegator tengo que volver a usar el MemoryRoute
+
+
+
+
+    En la segunda simula que no está logeado e intenta ir a un sitio donde debe estar logeado, saltando el login.
+
+
+Quiere probar que se usa el useNavigate
+para hacerlo mockea el useNavigate, para ello hace lo siguiente
+
+define una función mockeada.
+
+const mockedMio = jest.fn();
+y luego 
+jest.mock('de la libreria donde está''react-router-dom', () => ({
+    useNavigate: () => mockedMio
+}))
+
+Pero esto dará error porque pide que mockeemos todas la funciones de la librería,
+para evitarlo le dice que lo haga automáticamente con
+...jest.requireActual('react-router-dom" la librería)
+
+Ojo con la nomenclatura de funciones mockeadas.
+
+const mocketMio=jest.fn() funciona pero
+const Mio = jest.fn() no funciona da errores raros
+
+Sección 17. Preubas sobre la pagina SearchPage.
+
+El primer test indica que debe mostrarse con valores por defecto.
+lo hace por snapshots
+
+Me ha dado problemas el querystring, dice que no puedo hacer le import en el SearchPage
+Hago lo que indican en el formato
+1.- Poner en lugar de un import un require dentro del export
+
+export const SearchPage = () => {
+  const queryString = require('query-string'); // con el import los test dan error
+
+2.- En el fichero de test añadir 
+
+jest.mock('query-string', () => ({
+    parse: jest.fn(() => ({ foo: 'bar', abc: 'xyz' })),
+    stringify: jest.fn(),
+    // Add other methods you need to mock here
+  }));
+
+  Lo saca de esta página 
+  https://hatchjs.com/cannot-use-import-statement-outside-a-module-jest/
+
+  Sección 16. Tema 232
+  debe mostrar que cuando busque batman encuentre batman
+Le dice que la url inicial es '/search?q=batman' así 
+
+Dado que puse lo anterior la funció query-string está mockeada, y claro no funciona la búsqueda.
+Para que funcione la toco para que devuelva lo que busco.
+
+jest.mock('query-string', () => ({
+    parse: jest.fn(() => ({ foo: 'bar', abc: 'xyz',miQuery:'batman' })),
+    stringify: jest.fn(),
+    // Add other methods you need to mock here
+  }));
+
+  Y entonces se me rompe el snapshot, porque claro era la preuba inicical, pero mockeando ha cambiado.
+  Lo borro y lo vuelvo a ejecutar.
+
+  Ahora pide que probemos a busar algo añadiendo el label.
+
+  aria-label="alert-danger"
+
+   <div aria-label="alert-danger" className="alert alert-danger animate__animated animate__fadeIn" style={{display: showError ? '':'none'}}>No hero with <b>{miQuery}</b></div>
+
+   y luego const alert = screen.getByLabelText('alert-danger');
+        expect (alert.style.display).toBe('none');
+
+vuelve a fallar la prueba del snaptshot porque la hemos cambiado, la borramos.
+
+Sección 16. Tema 233 
+
+Pide hacer dos pruebas.
+
+Debe mostrar un error si no encuentra el hero.
+
+Este no lo puedo hacer porque por el bypass anterior ya marco lo que debe buscar es batman y este lo encuentra siempre.
+
+
+
+Ojo cuando hacemos esto  const form = screen.getByRole('form'); da el siguiente error
+TestingLibraryElementError: Unable to find an accessible element with the role "form"
+Es un problema del jest, y el work around es ponerle arial-label="form"
