@@ -8,14 +8,12 @@ export const Navbar = () => {
     const navigate = useNavigate();
 
 
-    const {pathname, search} = useLocation();
+
 
 
     const onLogout= () => {
-        console.log('Logout',pathname,search);
+        
 
-        const lastPath = pathname + search;
-        localStorage.setItem('lastPath',lastPath);
 
         logout();
         navigate('/login',{ replace:true});
