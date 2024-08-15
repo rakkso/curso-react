@@ -3820,3 +3820,7 @@ Crea archivo de barril
 Ahora usa el componente en JournaApp y no el main para no ensuciar el main
 Luego en el journalPage utiliza los compoentes de Material UI como es el Typography
 <Typography variant='h1> JournalPage </Typography>
+
+
+Descargo el código de la sección 17 porque creo que no aporta es crear la maqueta de la aplicación, menus, vistas , etc.. con Material UI de aquí
+https://github.com/Klerith/react-journal-material/tree/fin-seccion-17
