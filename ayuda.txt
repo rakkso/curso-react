@@ -3824,3 +3824,68 @@ Luego en el journalPage utiliza los compoentes de Material UI como es el Typogra
 
 Descargo el código de la sección 17 porque creo que no aporta es crear la maqueta de la aplicación, menus, vistas , etc.. con Material UI de aquí
 https://github.com/Klerith/react-journal-material/tree/fin-seccion-17
+
+Sección 18, tema 255
+
+Redux es un patrón
+
+¿Qué veremos en esta sección?
+
+Redux
+Store
+Middlewares
+Dispatch
+Actions
+State
+Acciones asíncronas
+RTK Query
+Redux Toolkit
+Slices
+
+Sección 18 Tema 257
+
+Redux es muy similar al Reducer. El reducer era un
+
+estado que le pasa la información a la vista y la vista cuando hace cambios genera una acción, esa acción se envia al reducer y el reducer que es una función simple modifica el estado
+la vista no modifica el estado nunca sólo lo lee, lo actualiza vía acción que le pasa al reducer.
+
+El Redux es similar, no es propio de react se puede usar en cualquier framework como angular.
+En Reux tenemos un estado que se llama store, ese store es leido por las vistas, cuando una vista necesita actualizar el estado genera una acción.
+esta acción llega al Dispatcher, el dispatcher en función de si la acción es sincrona o asincrona decide si es asincrona resolverla con el dispatcher y 
+cuando este la resuelve entonces la pasa a uno de los reducer que hay dentro del store y actualiza el estado.
+
+Sección 18 Tema 258
+
+Redux es el patrón
+ReactRedux es la manera de usar Redux en react, pero necesita añadir mucho código
+Redux Toolkit nos da un monton de funciones, no necesitaremos crear mucho código.
+También esta  RTK Redux es una librería simiar react query que permite gestionar las peticiones http.
+
+Sección 18 Tema 259
+
+Crea un nuevo proyecto
+yarn create  vite
+toolkit-redux
+yarn 
+
+Ahora instala el paquete de toolkit y de react-redux 
+
+yarn add @reduxjs/toolkit react-redux
+
+https://redux-toolkit.js.org/
+
+
+
+Tenía una problema con el directorio 6 y git. El directorio 6 estaba ligad el repositorio de git especifico:
+
+https://github.com/rakkso/custom-hooks.git
+
+y lo que he hecho es añadirlo al repositoio de git global
+
+https://github.com/rakkso/curso-react.git
+
+co el comando $ git remote set-url origin https://github.com/rakkso/curso-react.git
+así que el directorio 6 está en dos repositorios a la vez
+
+
+
