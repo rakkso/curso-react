@@ -3890,3 +3890,117 @@ así que el directorio 6 está en dos repositorios a la vez
 
 
 Eliminando gitpages
+
+Tengo instalada la vesión de node 
+PS I:\udemy\repogit\cursoReact\udemy-react-de-cero-a-experto-hooks-y-mern\hola> node --version
+v18.17.1
+y el comando yarn create vite, cuando luego hago yarn me da el siguiente error:
+
+PS I:\udemy\repogit\cursoReact\udemy-react-de-cero-a-experto-hooks-y-mern\hola> yarn
+yarn install v1.22.19
+info No lockfile found.
+[1/4] Resolving packages...
+[2/4] Fetching packages...
+error @eslint/js@9.9.0: The engine "node" is incompatible with this module. Expected version "^18.18.0 || ^20.9.0 || >=21.1.0". Got "18.17.1"
+error Found incompatible module.
+info Visit https://yarnpkg.com/en/docs/cli/install for documentation about this command.
+
+
+Pruebo a instalar una versión de node mayor la 18.18.0, la versión 18.20.4 que me instala chocolate, python y plugins para visual studio da este error
+ - visualstudio2019-workload-vctools (exited -1) - Error while running 'C:\ProgramData\chocolatey\lib\visualstudio2019-workload-vctools\tools\ChocolateyInstall.ps1'.
+
+ ahora ya me funciona...    
+
+--> Ahora tengo la version de node diferente y la redux que acabo de instalar tambien.
+
+Sección 17 Tema 260
+
+intenta seguir la documentación para usar redux
+
+crea una carpeta store, que tiene el store.js y copia
+lo que hay en la documentación
+import { configureStore } from '@reduxjs/toolkit'
+
+export const store = configureStore({
+  reducer: {},
+})
+
+Luego provee el store a toda la aplicación
+esto lo hace en el fichero main añadiendo
+<Provider store={store}>
+<App/>
+</Provider>
+
+Al arrancar dice que falta un reducer.
+
+en la documentación dice como hacerlo
+crea una carpeta dentro de store, llamada Slices
+y luego una carpeta counter
+
+Copia mas o menos esto https://redux-toolkit.js.org/tutorials/quick-start:
+
+import { createSlice } from '@reduxjs/toolkit'
+
+const initialState = {
+  value: 0,
+}
+
+export const counterSlice = createSlice({
+  name: 'counter',
+  initialState,
+  reducers: {
+    increment: (state) => {
+      // Redux Toolkit allows us to write "mutating" logic in reducers. It
+      // doesn't actually mutate the state because it uses the Immer library,
+      // which detects changes to a "draft state" and produces a brand new
+      // immutable state based off those changes
+      state.value += 1
+    },
+    decrement: (state) => {
+      state.value -= 1
+    },
+    incrementByAmount: (state, action) => {
+      state.value += action.payload
+    },
+  },
+})
+
+// Action creators are generated for each case reducer function
+export const { increment, decrement, incrementByAmount } = counterSlice.actions
+
+export default counterSlice.reducer
+
+El slice es una función que recibe un objeto
+
+Luego hace uso de este counterSlice desde nuestro js store
+
+export const store = configureStore({
+  reducer: {
+
+    counter: counterSlice.reducer
+  },
+})
+
+Recapitulando, tenemos un storage al que tenemos que añadirle un
+reducer, el reducer es el SliceReducer que hemos compiado
+de redux, allí tenemos una acción que es decrement.
+
+Sección 17 Tema 261
+
+Ahora va usar el Store, siguiendo la documentación.
+
+usa el useSelector para coger algo del store
+
+y el useDispatch para llamar para tocar el store
+Toca el app.jsx para que use el valor del store y 
+
+que cuando toque el botón cambie el valor con el acción
+
+const {counter} = useSelector( state=> state.counter)
+cons dispatch = useDispatch();
+
+
+
+
+
+
