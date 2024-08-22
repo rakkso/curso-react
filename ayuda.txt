@@ -4000,6 +4000,13 @@ const {counter} = useSelector( state=> state.counter)
 cons dispatch = useDispatch();
 
 
+Sección 17 Tema 262
+
+Pide que hagamos un ejercicio para que añadamos un decremento y un incrementoby x, en lugar de +1
+
+
+
+
 
 
 
