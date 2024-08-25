@@ -4170,12 +4170,12 @@ Con esto nos hace hacer la tarea.
 Para coger los datos usamos el useSelector
 
 
-RTK Query 
+Sección 18 Tema 268 RTK Query 
 
 Ayuda a haceer cache de las peticiones a apis. Funciona con axios.
 Si ya tienes redux-toolkit ya viene
 
-Es competencia del reacQuery
+Es competencia del reactQuery
 
 Hace un funtional component TodoApp.jsx y lo mete dentro del main
 Luego va al directorio store, y crea una carpeta apis, y dentro un archivo
@@ -4202,3 +4202,31 @@ export const todosApi = createApi({
 
 /* RTK nos crea un custom hook poniendo la palabra use y Query, query por que no es un post */
     export const {useGetTodosQuery } =todosApi
+
+Sección 18 Tema 269 usar el  RTK Query
+
+Lo primero es llamarlo desde TodoApp.jsx:
+
+const algo = use GetTodosQuery();
+
+Pero le da error porque hay que darlo de alta en el store.
+En la parte de reducer pone:
+[todosApi.reducerPath]: todosApi.reducer,
+
+A continuacion del reducer pone
+middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(todosApi.middleware)
+
+Ahora vuelve a todoApp.jsx para pintar los datos recogidos.
+
+const {data: todos =[] , isLoading} =  useGetTodosQuery();
+
+esto hace que cojamos el data lo renombra a todos y si no existe lo pone a array vacio
+
+
+
+
+
+
+
+
+
