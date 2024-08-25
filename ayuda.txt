@@ -3989,7 +3989,9 @@ Sección 17 Tema 261
 
 Ahora va usar el Store, siguiendo la documentación.
 
-usa el useSelector para coger algo del store
+usa el useSelector para coger algo del store,
+
+al useSelector se le debe pasar el nombre del slice donde tenemos los datos
 
 y el useDispatch para llamar para tocar el store
 Toca el app.jsx para que use el valor del store y 
@@ -4155,8 +4157,48 @@ Axios es mejor que fetchAoi que viene por defecto, no hay que hacer .json de la
 respuesta, además permite configurar un conector donde podemos poner lo báscio de una
 conexión, credenciales, url base etc...
 
+Sección 17 Tema 267 Mostramos pokemos via le store
+
+pone un <span> Loading:  {true </span>
+{poiemons.map}
+
+button diasabled = {isLoadin}
+onClick dispatch getPokemos(page)
+
+Con esto nos hace hacer la tarea.
+
+Para coger los datos usamos el useSelector
 
 
+RTK Query 
+
+Ayuda a haceer cache de las peticiones a apis. Funciona con axios.
+Si ya tienes redux-toolkit ya viene
+
+Es competencia del reacQuery
+
+Hace un funtional component TodoApp.jsx y lo mete dentro del main
+Luego va al directorio store, y crea una carpeta apis, y dentro un archivo
+todosApi.js
+
+import createApi, fetchBaseQuery
+
+export const todosApi = createApi({
+    reducerPath: 'todos',
+
+    baseQuery: fetchBaseQuery)({
+        baseUrl: 'https://jsonplaceholder.typicode.com'
+    }),
+    
+    endpoints: /*funciones para traer datos*/
+       (builder) => ({
+        getTodos: builder.query ({
+            query: () = '/todos'
+        })
 
 
+       })
+    })
 
+/* RTK nos crea un custom hook poniendo la palabra use y Query, query por que no es un post */
+    export const {useGetTodosQuery } =todosApi
