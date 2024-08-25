@@ -4222,8 +4222,27 @@ const {data: todos =[] , isLoading} =  useGetTodosQuery();
 
 esto hace que cojamos el data lo renombra a todos y si no existe lo pone a array vacio
 
+Sección 18 Tema 270 
+
+Crea otro endpoint para coger el todo concreto con el id.
+
+getTodo: builder.query({
+    query: (todoId) => `/todos/${todoId}
+})
+
+En el todoApp.jsx usará esta otra hook, y cambia para ir
+mostrando un elemento con dos botones next y previous.
+Muestra la potencia de RTK Query porque hace cache, y además el código
+queda muy limpio, para saber cual ha de coger lo mantiene con un useState
+
+const [todoId, setTodoId] = useState(1);
+const { data: todo, isLoading} = useGetTodoQuery(todoId);
 
 
+<pre<{JSON.stringfy(todo)}</pre>
+<button onClick={prevTodo}> Prev Todo</button>
+
+<button onClick={nextTodo}> Next Todo</button>
 
 
 
