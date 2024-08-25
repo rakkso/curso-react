@@ -4151,6 +4151,10 @@ const {data} = await pokemonApi.get(`/pokemon?limit010&offset${page +10}`)
 
 en el thunks
 
+Axios es mejor que fetchAoi que viene por defecto, no hay que hacer .json de la
+respuesta, además permite configurar un conector donde podemos poner lo báscio de una
+conexión, credenciales, url base etc...
+
 
 
 
