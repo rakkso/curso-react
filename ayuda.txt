@@ -4057,8 +4057,99 @@ para hacer la multiselección es clicando la Recuerda
 	}
 }
 
+Sección 17 Tema 264
+
+Crea una página principal PokemonApp.jsx que será un funcional component con este contenido
+
+<h1>Pokemon</h1>
+<hr/>
+<ul>
+<li>hola</li>
+<li>hola</li>
+<li>hola</li>
+<li>hola</li>
+</ul>
+
+y en el index.css pone un padding: 50px
+
+Crea un slice para guardar la información del Pokemon
+Crea el archivo pokemonSlice dentro del directorio slices, además corrige el snippet, en el name, 
+le pone datos de estoa pagai,poekemon [] , isloading:false.
+Vamos al store y pokemons: pokemonSlice
+
+crea dos reducer:
+
+startLoadPokemons
+que ponga a true el isLoadding
+
+setPokemons
+que sólo hará consolelog del action
+
+Ahora miramos en el navegador en el redux que ahora tenemos 2.
+
+Sección 17 Tema 265
+
+Thunks
+
+thunks son funcionaes  asincronas que llamará a una acción del reducer.
+En el directorio pokemon, crea un archivo thunks.js que tiene todos los thunks
+
+una la api pokeapi.co/api/v2/pokemon?limit10&offset=0
+
+export const getPokemons = (page =0 ) => {
+
+    return async (dispatch,getState ) => {
+
+        dispatch (startLoadPokemons());
+        // TODO llamar a la pide
+        dispatch(setPokemons());
+
+    }
+}
 
 
+en el pokemonApp añade un useEffect para cargar 
+
+
+useDispatch = useDispatch();
+
+useEfect(()=> getPokemons)
+
+Para hacer la llamada 
+
+Sección 17 Tema 266
+Para hacer la llamada a la pi usa axios
+
+Primero lo hace con fetchAoi
+En el thunks en el getPokemons hace
+
+const resp = await fetch(`httpps://pokeapi.co/api/v2/pokemon?limit=10&offset=${page *10}`);
+const data = await resp.json();
+console.log(data);
+
+Ahora construye la acción setPokemons
+debería actualizar isloading= false, state.page = page, y state.pokemons
+
+y lo pasa 
+
+dispatch ( setPokemons({ pokemons:data.results, page : page +1 }));
+
+Ahora hace lo mismo con axios.
+
+yarn add axios
+crea carpeta api, creaa pokemonApi.js
+y hace
+import axios from'axios';
+
+export const pokemonApi = axios.create(
+    baseURL:'https://pokeapi.co/api/v2/
+)
+
+y usa el pokemonApi
+
+const {data} = await pokemonApi.get(`/pokemon?limit010&offset${page +10}`)
+
+en el thunks
 
 
 
