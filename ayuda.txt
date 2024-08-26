@@ -4306,9 +4306,23 @@ En auth crea un thunks.js porque el login son tareas asincronas.
 
 export const checkingAuthentication = (email, passowrd) => {
     return  async(dispatch) => {
-        
+
     }
 }
+
+Ahora pide que cambiemos el estado con lo que tenemos montado.
+
+Luego hace lo análogo para google. Para ello en el thunks.js crea otra función
+statGoogleSign
+
+export const startGoogleSignIn = () => {
+    return async(dispatch) => {
+        dispatch (procesando());
+    }
+}
+
+y hace que lo llame la página
+
 
 
 
