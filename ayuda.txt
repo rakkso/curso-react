@@ -3856,12 +3856,12 @@ cuando este la resuelve entonces la pasa a uno de los reducer que hay dentro del
 
 Sección 18 Tema 258
 
-Redux es el patrón
+Redux es el patrón, se puede usar en lugar de context, es para aplicaciones más grandes.
 ReactRedux es la manera de usar Redux en react, pero necesita añadir mucho código
 Redux Toolkit nos da un monton de funciones, no necesitaremos crear mucho código.
 También esta  RTK Redux es una librería simiar react query que permite gestionar las peticiones http.
 
-Sección 18 Tema 259
+Sección 18 Tema 259 Redux
 
 Crea un nuevo proyecto
 yarn create  vite
@@ -4244,6 +4244,71 @@ const { data: todo, isLoading} = useGetTodoQuery(todoId);
 
 <button onClick={nextTodo}> Next Todo</button>
 
+Sección 19. TEma 272 Introducción
+Explica que aplicará redux para la parte de autentificación de la aplicación JournalAPP
+junto con FireBase y El SignIn de Google.
+
+¿Qué veremos en esta sección?
+
+Redux aplicado en nuestro proyecto
+
+Firebase
+
+FireStore
+
+Redux Devtools
+
+Thunk
+
+Formularios
+
+Google SingIn
+
+Acciones Asíncronas
+
+Mantener el estado de la autenticación
+
+En esta sección configuraremos Redux en nuestro proyecto por primera vez, aplicado al inicio en la parte de la autenticación y mantener el estado de la misma a lo largo de toda la aplicación.
+Haremos que se auntentifique contra google.
+
+Sección 19 TEma 275
+Coge la aplicación del journalApp
+
+instala redux reduxtoolkit
+
+yarn add @reduxjs/toolkit react-redux
+
+configura el store, con un directorio store y allí un store.js
+Va a poner el Provider del redux lo más alto posible, en el main por encima del BrowserRouter
+Sección 19 Tema 276
+
+Ahora crea el Slicce, dentro del store crea un directorio auth y llí un authSlice
+
+que se llamará auth, y le pone el estado (autenticado, no autenticado)
+uid: email, displayname: photoURL, errorMessage
+
+Tengra una función de login, logout, checkingCredentials sirve para que sea el estoa
+mientras que se está haciendo el login.
+
+Sección 19 Tema 276
+
+Ahora usará el store y las funciones.
+
+pone a no autenticado el estado inical.
+
+Crea un custom hook de useForm
+y en loginPage usa el useForm
+pone el onSubmit para que haga el dispatch
+
+hace otra función para el loginde Google
+
+En auth crea un thunks.js porque el login son tareas asincronas.
+
+export const checkingAuthentication = (email, passowrd) => {
+    return  async(dispatch) => {
+        
+    }
+}
 
 
 
