@@ -4555,7 +4555,7 @@ y añade este objeto en la salida.
 
 ...formValidation
 
-Sección 19 Tema 294 
+Sección 19 Tema 284 
 
 Ahora crea el isFormValid, será un useMemo porque solo se debe procesar si se procesa el formState, 
 mira si formValidation tiene alguna que no sea null, eso quiere decir que hay algún error:
@@ -4575,7 +4575,7 @@ Pero luego lo guita
 
 Ahora usa los nuevos campos Valid para mostrar el error en cada campo:
 
-error = {!displayNameValid}
+error = {!!displayNameValid}
 helperText = {displayNameValid}
 
 Intenta salvar que al entrar de error porque no hay nada informado.
@@ -4583,6 +4583,11 @@ Crea un useState que indica si se ha posteado el formulario  y lo
 actualiza cuando lo posteamos en la función onSubmit.
 Y sólo mostramos error si se ha posteado.
 
-const {formSubmitted,setFormSubmitted} = useForm (false);
+const [formSubmitted,setFormSubmitted] = useState (false);
 
+setFomrSubmitted(true);
+
+y lo usa:
+
+error = {!!displayNameValid && formSubmitted}
 
