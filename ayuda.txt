@@ -3991,7 +3991,10 @@ Ahora va usar el Store, siguiendo la documentación.
 
 usa el useSelector para coger algo del store,
 
-al useSelector se le debe pasar el nombre del slice donde tenemos los datos
+al useSelector se le debe pasar el nombre del slice donde tenemos los datos, este nombre se lo hemos
+dado al declararlo en el store algo de este tipo:
+
+  login: autorizadorSlice.reducer, 
 
 y el useDispatch para llamar para tocar el store
 Toca el app.jsx para que use el valor del store y 
@@ -4323,8 +4326,263 @@ export const startGoogleSignIn = () => {
 
 y hace que lo llame la página
 
+Sección 19 Tema 278
+
+En esta aplicación va a usar de backend fiebase, es una base de datos en la nube
+vamos a la web https://firebase.google.com/?hl=es y luego vamos a la consola (go to console)  y crea un nuevo proyecto
+react-cursos... esto crea un proyecto. busca el icono </> que nos permite
+configurar la aplicación Journal-App, registrar la aplicación
+Esto dará una api,  y el código para usarla.
+
+// Import the functions you need from the SDKs you need
+import { initializeApp } from "firebase/app";
+// TODO: Add SDKs for Firebase products that you want to use
+// https://firebase.google.com/docs/web/setup#available-libraries
+
+// Your web app's Firebase configuration
+const firebaseConfig = {
+  apiKey: "AIzaSyAD1MsBS-hQDtNrmXTnkaHQqdkNCJEwWZo",
+  authDomain: "react-curso-5548a.firebaseapp.com",
+  projectId: "react-curso-5548a",
+  storageBucket: "react-curso-5548a.appspot.com",
+  messagingSenderId: "924464420985",
+  appId: "1:924464420985:web:0df179e1e46ec8d6ab5ca8"
+};
+
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+
+
+Luego instala yarn add Firebase
+Crea una carpeta que se llama firebase en src, y crea un acrhivo config.js donde pone todo el código
+Añade
+import {getAuth} from 'firebase/auth'
+import {getFireStore} from 'firebase/FireStore/lite',
+
+export const FirebaseAuth = getAuth (FirebaseApp)
+export const FirebaseBD = getFirestore (FirebaseApp)
+
+
+Sección 19  Temta 279 GoogleSingIn Firebase
+Va la web de firebase y añade proveedores para ello va ala web de firebase y en 
+
+autenticación selecciona provedore Google, y correo y contraseña.
+En la carpeta firebase crea un archivo que se llama providers.js
+
+const GoogleAuthProvider = new GooggleAuthProvider();
+
+export const singInWithGoogle = async() =>{
+    try {
+const result = await signInWithPopup(FirebaseAuth, gooogleProvider);
+const {displayName,email,photoUrl,uid} = result.user;
+//        const credentials = GooggleAuthProvider.credentialFromResult(result);
+        console.log ( {credentials};)
+
+        return {
+            ok: true,
+            //User info
+            displayName, email, photoURL,uid
+        }
+    } catch (error) {
+        console.log(error);
+
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        return {
+            ok: fale,
+            errorMessage
+        }
+    }
+}
+
+En el thunks lo llama
+
+
+const result = await singInWithGoogle();
+console.log ({result})
+
+
+Sección 19 TEma 280
+
+Ahora se centra en recoger el resultado del acceso a google, para cambiar el estado de checkingAuthentication
+a autorizado o no autorizado, en thunks hace esto:
+
+if (!result.ok) return dispatch(logout())
+ dispatch(login( result ))
+
+En logout lo que ara es dejar el estado como no autenticado.
+
+state.status = 'no-autenticado';
+state.uid = null;
+state.displayName = null;
+state.photoURL = null;
+state.errorMessage = payload.errorMessage;
+
+y en login hace:
+
+state.status = 'autenticado';
+state.uid = payload.uid;
+state.email = payload.email;
+state.displayName = payload.displayName;
+state.photoURL = payload.photoURL;
+state.errorMessage = payload.errorMessage;
+
+Una vez, estamos autenticados debemos bloquear volver a hacer login.
+
+
+coge
+const {status} = useSelector ( state => state.auth);
+y se lo guarda en 
+
+const isAuthenticating = useMemo(() => status == 'checking', [status])
+
+Con eso lo que hace es que isAuthenticating no se recalcule sino es que cambia status
+
+El isAuthenticating lo pone en los botones disable={isAuthtenticating}
+
+Sección 19 Tema 281
+
+Quiere añadir validaciones al formulario. Quiere hacerlo igual 
+
+que react-hook-from y formik, que son dos compoententes que lo hacen
+
+Pimero incluye el useForm nuestro en la página de Registro.
+import { useForm } from '../../hooks';
+
+const formData = {
+ email: 'rak0kso@gmail.com',
+ password : '123',
+ displayName: 'Óscar' 
+}
 
 
 
+const {formState,onInputChange displayName,email,password, } = useForm(formData);
+
+Ahora hace la conexión de los campos al formularcio.
+
+const on Submit = (event) =>{
+    event.preventDefault();
+    console.log(formState);
+}
+
+añade:
+
+Al formulario onSubmit={onSubmit}
+
+name="displayName"
+value={displayName}
+onChange= {onInputChage}
+
+a cada campo
+
+y pone tipo submit al botón de crear cuenta.
+
+Las validaciones las hace en el siguiente tema.
+
+Sección 19 Tema 282
+
+Ahora hace validaciones crea las validaciones.
+
+Empieza tocando con material ui cómo se vería un campo con error Y
+como se podría poner un texto de ayuda.
+si en text pones error, lo renderiza en recojo
+si pones helperText="un texto" muestra esto en la parte de abajo del texto como ayuda.
+
+El problema es que si lo ponemos siempre saldrán, para evitarlo los define condicionales.
+
+erro={}
+helpText={}
+
+Le añade a useForm varias variables: isFormValid,displayNameValidd, emailValid,
+
+
+const {
+     formState, displayName, email, password, onInputChange,
+     isFormValid, displayNameValid, emailValid, passwordValid
+} = useForm(formData);
+
+
+}
+
+
+error={!displayNameValid}
+helperText ? {displayNameValid}
+
+
+Crea un objeto que contenga las validaciones a hacer por campo
+const formValidations = {
+    email:[ (value) => value.includes('@'), El correo debe tener una @'],
+    password: [(value)=> value.length >=6 ,'El password de de tener más de 6 letras'],
+    displayName: [(value)=> value.lenght >=1,'El displayName es obligatorio']
+}
+
+Es importante que el nombre de cada campo sea el del formulario.
+
+Este objeto se lo pasamos al useForm para que lo use.
+
+Esto lo hará en el siguiente tema.
+
+
+Sección 19 Tema 283
+
+Ahora toca el useForm para que recoja el objeto con las validaciones a realizar.
+
+Le añade un useState que guarda el objeto de validaciones que recibimos
+const [ formValidation, setFormValidation ] =useState({})
+
+usa un useEffect para que se ejecute cada vez que se cambie algo del formulario se ejecute
+
+
+crea la función  createValidatiors que lee el objeto de validaciones Y
+las ejecuta
+
+const createValidators =() => {
+    const formCheckedValues = {};
+
+    for (const formField of Object.keys (formValidations)) {
+        console.log(formField)
+        const [fn, errorMessage] =formValidations[formField];
+        Crea en el formChecked una entrada con nombre, nombre del campo +Valid con el 
+        resultado de la ejecución de la función que nos han pasado.
+        formChecked[`${ formField}Valid']= fn(formstate[formField]) ? null: errorMessage;
+    }
+
+    setFormValidation (formCheckedValues);
+}
+
+y añade este objeto en la salida.
+
+...formValidation
+
+Sección 19 Tema 294 
+
+Ahora crea el isFormValid, será un useMemo porque solo se debe procesar si se procesa el formState, 
+mira si formValidation tiene alguna que no sea null, eso quiere decir que hay algún error:
+
+const isFormValid = useMemo ( () => {
+    for (const formValue of Object.keys( formValidation)) {
+        if (formValidation[formValue] !== null) return false;
+    }
+    return true;
+}, [formValidation])
+
+y lo retorna en el form.
+
+En el Register page pone un <h1>FormValid: { isFormValid ? ' Válido':'Incorrecto' } </h1>
+
+Pero luego lo guita 
+
+Ahora usa los nuevos campos Valid para mostrar el error en cada campo:
+
+error = {!displayNameValid}
+helperText = {displayNameValid}
+
+Intenta salvar que al entrar de error porque no hay nada informado.
+Crea un useState que indica si se ha posteado el formulario  y lo 
+actualiza cuando lo posteamos en la función onSubmit.
+Y sólo mostramos error si se ha posteado.
+
+const {formSubmitted,setFormSubmitted} = useForm (false);
 
 

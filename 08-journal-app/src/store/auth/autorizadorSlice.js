@@ -13,11 +13,23 @@ export const autorizadorSlice = createSlice({
 
   },
   reducers: {
-    login: (state,action) => {
+    login: (state,{payload}) => {
+
+      state.estado= 'autenticado';
+      state.uid= payload.uid;
+      state.email= payload.email;
+      state.displayname= payload.displayname;
+      state.photoURL= payload.photoURL;
+      state.errorMessage= payload.errorMessage;
 
     },
-    logout: (state, action) => {
-
+    logout: (state, {payload}) => {
+     state.estado= 'no-autenticado';
+     state.uid= null;
+     state.email= null;
+     state.displayname= null;
+     state.photoURL= null;
+     state.errorMessage= payload.errorMessage;
     },
 
     procesando: (state,action) =>{
