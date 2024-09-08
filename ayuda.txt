@@ -4591,3 +4591,31 @@ y lo usa:
 
 error = {!!displayNameValid && formSubmitted}
 
+Sección 19 Tema 285
+
+Ahora hace la llamada al backend, como es asincrono necesitamos dentro del thunks
+
+Primero crear un proveedor  en providers.js
+export const registerUserWithEmailPassword = async ({email,password,displayName}) =>{
+
+    try {
+        const resp  = await createUserWithEmailAndPassword (FirebaseAuth,email,password)
+        const {uid, photoURL } = resp.user;
+        console.log(resp);
+
+    } catch (error) {
+        console.log(error);
+        return { ok: false, errorMessage: error.message}
+    }
+}
+
+Crea en el thunks una función
+export const statCreatingUserWiehEmailPassword ({ name, password, displayName }) =>{
+    returnt async (dispatch) => ´{
+        dispatch (checkingCredentials());
+        const resp = await registerUserWithEmailPassword ({})
+    }
+}
+
+
+y luego en el RegisterPage en el onsubmit via dispatch lo llama.

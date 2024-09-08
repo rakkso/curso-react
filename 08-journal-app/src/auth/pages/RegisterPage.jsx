@@ -1,9 +1,11 @@
 import { Link as RouterLink } from 'react-router-dom';
+import {useDispatch} from 'react-redux'
 import { Button, Grid, Link, TextField, Typography } from '@mui/material';
 import { Google } from '@mui/icons-material';
 import { AuthLayout } from '../layout/AuthLayout';
 import { useForm } from '../../hooks';
 import { useState } from 'react';
+import { statCreatingUserWiehEmailPassword } from '../../store/auth/thunks';
 
 
 const formData = {
@@ -23,7 +25,7 @@ const formData = {
 
 export const RegisterPage = () => {
 
-
+const dispatch = useDispatch();
 
 
   const {
@@ -37,6 +39,7 @@ const [formSubmitted,setFormSubmitted]= useState (false);
     event.preventDefault();
     setFormSubmitted(true);
     console.log(formState);
+    dispatch (statCreatingUserWiehEmailPassword(formState));
 }
 
                 {/* error={!displayNameValid}
