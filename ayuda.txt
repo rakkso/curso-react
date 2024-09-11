@@ -3994,7 +3994,7 @@ usa el useSelector para coger algo del store,
 al useSelector se le debe pasar el nombre del slice donde tenemos los datos, este nombre se lo hemos
 dado al declararlo en el store algo de este tipo:
 
-  login: autorizadorSlice.reducer, 
+  counter: counterSlice.reducer, aquí le hemos dado el nombre de counter
 
 y el useDispatch para llamar para tocar el store
 Toca el app.jsx para que use el valor del store y 
@@ -4633,3 +4633,24 @@ if (!ok) return dispatch(logout({errorMessage}))
 dispatch ( login ({ uid, displayName, email, photoURL}))
 
 En la siguiente sección usaré el mensaje de error 
+
+Sección 19 Tema 287
+Ahora va a mostrar los errores que nos puede dar el login
+En la página RegisterPage usa el useSelector para recoger el status y el errorMessage
+y también crea una variable que no se esté calculando todo el rato solo cuando el estado cambie
+que tiene el valor si está logeando
+
+const { estado, errorMessage} = useSelector(state => state.login);
+const isCheckingAuthentication = useMemo( () => estado === 'checking' )
+
+para poner disable si está en checking
+
+También añade de material lo siguiente para mostar el error.
+<Grid 
+item 
+xs={12}
+display= { !!errorMessage ? '':'none'}
+Hace que si errorMessage viene a null display vale '' sino vale 'none'
+>
+<Alert serverity='error'>{errorMessage</Alert>
+</Grid>
