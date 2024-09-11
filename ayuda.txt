@@ -4619,3 +4619,17 @@ export const statCreatingUserWiehEmailPassword ({ name, password, displayName })
 
 
 y luego en el RegisterPage en el onsubmit via dispatch lo llama.
+
+Sección 19 TEma 286
+Quedó actualizar el displayName y una vez creado el usuario hacer login
+
+usa en el provider 
+
+await updateProfile( FirebaseAuth.currentUser,{displayName});
+
+En la parte del thunks
+
+if (!ok) return dispatch(logout({errorMessage}))
+dispatch ( login ({ uid, displayName, email, photoURL}))
+
+En la siguiente sección usaré el mensaje de error 

@@ -18,7 +18,7 @@ export const autorizadorSlice = createSlice({
       state.estado= 'autenticado';
       state.uid= payload.uid;
       state.email= payload.email;
-      state.displayname= payload.displayname;
+      state.displayName= payload.displayName;
       state.photoURL= payload.photoURL;
       state.errorMessage= payload.errorMessage;
 
