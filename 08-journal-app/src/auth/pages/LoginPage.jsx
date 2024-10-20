@@ -1,5 +1,5 @@
 import { Link as RouterLink } from 'react-router-dom';
-import { Button, Grid, Link, TextField, Typography } from '@mui/material';
+import { Alert, Button, Grid, Link, TextField, Typography } from '@mui/material';
 import { Google } from '@mui/icons-material';
 import { AuthLayout } from '../layout/AuthLayout';
 import { useForm } from '../../hooks';
@@ -11,7 +11,7 @@ export const LoginPage = () => {
 
   const dispatch = useDispatch();
 
-  const {estado} = useSelector ( state => state.login);
+  const {estado,errorMessage} = useSelector ( state => state.login);
   console.log("estado",estado);
 
   const estaAutenticado = useMemo(() => estado == 'autenticado', [estado]);
@@ -26,9 +26,9 @@ export const LoginPage = () => {
   const onSubmit = (event) => {
     event.preventDefault();
 
-    console.log({email,password})
+    console.log("LoginPage:","password:",password,"email:",email,"junto:", {email,password});
 
-    dispatch (checkingAuthentication())
+    dispatch (checkingAuthentication({email,password}))
   }
     
 
@@ -69,6 +69,16 @@ export const LoginPage = () => {
               />
             </Grid>
             
+
+
+            <Grid container spacing={ 2 } sx={{ mb: 2, mt: 1 }}>
+
+<Grid item  xs={12}   display= { !!errorMessage ? '':'none'}>
+      <Alert severity='error' >{errorMessage}</Alert>
+</Grid>
+</Grid>
+
+
             <Grid container spacing={ 2 } sx={{ mb: 2, mt: 1 }}>
               <Grid item xs={ 12 } sm={ 6 }>
                 <Button  disabled={estaAutenticado} type='submit' variant='contained' fullWidth>

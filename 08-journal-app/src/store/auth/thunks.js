@@ -1,11 +1,15 @@
 import { login, logout, procesando } from "./autorizadorSlice";
-import { registerUserWithEmailPassword, singInWithGoogle } from "../../firebase/providers"
+import { loginUserWithEmailPassword, registerUserWithEmailPassword, singInWithGoogle } from "../../firebase/providers"
 
-export const checkingAuthentication = (email,password) => {
+export const checkingAuthentication = ({email,password}) => {
     return async(dispatch,getState) => {
        
             dispatch (procesando());
-    
+            console.log("thunks:","email:",email,"password:",password);
+            const {ok, uid, photoURL, displayName,errorMessage } = await loginUserWithEmailPassword ({email,password})
+            //console.log("statCreatingUserWiehEmailPassword:")
+            if (!ok) return dispatch(logout({errorMessage}))
+             dispatch ( login ({ uid, displayName, email, photoURL})) 
     
     
         }
@@ -30,7 +34,7 @@ export const startGoogleSignIn = (email,password) => {
         }
     
 
- export const statCreatingUserWiehEmailPassword =  ({ email, password, displayName }) =>{
+ export const statCreatingUserWithEmailPassword =  ({ email, password, displayName }) =>{
             return async (dispatch) => {
 
                 console.log ("name:",email,"password", password,"displayName",displayName);
@@ -41,4 +45,7 @@ export const startGoogleSignIn = (email,password) => {
                  dispatch ( login ({ uid, displayName, email, photoURL}))
             }
 }
-    
+
+
+
+

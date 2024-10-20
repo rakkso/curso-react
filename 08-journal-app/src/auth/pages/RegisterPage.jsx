@@ -5,7 +5,7 @@ import { Google } from '@mui/icons-material';
 import { AuthLayout } from '../layout/AuthLayout';
 import { useForm } from '../../hooks';
 import { useMemo, useState } from 'react';
-import { statCreatingUserWiehEmailPassword } from '../../store/auth/thunks';
+import { statCreatingUserWithEmailPassword } from '../../store/auth/thunks';
 
 
 const formData = {
@@ -42,7 +42,7 @@ const [formSubmitted,setFormSubmitted]= useState (false);
     event.preventDefault();
     setFormSubmitted(true);
     console.log(formState);
-    dispatch (statCreatingUserWiehEmailPassword(formState));
+    dispatch (statCreatingUserWithEmailPassword(formState));
 }
 
                 {/* error={!displayNameValid}

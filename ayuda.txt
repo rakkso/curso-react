@@ -4654,3 +4654,19 @@ Hace que si errorMessage viene a null display vale '' sino vale 'none'
 >
 <Alert serverity='error'>{errorMessage</Alert>
 </Grid>
+
+Sección 19 Tema 288 Hacer login sin el usuario de google
+
+Es una tarea,  indica que creemos un thunks que haga el login y en la parte de  los providers crea otra función
+
+la función de firebase es signInWithEmailAndPassword
+
+Sección 19 Tema 289 Crear pantalla de carga
+Cuando hago login está en memoria
+Crea una carpeta ui para meter componentes globales.
+Crea carpeta components y crea el ChekcingAuth.jsx para crear una pantalla de carga
+
+En el router hace :
+
+const { status } = useSelector (state =)
+
