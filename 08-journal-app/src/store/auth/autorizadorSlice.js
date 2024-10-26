@@ -4,7 +4,7 @@ export const autorizadorSlice = createSlice({
   name: 'autorizador',
   initialState : {
 
-    estado: 'no-autenticado', /* checking, autenticado, no-autenticado */
+    estado: 'checking', /* checking, autenticado, no-autenticado */
     uid: null,
     email: null,
     displayname: null,

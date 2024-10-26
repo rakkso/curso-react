@@ -4661,12 +4661,39 @@ Es una tarea,  indica que creemos un thunks que haga el login y en la parte de  
 
 la función de firebase es signInWithEmailAndPassword
 
-Sección 19 Tema 289 Crear pantalla de carga
+Sección 19 Tema 290 Crear pantalla de carga
 Cuando hago login está en memoria
 Crea una carpeta ui para meter componentes globales.
 Crea carpeta components y crea el ChekcingAuth.jsx para crear una pantalla de carga
+A partir de lo que hicimos en el Authlayout
+
+    <Grid
+      container
+      spacing={ 0 }
+      direction="column"
+      alignItems="center"
+      justifyContent="center"
+      sx={{ minHeight: '100vh', backgroundColor: 'primary.main', padding: 4 }}
+    >
+
+      <Grid item direction='row' justifyContent='center'
+
+       
+
+             
+        }}>
+
+Le añade en el item el CircularProgress color='warnning'
+Ahora en el slice autorizadorSlice en el initialState cambia el estado de no-auntehnticao a checking por que no sabe si está o no autenficado.
 
 En el router hace :
 
-const { status } = useSelector (state =)
+const { status } = useSelector (state =>    state.login)
 
+if (status === 'checking' ) {
+    return <ChekcingAuth />
+}
+
+Con esto hace que no importa la ruta en la que estemos si no estás autenticado saldrá esto.
+
+Ahora cualquier ruta que pongamos nos muestra la pantalla de checking (el circulo) hasta no saber si estamos o no logeados.
