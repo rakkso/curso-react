@@ -4697,3 +4697,93 @@ if (status === 'checking' ) {
 Con esto hace que no importa la ruta en la que estemos si no estás autenticado saldrá esto.
 
 Ahora cualquier ruta que pongamos nos muestra la pantalla de checking (el circulo) hasta no saber si estamos o no logeados.
+
+Sección 19 Tema 291
+
+Tenemos la aplicación que el route muestar el cargando si estamos chequeando
+que es el estado inicial.
+Para cualquier ruta.
+
+Ahora lo que hará es intentar cambiar el estado, ya que cuando haces recargar de la página
+lo que tenemos en el redux se pierde y si tenemos el usuario logeado el estado dirá que no
+ para ello con un useEffect
+mira si tenemos usuario y si lo tenemos lanza el login y sino el logout
+Así cambiaremos el estado de checking a authenticated o no-autenficado
+
+
+Primero pone un console log del user como función a la que llamar para que veamos que tiene.
+
+  useEffect(()=>{
+
+    onAuthStateChanged (FirebaseAuth,async (user) => {
+      console.log(user)
+    })
+
+  },[])
+
+  Al hacerlo dice que el usuario es cuenta11@gmail.com, y acabo de arrancar la aplicación.
+
+  Comenta que con es usario lo que tenemos que hacer es que se autentique. Para ello
+  usa el useDispatch.
+  Hace que si no hay usuario llame al logout.
+  Si hay un usuario llame al login
+
+  useEffect(()=>{
+
+    onAuthStateChanged (FirebaseAuth,async (user) => {
+      if ( !user) return dispatch (logout());
+
+      const {uid,email,displayName, photoURL} = user;
+      dispatch ( login( {uid, email, displayName, photoURL }) );
+    
+    })
+
+  },[])
+
+
+
+
+
+Con esto aunque refresquemos la pantalla guardamos el estado y lo usamos.
+
+Ahora cambia las rutas para que sólo salga el login si no estoy autenticado
+       {
+         (estado === 'autenticado')
+         ? <Route path="/*" element={ <JournalRoutes /> } />
+         : <Route path="/auth/*" element={ <AuthRoutes />   } />
+       }
+
+       <Route path='/*' element={<Navigate to='/auth/login'/>} />
+
+
+
+Sección 19 TEma 292
+
+Hace un customHook para quitar codigo del AppRoute, lo llama useCheckAutch
+
+retornará si está autenticado O no
+
+Sección 19 Tema 293
+
+Ahora implementa el cerrar sesión. 
+En el Navbar tenemos el botón logout.
+implementa
+
+const onLogout = () =< {
+    console.log();
+}
+
+Para hacer logoout llama al firebase que no es sincrono.
+En el provider añade otra función
+
+export const logoutFirebase = async() => {
+    return await FirebaseAuht.signOut();
+}
+
+Ahora crea una acción en el thunks
+export const satrtLogout = () => {
+    return async (dispatch) => {
+        await logoutFirebase();
+        dispatch (logout());
+    }
+}
