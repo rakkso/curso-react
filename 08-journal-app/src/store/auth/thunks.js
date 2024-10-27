@@ -1,5 +1,5 @@
 import { login, logout, procesando } from "./autorizadorSlice";
-import { loginUserWithEmailPassword, registerUserWithEmailPassword, singInWithGoogle } from "../../firebase/providers"
+import { loginUserWithEmailPassword, logoutFirebase, registerUserWithEmailPassword, singInWithGoogle } from "../../firebase/providers"
 
 export const checkingAuthentication = ({email,password}) => {
     return async(dispatch,getState) => {
@@ -46,6 +46,15 @@ export const startGoogleSignIn = (email,password) => {
             }
 }
 
+
+export const startLogout = () => {
+
+    return async (dispatch) => {
+
+        await logoutFirebase();
+        dispatch ( logout() );
+    }
+}
 
 
 

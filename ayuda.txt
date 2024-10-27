@@ -4757,10 +4757,25 @@ Ahora cambia las rutas para que sólo salga el login si no estoy autenticado
 
 
 
-Sección 19 TEma 292
+Sección 19 Tema 292
 
 Hace un customHook para quitar codigo del AppRoute, lo llama useCheckAutch
+Concretamente este código
+  const { estado } = useSelector (state =>  state.login);
 
+  const dispatch = useDispatch();
+
+  useEffect(()=>{
+
+    onAuthStateChanged (FirebaseAuth,async (user) => {
+      if ( !user) return dispatch (logout());
+
+      const {uid,email,displayName, photoURL} = user;
+      dispatch ( login( {uid, email, displayName, photoURL }) );
+    
+    })
+
+  },[])
 retornará si está autenticado O no
 
 Sección 19 Tema 293
