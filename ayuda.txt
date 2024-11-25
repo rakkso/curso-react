@@ -4802,3 +4802,118 @@ export const satrtLogout = () => {
         dispatch (logout());
     }
 }
+
+Sección 19 Temas 294
+
+Añade transiciones entre pantallas. Para ello va a la página animate.style
+
+En el index pone  la importación del css y luego pone el siguiente código
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
+  />
+
+className = 'animate__animated animate__fadeIn animate__faster'
+
+En diferentes lugares:
+
+LoginPage en el form
+RegisterPage en el form
+JorunalPage en el box de JournalLayout
+NothingSelectedView en el Grid
+NoteView en el Grid
+
+
+Sección 20 
+¿Qué veremos en esta sección?
+
+CRUD hacia Firestore
+
+Expandiendo nuestro store añadiendo otros reducers
+
+Seleccionar y subir archivos
+
+Animaciones adicionales a nuestra aplicación
+
+Limpieza en el logout
+
+Esta sección está enfocada ahora en las entradas de nuestro diario, asegurándose de que grabe únicamente en el documento del usuario autenticado.
+
+Sección 20 Tema 299 JournalSlice
+En store crea una carpeat journal, crea el index.js journalslice.js thunks.js
+
+En elo jorunalslice.js crea una variable que será que nos indica si está grabando isSaving. También guardará todas las notas y la nota activa, además
+Crea las acciones:
+addNewEmptyNote
+setActiveNote
+setNotes
+updateNotes
+deleteNoteById
+
+Sección20 Tema Preparar base de datos
+
+Usa cloud FireStore mejor que real time database, cloud firebase es mas robusto, está mejor estructurado.
+Vamos a firebase y hacemo crear base de datos cloud FireStore . Escoge modo producción porque permite hacer lecturas y escrituras si estás autentificado. 
+Escoge la region mas cercana a nosotros
+Es una base de datos no sql. Se basa en colecciones y elementos. Hace colecciones de  usuarios, que tiene documentos, y cada documento tendra una colección de notas
+y cada nota tendrá un título, body, fecha
+
+Comenta que para grabar será un thunks porque será una acción asincrona.
+
+Sección 20 Tema 301 Crear una nueva nota
+Cuando haga un mas, debe crear una nota. En el thunks.js crea una función que será startNewNote
+
+en la página de journal crea una función que haga el dispatch que llame al startNewNote. Comenta que deberíamos pasarle el uid del usuario conectado, pero 
+comenta que mejor no pasarlo porque en el thunk tenemos acceso a esa información.
+
+Esto esta en journal/pages/JournalPage.jsx (en IconButton)
+Allí en el icono pone onClick={onClickNewNote} y declara esta función que acaba llamando al thunks:
+
+  const onClickNewNote = () => {
+
+    dispatch(startNewNote() );
+  }
+  
+Para coger el usuario, en el thunks incorpora el parámetro getState que da acceso al estado del store. Allí está el uid del usuario.
+
+En el thunks hace esto:
+
+export const startNewNote= () => {
+    return aync (dispatch) =>{}
+}
+const {uid} = getState().auth;
+
+const newNote = {
+    title:'';
+    body:'';
+    date: new Date().getTime();
+}
+
+const newDoc = doc( collection (FirebaseDB, `${ uid}/journal/notes));
+await setDoc(newDoc,newNote);
+
+Prueba y da un 403, por que según tenemos definido en el Firebase allow read, write: if flase , es decir no dejamos hacer nada.
+lo cambia por if request.auth != null es decir si estamos autenticados
+
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}
+
+por
+
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /{document=**} {
+      allow read, write: if request.auth !=null;
+    }
+  }
+}
+
