@@ -4938,3 +4938,25 @@ Ahora pide que hagamos un dispatch que impida que cliquemos dos veces generando 
 Creo que va por hacer un if sobre el campo isSaving, el botón deberá estar deshabilitado si se está grabando.
 
 
+Sección 20. Temas 303
+
+Cuando refrescamos el navegador perdemos las notas aunque las tenemos en firebase. Ahora traera las notas de firebase.
+en el thunks cre un método que se llama startLoadingNote.
+ahora busca donde hacer la llamada a este thunk, indica que teniamos un hook cuando que hacia la llamada al login el useCheckAuth
+Para no cargar demasiado código en el thunks, crea una nueva carpeta helpers con el archivo loadNotes, con una función que
+export const loadNotes = async (uid= '') => {
+    if (!uid) throws new Error ('El UID del usuario  no existe');
+
+    const collectionRef = collection(FireBaseDB, `${uid}/journal/notes`);
+    const docs = await getDocs(collectionRef);
+
+    const notes = [];
+
+    docs.forEach(doc => {
+        notes.push({id:doc.id, ...doc.data()});
+    })
+
+    return notes;
+}
+
+Ahora pide que metamos estas notas en el store
