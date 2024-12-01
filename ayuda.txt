@@ -4995,3 +4995,8 @@ const nuevoTitulo = useMemo(()=> {
             ?  title.substring(0,17) + '...'
             : title;
 })
+
+Sección 20  Tema 305 Activar una nota.
+
+Es una tarea que consiste en hacer que cuando clicke en la barra de notas ponga activa la nota clicada.
+

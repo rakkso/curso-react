@@ -43,3 +43,10 @@ export const startLoadNotes= () => {
 
     }
 }
+
+export const startSetNotes = (nota) => {
+
+    return (dispatch,getState) => {
+        dispatch(setActiveNote(nota));
+    }
+}
