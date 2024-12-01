@@ -4917,3 +4917,24 @@ service cloud.firestore {
   }
 }
 
+
+Sección 20 .Tema 302
+
+Ahora mete la nota creada en el store despues de crearla en firebase. Para ello define las acciones del slice de newNote y activar nota.
+En la de newNote lo que hace es meterla en la lista y decir que no se ha salvado la lista.
+En la de setActiveNote lo que hace es coger la nota y guardarla en el store dentro del campo activa.
+
+state.notes.push= action.payload;
+state.isSaving = false,
+
+statate.active = action.payload
+
+luego desde el thunk las llama con el dispatch
+
+dispatch (addNewEmptyNote (newNote));
+dispatch ( setActiveNote (newNote));
+
+Ahora pide que hagamos un dispatch que impida que cliquemos dos veces generando notas sin que tengamos guardada una.
+Creo que va por hacer un if sobre el campo isSaving, el botón deberá estar deshabilitado si se está grabando.
+
+
