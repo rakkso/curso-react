@@ -4960,3 +4960,38 @@ export const loadNotes = async (uid= '') => {
 }
 
 Ahora pide que metamos estas notas en el store
+
+Sección 20. Tema 304 Mostrar las notas en el menú lateral.
+
+Va fireBase y a cada documento le pone el título o detalles.  En el SlideBar.js será el que muestre la información de las notas.
+
+Para ello primero recupera las notas con esto
+const {notes} =useSelector (state => state.journal)
+
+y las pone más abajo.
+
+                    notas.map( notas => (
+                        <ListItem key={ nota.id } disablePadding>
+                            <ListItemButton>
+                                <ListItemIcon>
+                                    <TurnedInNot />
+                                </ListItemIcon>
+                                <Grid container>
+                                    <ListItemText primary={ nota.title } />
+                                    <ListItemText secondary={ 'Exercitation cillum irure elit consectetur.' } />
+                                </Grid>
+                            </ListItemButton>
+                        </ListItem>
+                    ))
+Como queda mucho código crea otro functional component para las notas, el nuevo componente lo llama SliceBarItem
+
+<SideBarItem  key = {nota.id} note={note}/>
+
+al hace preuebas como  el título puede llegar a ser largo lo acorta. Para eso usa el hook useMemo para que si cambia el tiulo 
+ejecute el acortamiento:
+
+const nuevoTitulo = useMemo(()=> {
+    reuturn title.length >17 
+            ?  title.substring(0,17) + '...'
+            : title;
+})

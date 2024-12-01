@@ -31,9 +31,7 @@ export const JournalPage = () => {
         : <NothingSelectedView />
       }
 
-      if (active) <NoteView /> 
-      else <NothingSelectedView />
-
+ 
       <IconButton  disabled={isSaving}
         onClick={onClickNewNote}
         size='large'
